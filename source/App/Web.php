@@ -15,13 +15,17 @@ public function __construct()
 
     public function home ()
     {
-        //echo "<h1>Eu sou a Home</h1>";
         echo $this->view->render("home",[]);
     }
 
     public function contact ()
     {
         echo $this->view->render("contact",[]);
+    }
+
+    public function faq()
+    {
+        echo $this->view->render("faq", []);
     }
 
     public function location ()

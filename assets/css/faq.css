@@ -1,0 +1,23 @@
+section {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding: 2% 0;
+}
+
+.faq-item {
+    width: 80%;
+    padding: 26px 20px;
+    border-radius: 8px;
+    background-color: #c7c7c7;
+    cursor: pointer;
+}
+
+.faq-item h3 {
+    font-size: 20px;
+}
+
+.faq-item p {
+    margin-top: 22px;
+}

@@ -1,0 +1,35 @@
+#cart-body {
+    position: absolute;
+    width: 400px;
+    height: 100%;
+    top: 0;
+    right: 0;
+    background-color: #efefef;
+    animation: open-cart ease-in-out 280ms;
+}
+
+#cart-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 20px;
+    background-color: #FFFFFF;
+}
+
+#cart-header p {
+    font-weight: 500;
+}
+#cart-header p span {
+    font-size: 11px;
+    color: #636363;
+}
+
+@keyframes open-cart {
+    from {
+        right: -500px;
+    }
+
+    to {
+        right: 0px;
+    }
+}

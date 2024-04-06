@@ -1,3 +1,5 @@
-<?php
+<?php $this->layout("master"); ?>
 
-echo "<h1>Eu sou a Home</h1>";
+<section style="height: 1000px">
+    <img id="wallpaper" src="assets/imgs/wallpaper.jpg">
+</section>

@@ -1,4 +1,3 @@
-<?php
+<?php $this->layout("master"); ?>
 
-
-echo "<h1>Eu sou o Contato</h1>";
+<h1>Contato</h1>
