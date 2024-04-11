@@ -1,0 +1,24 @@
+section {
+    display: flex;
+    flex-direction: column;
+    padding: 5% 0;
+}
+
+#container-login-signin {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: baseline;
+    gap: 5%;
+}
+
+#form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+#form p {
+    font-weight: 600;
+    text-transform: uppercase;
+}

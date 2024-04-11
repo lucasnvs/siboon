@@ -11,6 +11,15 @@
     --primary-color: #8A11A8;
 }
 
+a {
+    color: #FFF;
+    text-decoration: none;
+}
+a:hover {
+    transition: linear 150ms;
+    color: var(--primary-color);
+}
+
 .background-blur {
     display: none;
     z-index: 1;
@@ -21,6 +30,21 @@
     right: 0;
     background-color: rgba(0,0,0,0.45);
 }
+
+.btn {
+    letter-spacing: 1px;
+    cursor: pointer;
+    padding: 16px;
+    font-weight: 500;
+    text-transform: uppercase;
+    border: 2px solid var(--primary-color);
+    background-color: var(--primary-color);
+    color: #FFF;
+    transition: all ease-in-out 200ms;
+}.btn:hover {
+     background-color: #FFF;
+     color: var(--primary-color);
+ }
 
 header {
     display: flex;
@@ -45,6 +69,7 @@ header #mid-menu {
 header #mid-menu ul {
     display: flex;
     flex-direction: row;
+    align-items: center;
     justify-content: space-evenly;
     list-style: none;
     text-transform: uppercase;
@@ -57,10 +82,7 @@ header #mid-menu ul li {
     cursor: pointer;
     color: #FFF;
     font-size: 15px;
-}
-header #mid-menu ul li:hover {
-    transition: linear 150ms;
-    color: var(--primary-color);
+    height: fit-content;
 }
 
 header #option-menu {
@@ -153,4 +175,18 @@ footer #footer-logo-info img {
     left: 1px;
     background-color: #FFFFFF;
     transform: rotate(-45deg);
+}
+
+
+.input-container {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+.input-container input {
+    outline: 0;
+    width: 400px;
+    height: 35px;
+    padding: 6px 12px;
+    font-weight: 500;
 }

@@ -31,19 +31,19 @@
 
         <div id="mid-menu">
             <ul>
-                <li>tênis</li>
-                <li>skate</li>
-                <li>vestuário</li>
-                <li><img src="assets/icons/siboon-logo-name.svg" style="width: 180px;height: 90px"></li>
-                <li>sale</li>
-                <li>novidades</li>
-                <li>marcas</li>
+                <li><a href=" <?= url() ?>">tênis</a></li>
+                <li><a href="<?= url() ?>">skate</a></li>
+                <li><a href="<?= url() ?>">vestuário</a></li>
+                <li><a href="<?= url() ?>"><img src="assets/icons/siboon-logo-name.svg" style="width: 180px;height: 90px"></a></li>
+                <li><a href="<?= url() ?>">sale</a></li>
+                <li><a href="<?= url() ?>">novidades</a></li>
+                <li><a href="<?= url() ?>">marcas</a></li>
             </ul>
         </div>
 
         <div id="option-menu">
             <img src="assets/icons/search.svg">
-            <img src="assets/icons/user.svg">
+            <a href="<?= url("entrar") ?>"><img src="assets/icons/user.svg"></a>
             <img id="cart-button" src="assets/icons/shopping-bag.svg">
         </div>
     </header>
@@ -54,11 +54,11 @@
         <div>
             <h3>Ajuda</h3>
             <br>
-            <p>Contato</p>
+            <p><a href="<?= url("contato") ?>">Contato</a></p>
             <br>
             <p>Política de Privacidade</p>
             <br>
-            <p><a href="/siboon/faq">FAQ</a></p>
+            <p><a href="<?= url("faq") ?>">FAQ</a></p>
         </div>
         <div id="footer-logo-info">
             <img src="assets/icons/siboon-logo-name.svg">

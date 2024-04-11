@@ -23,6 +23,11 @@ public function __construct()
         echo $this->view->render("contact",[]);
     }
 
+    public function login ()
+    {
+        echo $this->view->render("login", []);
+    }
+
     public function faq()
     {
         echo $this->view->render("faq", []);
