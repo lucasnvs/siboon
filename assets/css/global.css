@@ -38,6 +38,7 @@ a:hover {
     font-weight: 500;
     text-transform: uppercase;
     border: 2px solid var(--primary-color);
+    border-radius: 2px;
     background-color: var(--primary-color);
     color: #FFF;
     transition: all ease-in-out 200ms;

@@ -5,10 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="assets/icons/siboon-logo-icon.svg">
     <title> Siboon Skate Shop </title>
-    <script src="assets/js/scripts-home.js" async></script>
     <link rel="stylesheet" href="assets/css/global.css">
-    <link rel="stylesheet" href="assets/css/home.css">
     <link rel="stylesheet" href="assets/css/cart.css">
+    <script src="assets/js/scripts-master.js" async></script>
 </head>
 <body>
     <div id="background-cart" class="background-blur">
@@ -70,6 +69,9 @@
             <h3>Formas de Pagamento</h3>
 
             <h3>Formas de Entrega</h3>
+            <img src="assets/imgs/logo-correio.jpg">
+            <img src="assets/imgs/logo-pac.jpg">
+            <img src="assets/imgs/logo-sedex.jpg">
         </div>
     </footer>
 </body>
