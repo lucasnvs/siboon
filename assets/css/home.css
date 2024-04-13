@@ -7,7 +7,6 @@
 }
 
 .product-container {
-    min-width: 300px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -71,12 +70,11 @@
 }
 
 .section-products {
-    max-width: 100%;
+    width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 30px;
-    overflow-x: scroll;
 }
+
 .section-products h2 {
     font-size: 40px;
     font-family: "Work Sans", sans-serif;
@@ -84,8 +82,9 @@
     color: var(--primary-color);
 }
 
-.section-products .scroll {
-    display: flex;
-    flex-direction: row;
-    gap: 25px;
+.section-products .container {
+    display: grid;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 10px 30px;
 }

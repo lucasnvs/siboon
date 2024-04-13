@@ -6,7 +6,7 @@
 
     <section class="section-products">
         <h2>EM ALTA</h2>
-        <div class="scroll">
+        <div class="container">
             <div class="product-container">
                 <div class="image-container">
                     <img src="assets/imgs/camisa-independent.jpeg">

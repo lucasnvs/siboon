@@ -55,7 +55,7 @@
             <br>
             <p><a href="<?= url("contato") ?>">Contato</a></p>
             <br>
-            <p>Política de Privacidade</p>
+            <p><a href="<?= url("sobre") ?>">Sobre</a></p>
             <br>
             <p><a href="<?= url("faq") ?>">FAQ</a></p>
         </div>

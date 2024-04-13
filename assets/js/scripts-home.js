@@ -1,7 +1,7 @@
 console.log("HOME - Olá, Mundo!");
 
 for (let i = 0; i < 10; i++) {
-    document.querySelector(".scroll").innerHTML += "            <div class=\"product-container\">\n" +
+    document.querySelector(".container").innerHTML += "            <div class=\"product-container\">\n" +
         "                <div class=\"image-container\">\n" +
         "                    <img src=\"assets/imgs/camisa-independent.jpeg\">\n" +
         "                </div>\n" +
