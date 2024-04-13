@@ -15,7 +15,7 @@ $route->group(null);
 $route->get("/", "Web:home");
 $route->get("/contato", "Web:contact");
 $route->get("/entrar", "Web:login");
-$route->get("/localizacao", "Web:location");
+$route->get("/sobre", "Web:about");
 $route->get("/faq", "Web:faq");
 $route->get("/ops/{errcode}", "Web:error");
 

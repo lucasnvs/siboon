@@ -33,9 +33,9 @@ public function __construct()
         echo $this->view->render("faq", []);
     }
 
-    public function location ()
+    public function about ()
     {
-        echo "<h1>Eu sou a Localização</h1>";
+        echo $this->view->render("about", []);
     }
 
     public function error(array $data)
