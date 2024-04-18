@@ -3,7 +3,12 @@
 <?php $this->layout("master"); ?>
 
 <section class="main">
-
+    <div class="banner">
+        <img src="assets/imgs/background.png">
+    </div>
+    <!-- banner -->
+    <!-- seção rápida scroll horizontal -->
+    <!-- seção rápida (talvez por marcas)-->
     <section class="section-products">
         <h2>EM ALTA</h2>
         <div class="container">
@@ -29,5 +34,7 @@
             </div>
         </div>
     </section>
+    <!-- banner -->
+
 
 </section>
