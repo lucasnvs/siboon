@@ -6,6 +6,7 @@
     <link rel="icon" href="assets/icons/siboon-logo-icon.svg">
     <title> Siboon Skate Shop </title>
     <link rel="stylesheet" href="assets/css/global.css">
+    <link rel="stylesheet" href="assets/css/layout_web.css">
     <link rel="stylesheet" href="assets/css/cart.css">
     <script src="assets/js/scripts-master.js" async></script>
 </head>
@@ -33,7 +34,7 @@
                 <li><a href=" <?= url() ?>">tênis</a></li>
                 <li><a href="<?= url() ?>">skate</a></li>
                 <li><a href="<?= url() ?>">vestuário</a></li>
-                <li><a href="<?= url() ?>"><img src="assets/icons/siboon-logo-name.svg" style="width: 180px;height: 90px"></a></li>
+                <li><a href="<?= url() ?>"><img src="assets/icons/siboon-logo.png" style="width: 180px;height: 90px"></a></li>
                 <li><a href="<?= url() ?>">sale</a></li>
                 <li><a href="<?= url() ?>">novidades</a></li>
                 <li><a href="<?= url() ?>">marcas</a></li>
@@ -47,7 +48,9 @@
         </div>
     </header>
 
-    <?= $this->section("content") ?>
+    <section id="main">
+        <?= $this->section("content") ?>
+    </section>
 
     <footer>
         <div>
@@ -60,7 +63,7 @@
             <p><a href="<?= url("faq") ?>">FAQ</a></p>
         </div>
         <div id="footer-logo-info">
-            <img src="assets/icons/siboon-logo-name.svg">
+            <img src="assets/icons/siboon-logo.png">
             <p>Siboon Comp. Ltda. Cnpj: 10.100.100/0001-10</p>
             <p>Rua Tony Hawk, 191. Cep: 10100-100.</p>
             <p>Porto Alegre, Rio Grande do Sul.</p>
