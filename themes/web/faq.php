@@ -1,21 +1,45 @@
 <link rel="stylesheet" href="assets/css/faq.css">
 
-<section>
-    <?php
+<?php
     use \Source\Models\Faq\Question;
+    use \Source\Models\Faq\Type;
 
     $this->layout("master");
 
     $faq = new Question();
-    $res = $faq->selectAll();
+    $dataQuestions = $faq->selectAll();
 
-    foreach ( $res as $question ) {
-        echo
-        "<div class='faq-item'>
-            <h3>{$question->question}</h3>
-            <p>{$question->answer}</p>
-        </div>
-        <br>";
+    $separatedData = [];
+
+    foreach ($dataQuestions as $item) {
+        $categoryId = $item->type_id;
+        if (!isset($separatedData[$categoryId])) {
+            $separatedData[$categoryId] = [];
+        }
+        $separatedData[$categoryId][] = $item;
     }
-    ?>
-</section>
+
+    $faqTypes = new Type();
+    $dataTypes = $faqTypes->selectAll();
+
+    $categories = [];
+    foreach ($dataTypes as $type) {
+        $categories[$type->id] = $type->description;
+    }
+
+    foreach ($separatedData as $categoryId => $items) {
+        $categoryName = $categories[$categoryId];
+        $stringHTML =
+        "<div class='faq-type'>
+            <h2>{$categoryName}</h2>";
+
+        foreach ($items as $item) {
+            $stringHTML .= "<div class='faq-item'>";
+            $stringHTML .= "<h3>{$item->question}</h3>";
+            $stringHTML .= "<p>{$item->answer}</p>";
+            $stringHTML .= "</div>";
+        }
+        $stringHTML .= "</div>";
+
+        echo $stringHTML;
+    }

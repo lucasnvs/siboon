@@ -1,16 +1,34 @@
-section {
+#main {
     display: flex;
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    padding: 2% 0;
+    padding: 2% 10%;
+    gap: 40px;
+}
+
+.faq-type {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+}
+
+.faq-type h2 {
+    font-size: 40px;
+    font-family: "Work Sans", sans-serif;
+    font-weight: 900;
+    color: var(--primary-color);
+    align-self: flex-start;
+    margin-bottom: 10px;
 }
 
 .faq-item {
-    width: 80%;
-    padding: 26px 20px;
-    border-radius: 8px;
-    background-color: #c7c7c7;
+    padding: 12px;
+    border-radius: 2px;
+    background-color: #9f9f9f;
+    color: #2a2a2a;
 }
 
 .faq-item h3 {
@@ -18,5 +36,6 @@ section {
 }
 
 .faq-item p {
-    margin-top: 22px;
+    font-weight: 500;
+    margin-top: 18px;
 }
