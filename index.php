@@ -13,6 +13,9 @@ $route->namespace("Source\App");
 $route->group(null);
 
 $route->get("/", "Web:home");
+
+$route->get("/admin", "Admin:admin"); // transformar em rota privade de admin
+
 $route->get("/contato", "Web:contact");
 $route->get("/entrar", "Web:login");
 $route->get("/sobre", "Web:about");
