@@ -1,0 +1,41 @@
+#main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--primary-neutral-color);
+}
+
+#container-about {
+    display: flex;
+    padding: 40px;
+    gap: 30px;
+    color: #FFF;
+}
+
+#container-about .about {
+    max-width: 500px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.picture-card {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    width: 100%;
+    gap: 20px;
+    align-items: center;
+    background-color: #FFF;
+    color: #2a2a2a;
+}
+
+.picture-card img {
+    max-width: 400px;
+}
+
+.picture-card p {
+    margin: 15px 0px 15px 0px;
+    font-size: 18px;
+    font-family: Cambria;
+}
