@@ -6,11 +6,7 @@
 
     $this->layout("master");
 
-    $faq = new Question();
-    $dataQuestions = $faq->selectAll();
-
     $separatedData = [];
-
     foreach ($dataQuestions as $item) {
         $categoryId = $item->type_id;
         if (!isset($separatedData[$categoryId])) {
@@ -18,9 +14,6 @@
         }
         $separatedData[$categoryId][] = $item;
     }
-
-    $faqTypes = new Type();
-    $dataTypes = $faqTypes->selectAll();
 
     $categories = [];
     foreach ($dataTypes as $type) {

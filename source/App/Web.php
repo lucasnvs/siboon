@@ -3,6 +3,8 @@
 namespace Source\App;
 
 use League\Plates\Engine;
+use Source\Models\Faq\Question;
+use Source\Models\Faq\Type;
 
 class Web
 {
@@ -30,7 +32,16 @@ public function __construct()
 
     public function faq()
     {
-        echo $this->view->render("faq", []);
+        $faq = new Question();
+        $dataQuestions = $faq->selectAll();
+
+        $faqTypes = new Type();
+        $dataTypes = $faqTypes->selectAll();
+
+        echo $this->view->render("faq", [
+            "dataQuestions" => $dataQuestions,
+            "dataTypes" => $dataTypes
+        ]);
     }
 
     public function about ()

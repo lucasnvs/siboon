@@ -14,7 +14,7 @@
                 <label for="password-login">Senha:</label>
                 <input type="password" id="password-login">
             </div>
-
+            <a>Esqueci minha senha</a>
             <input class="btn" type="button" value="Entrar">
         </div>
 
@@ -40,7 +40,6 @@
                 <label for="password-confirm">Confirme a senha:</label>
                 <input type="password" id="password-confirm">
             </div>
-
             <input class="btn" type="button" value="Entrar">
         </div>
 

@@ -1,8 +1,16 @@
-section {
+#main {
     display: flex;
     flex-direction: column;
     padding: 5% 0;
 }
+
+#main a {
+    font-size: 14px;
+    width: fit-content;
+    color: var(--primary-color);
+}#main a:hover {
+     color: black;
+ }
 
 #container-login-signin {
     display: flex;
