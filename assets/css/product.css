@@ -1,0 +1,36 @@
+#main {
+    display: flex;
+    padding: 4%;
+}
+
+img {
+    aspect-ratio: 1/1;
+}
+
+#product-image-container {
+    display: flex;
+    gap: 15px;
+    width: calc(50% - 15px);
+}
+
+#product-image-container .side-images-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#product-image-container .side-images-container .side-image {
+    width: 100px;
+}
+
+#principal-image {
+    width: 600px;
+    height: 600px;
+}
+/* */
+/* */
+
+#product-description-container {
+    width: 50%;
+
+}

@@ -1,0 +1,43 @@
+#main {
+    padding: 2% 4%;
+}
+
+#top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#top h2 {
+    font-size: 40px;
+    font-family: "Work Sans", sans-serif;
+    font-weight: 900;
+    color: var(--primary-color);
+}
+
+#principal {
+    display: flex;
+    flex-direction: row;
+    /*background-color: red;*/
+}
+
+#principal #filters {
+    min-width: 20%;
+}
+
+#principal #filters .filters-sticky-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: red;
+    position: sticky;
+    top: 10px;
+    /*background-color: blue;*/
+    height: 200px;
+}
+
+.container-grid-section {
+    width: 80%;
+    /*background-color: green;*/
+}
