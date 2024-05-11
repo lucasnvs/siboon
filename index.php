@@ -20,6 +20,12 @@ $route->get("/contato", "Web:contact");
 $route->get("/entrar", "Web:login");
 $route->get("/sobre", "Web:about");
 $route->get("/faq", "Web:faq");
+
+$route->get("/perfil", "Web:profile"); // rota de user logado
+
+$route->get("/product", "Web:product"); // rota template
+$route->get("/section", "Web:section"); // rota template
+
 $route->get("/ops/{errcode}", "Web:error");
 
 $route->group(null);

@@ -4,11 +4,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="assets/icons/siboon-logo-icon.svg">
-    <title> Siboon Skate Shop </title>
+    <title> <?=$this->e($title)?> - Siboon Skate Shop </title>
     <link rel="stylesheet" href="assets/css/global.css">
     <link rel="stylesheet" href="assets/css/layout_web.css">
     <link rel="stylesheet" href="assets/css/cart.css">
+    <?php if ($this->section("specific-style")): ?>
+        <?= $this->section("specific-style"); ?>
+    <?php endif; ?>
     <script src="assets/js/scripts-master.js" async></script>
+    <?php if ($this->section("specific-script")): ?>
+        <?= $this->section("specific-script"); ?>
+    <?php endif; ?>
 </head>
 <body>
     <div id="background-cart" class="background-blur">

@@ -1,6 +1,7 @@
-<link rel="stylesheet" href="assets/css/login.css">
-
-<?php $this->layout("master"); ?>
+<?php $this->layout("master", ['title' => $title]); ?>
+<?php $this->start("specific-style"); ?>
+    <link rel="stylesheet" href="assets/css/login.css">
+<?php $this->end(); ?>
 
 <section>
     <div id="container-login-signin">

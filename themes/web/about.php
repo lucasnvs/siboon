@@ -1,6 +1,7 @@
-<link rel="stylesheet" href="assets/css/about.css">
-
-<?php $this->layout("master"); ?>
+<?php $this->layout("master", ['title' => $title]); ?>
+<?php $this->start("specific-style"); ?>
+    <link rel="stylesheet" href="assets/css/about.css">
+<?php $this->end(); ?>
 
 <div id="container-about">
     <div>

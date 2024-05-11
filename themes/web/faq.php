@@ -1,10 +1,11 @@
-<link rel="stylesheet" href="assets/css/faq.css">
+<?php $this->layout("master", ['title' => $title]); ?>
+<?php $this->start("specific-style"); ?>
+    <link rel="stylesheet" href="assets/css/faq.css">
+<?php $this->end(); ?>
 
 <?php
     use \Source\Models\Faq\Question;
     use \Source\Models\Faq\Type;
-
-    $this->layout("master");
 
     $separatedData = [];
     foreach ($dataQuestions as $item) {
