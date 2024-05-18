@@ -25,9 +25,8 @@ footer a:hover {
     transition: linear 150ms;
     color: var(--primary-color);
 }
-
 .background-blur {
-    display: none;
+    display: block;  /* change to none */
     z-index: 1;
     position: fixed;
     top: 0;
@@ -202,3 +201,27 @@ footer a:hover {
 }
 
 /* END - PRODUTO */
+
+/* SCROLLBAR */
+
+/* Estilos para a barra de rolagem */
+/* Largura e cor do fundo da barra de rolagem */
+::-webkit-scrollbar {
+    width: 8px;
+    background-color: #f5f5f5;
+}
+
+/* Trilho da barra de rolagem */
+::-webkit-scrollbar-track {
+    background-color: #f5f5f5;
+}
+
+/* Alça (o botão que você pode arrastar) */
+::-webkit-scrollbar-thumb {
+    background-color: #b0b0b0;
+}
+
+/* Cursor (o botão pequeno que você pode arrastar para rolar rapidamente) */
+::-webkit-scrollbar-thumb:hover {
+    background-color: #555;
+}

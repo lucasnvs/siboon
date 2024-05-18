@@ -10,9 +10,10 @@ class Web
 {
     private $view;
 
-public function __construct()
+    public function __construct($router)
     {
         $this->view = new Engine(__DIR__ . "/../../themes/web","php");
+        $this->router = $router;
     }
 
     public function home ()
@@ -60,7 +61,15 @@ public function __construct()
 
     public function product ()
     {
-        echo $this->view->render("product", []);
+        $productName = "tshirt-diamond-black-piano";
+
+        $this->router->route("produto/{name}", [
+            "name" => $productName
+        ]);
+
+        echo $this->view->render("product", [
+            "title" => $productName
+        ]);
     }
 
     public function profile () // remover daq e colocar em local de user logado

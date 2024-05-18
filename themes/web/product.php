@@ -1,4 +1,4 @@
-<?php $this->layout("master", ["title"=> "Camisa Independent Oversizes - Truck CO."]); ?>
+<?php $this->layout("master", ['title' => $title]); ?>
 <?php $this->start("specific-style"); ?>
     <link rel="stylesheet" href="assets/css/product.css">
 <?php $this->end(); ?>

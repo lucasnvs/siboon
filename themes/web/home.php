@@ -17,7 +17,7 @@
         <h2>EM ALTA</h2>
         <div class="container-grid-section">
             <div class="product-container">
-                <a href="<?= url("product") ?>">
+                <a href="<?= url("produto/tshirt-diamond-black-piano") ?>">
                     <div class="image-container">
                         <img src="assets/imgs/camisa-independent.jpeg">
                     </div>

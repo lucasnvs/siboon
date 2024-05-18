@@ -1,15 +1,45 @@
-const background_cart = document.getElementById("background-cart");
-const closeCartButton = document.getElementById("close-cart");
+const TEST_PRODUCT = new CartProduct(23, "Tênis Tesla Shine Black Reflect", "Black Reflect", 38, 320.00, "R$ 320,00", 1, "../imgs/tesla.jpg");
+
+// localStorage.pushToItem("cart", TEST_PRODUCT);
+
+// const EXAMPLE_DATA_LOCALSTORAGE = [
+//     {id: 23, resPath: "../imgs/tesla.jpg", name: "Tênis Tesla Shine Black Reflect", color: "Black Reflect", size: 38, price: 320.00, formated_price: "R$ 320,00", quantity: 1},
+//     {id: 543, resPath: "../imgs/camisadiamond.jpg", name: "Camisa Diamond Long Island", color: "Cinza", size: "P", price: 109.90, formated_price: "R$ 190,90", quantity: 2},
+// ]
 
 const HEADER_OPTIONS = {
     search: "",
     user: "",
-    cart: document.getElementById("cart-button"),
 }
-HEADER_OPTIONS.cart.addEventListener("click", () => {
-    background_cart.style.display = "block";
+
+const CART_ELEMENTS = {
+    openCartButton: document.getElementById("cart-button"),
+    closeCartButton: document.getElementById("close-cart"),
+    background_cart: document.getElementById("background-cart"),
+    span_cart_quantity: document.getElementById("span-cart-quantity"),
+    catalog: document.getElementById("cart-catalog"),
+}
+
+CART_ELEMENTS.openCartButton.addEventListener("click", () => {
+    CART_ELEMENTS.background_cart.style.display = "block";
 })
-closeCartButton.addEventListener("click", () => {
-    background_cart.style.display = "none";
+CART_ELEMENTS.closeCartButton.addEventListener("click", () => {
+    CART_ELEMENTS.background_cart.style.display = "none";
     console.log("event")
 })
+
+function updateCart() {
+    const cart = localStorage.get("cart");
+    CART_ELEMENTS.span_cart_quantity.innerHTML = `(${cart.length} itens)`;
+    CART_ELEMENTS.catalog.innerHTML = "";
+    if(cart.length > 0) {
+        cart.forEach( product => {
+            console.log("Running...")
+            new ItemCart(product.name, product.color, product.size, product.resPath, product.formated_price, product.quantity).appendCardToParent(CART_ELEMENTS.catalog)
+        })
+        return;
+    }
+    CART_ELEMENTS.catalog.innerHTML = "<p>SEM ITENS NO CARRINHO</p>";
+}
+
+updateCart()
