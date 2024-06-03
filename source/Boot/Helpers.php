@@ -13,3 +13,11 @@ function url(string $path = null): string
     }
     return CONF_URL_BASE;
 }
+
+function buildStringFriendlyURL(string $string = ""): string
+{
+    $string = strtolower($string);
+    $string = preg_replace('/\s+/', '-', $string); // troca " " por "-"
+    $string = preg_replace('/[^a-zA-Z0-9-]/', '', $string); // remove caracteres não convencionais
+    return $string;
+}
