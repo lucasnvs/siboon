@@ -18,8 +18,14 @@ class Web
 
     public function home ()
     {
+        $productName = "T-Shirt Diamond Black Piano";
+
         echo $this->view->render("home",[
-            "title" => "Home"
+            "title" => "Home",
+            "products" => [
+                ["url" => buildStringFriendlyURL($productName)],
+                ["url" => buildStringFriendlyURL($productName)]
+            ]
         ]);
     }
 
@@ -61,15 +67,16 @@ class Web
 
     public function product ()
     {
-        $productName = "tshirt-diamond-black-piano";
+        $productName = "T-Shirt Diamond Black Piano";
 
         $this->router->route("produto/{name}", [
-            "name" => $productName
+            "name" => buildStringFriendlyURL($productName)
         ]);
 
         echo $this->view->render("product", [
             "title" => $productName
         ]);
+
     }
 
     public function profile () // remover daq e colocar em local de user logado
