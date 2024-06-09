@@ -12,7 +12,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 5px;
+    gap: 10px;
 }
 
 .faq-type h2 {
@@ -25,6 +25,7 @@
 }
 
 .faq-item {
+    width: 100%;
     padding: 12px;
     border-radius: 2px;
     background-color: #9f9f9f;
