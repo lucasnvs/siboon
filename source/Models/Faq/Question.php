@@ -22,7 +22,7 @@ class Question extends Model {
         $this->idType = $idType;
         $this->question = $question;
         $this->answer = $answer;
-        $this->entity = "questions";
+        $this->entity = "faq_questions";
 
     }
 

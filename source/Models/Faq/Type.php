@@ -15,7 +15,7 @@ class Type extends Model {
     {
         $this->id = $id;
         $this->description = $description;
-        $this->entity = "types";
+        $this->entity = "faq_types";
     }
 
     public function getId(): ?int
