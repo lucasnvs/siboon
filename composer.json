@@ -1,11 +1,11 @@
 {
-  "name": "fabio3268/mvc-project-tarde",
-  "description": "Estrutura básica de uma aplicação MVC",
+  "name": "lucasnvs/siboon",
+  "description": "Aplicação Web da loja Siboon Skateshop",
   "minimum-stability": "stable",
   "authors": [
     {
-      "name": "Fábio Santos",
-      "email": "fabiosantos@ifsul.edu.br",
+      "name": "Lucas Neves",
+      "email": "lucasneves.ch032@academico.ifsul.edu.br",
       "homepage": "https://www.ifsul.edu.br",
       "role": "Developer"
     }
