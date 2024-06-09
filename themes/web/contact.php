@@ -1,6 +1,6 @@
 <?php $this->layout("master", ['title' => $title]); ?>
 <?php $this->start("specific-style"); ?>
-    <link rel="stylesheet" href="assets/css/contact.css">
+    <link rel="stylesheet" href="<?= assets('web', 'css/contact.css') ?>">
 <?php $this->end(); ?>
 
 <div id="contact-container">

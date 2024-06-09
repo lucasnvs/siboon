@@ -2,7 +2,7 @@
 <div class="product-container">
     <a href="<?= url("produto/".$product["url"]) ?>">
         <div class="image-container">
-            <img src="<?= url('assets/imgs/camisa-independent.jpeg') ?>">
+            <img src="<?= assets('web', 'imgs/camisa-independent.jpeg') ?>">
         </div>
         <div class="product-description">
             <p class="title">CAMISA INDEPENDENT BLACK OVERSIZED - Truck Co.</p>

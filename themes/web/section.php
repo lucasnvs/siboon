@@ -1,6 +1,6 @@
 <?php $this->layout("master"); ?>
 <?php $this->start("specific-style"); ?>
-    <link rel="stylesheet" href="assets/css/section.css">
+    <link rel="stylesheet" href="<?= assets('web', 'css/section.css') ?>">
 <?php $this->end(); ?>
 
 <!-- transformar para se buildar de acordo com o tipo de seção e produto, por enquanto exemplo: SALE -->

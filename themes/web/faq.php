@@ -1,6 +1,6 @@
 <?php $this->layout("master", ['title' => $title]); ?>
 <?php $this->start("specific-style"); ?>
-    <link rel="stylesheet" href="assets/css/faq.css">
+    <link rel="stylesheet" href="<?= assets('web', 'css/faq.css') ?>">
 <?php $this->end(); ?>
 
 <?php

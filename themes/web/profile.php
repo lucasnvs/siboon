@@ -1,7 +1,7 @@
 <?php $this->layout("master", ['title' => $title]); ?>
 
 <?php $this->start("specific-style"); ?>
-    <link rel="stylesheet" href="assets/css/profile.css">
+    <link rel="stylesheet" href="<?= assets('web', 'css/profile.css') ?>">
 <?php $this->end(); ?>
 
 

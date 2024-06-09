@@ -13,6 +13,10 @@ function url(string $path = null): string
     }
     return CONF_URL_BASE;
 }
+function assets(string $theme = "web", string $resourcePath = null): string
+{
+    return url("themes/$theme/assets/$resourcePath");
+}
 
 function buildStringFriendlyURL(string $string = ""): string
 {
