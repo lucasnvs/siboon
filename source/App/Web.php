@@ -51,10 +51,34 @@ class Web
         $faqTypes = new Type();
         $dataTypes = $faqTypes->selectAll();
 
+
+        $groupedQuestions = [];
+        foreach ($dataQuestions as $question) {
+            $typeId = $question->type_id;
+
+            if (!isset($groupedQuestions[$typeId])) {
+                $groupedQuestions[$typeId] = [];
+            }
+
+            $groupedQuestions[$typeId][] = $question;
+        }
+
+        $finalObject = [];
+        foreach ($dataTypes as $type) {
+            $typeId = $type->id;
+            $typeDescription = $type->description;
+
+            $questions= [];
+            if (isset($groupedQuestions[$typeId])) {
+                $questions = $groupedQuestions[$typeId];
+            }
+
+            $finalObject[$typeDescription] = $questions;
+        }
+
         echo $this->view->render("faq", [
             "title" => "FAQ",
-            "dataQuestions" => $dataQuestions,
-            "dataTypes" => $dataTypes
+            "faqs" => $finalObject,
         ]);
     }
 

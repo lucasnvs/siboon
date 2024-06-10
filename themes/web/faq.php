@@ -1,39 +1,16 @@
-<?php $this->layout("master", ['title' => $title]); ?>
+<?php $this->layout("master", ['title' => $title, 'faqs' => $faqs]); ?>
 <?php $this->start("specific-style"); ?>
     <link rel="stylesheet" href="<?= assets('web', 'css/faq.css') ?>">
 <?php $this->end(); ?>
 
-<?php
-    use \Source\Models\Faq\Question;
-    use \Source\Models\Faq\Type;
-
-    $separatedData = [];
-    foreach ($dataQuestions as $item) {
-        $categoryId = $item->type_id;
-        if (!isset($separatedData[$categoryId])) {
-            $separatedData[$categoryId] = [];
-        }
-        $separatedData[$categoryId][] = $item;
-    }
-
-    $categories = [];
-    foreach ($dataTypes as $type) {
-        $categories[$type->id] = $type->description;
-    }
-
-    foreach ($separatedData as $categoryId => $items) {
-        $categoryName = $categories[$categoryId];
-        $stringHTML =
-        "<div class='faq-type'>
-            <h2>{$categoryName}</h2>";
-
-        foreach ($items as $item) {
-            $stringHTML .= "<div class='faq-item'>";
-            $stringHTML .= "<h3>{$item->question}</h3>";
-            $stringHTML .= "<p>{$item->answer}</p>";
-            $stringHTML .= "</div>";
-        }
-        $stringHTML .= "</div>";
-
-        echo $stringHTML;
-    }
+<?php foreach ($faqs as $categoryName => $items): ?>
+        <div class='faq-type'>
+            <h2><?= $categoryName ?></h2>
+            <?php foreach ($items as $item): ?>
+                <div class='faq-item'>
+                    <h3><?= $item->question ?></h3>
+                    <p><?= $item->answer ?></p>
+                </div>
+            <?php endforeach ?>
+        </div>
+<?php endforeach ?>
