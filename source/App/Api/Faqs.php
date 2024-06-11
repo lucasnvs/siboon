@@ -7,10 +7,14 @@ use Source\Models\Faq\Question;
 class Faqs extends Api
 {
 
-    public function listFaqs(): void
+    public function getFaqs(): void
     {
         $questions = new Question();
         $this->back($questions->selectAll(), 200);
     }
 
+    public function getFaq(): void
+    {
+
+    }
 }

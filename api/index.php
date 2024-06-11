@@ -6,11 +6,20 @@ require  __DIR__ . "/../vendor/autoload.php";
 
 use CoffeeCode\Router\Router;
 
-$route = new Router(url(),":");
+$route = new Router(url("api"),":");
 
 $route->namespace("Source\App\Api");
 
-$route->get("/faqs","Faqs:listFaqs");
+$route->group("faq");
+$route->get("/","Faqs:getFaqs");
+$route->get("/{id}", "Faqs:getFaq");
+
+$route->group("produtos"); // Recurso Produto // necessário add middleware
+$route->get("/", "Products:getProducts");
+$route->get("/{id}", "Products:getProduct");
+$route->post("/", "Products:postProduct");
+$route->put("/{id}", "Products:putProduct");
+$route->delete("/{id}", "Products:deleteProduct");
 
 $route->dispatch();
 
