@@ -7,6 +7,7 @@ use Source\Core\Model;
 class Product extends Model {
     protected $id;
     protected $name;
+    protected $description;
     protected $color;
     protected $size;
     protected $price_brl;
@@ -15,15 +16,17 @@ class Product extends Model {
     /**
      * @param $id
      * @param $name
+     * @param $description
      * @param $color
      * @param $size
      * @param $price_brl
      * @param $res_path
      */
-    public function __construct($id, $name, $color, $size, $price_brl, $res_path)
+    public function __construct($id, $name, $description, $color, $size, $price_brl, $res_path)
     {
         $this->id = $id;
         $this->name = $name;
+        $this->description = $description;
         $this->color = $color;
         $this->size = $size;
         $this->price_brl = $price_brl;
@@ -61,6 +64,22 @@ class Product extends Model {
     public function setName($name): void
     {
         $this->name = $name;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getDescription(): string
+    {
+        return $this->description;
+    }
+
+    /**
+     * @param mixed $description
+     */
+    public function setDescription($description): void
+    {
+        $this->description = $description;
     }
 
     /**
