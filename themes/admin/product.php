@@ -10,7 +10,7 @@
 ?>
 
 <div class="big-options-container">
-    <button class="big-button">Criar Produto</button>
+    <a href="<?= url("admin/produtos/registrar") ?>"><button class="big-button">Novo Produto</button></a>
 </div>
 
 <div class="container-section">

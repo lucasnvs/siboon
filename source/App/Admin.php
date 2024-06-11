@@ -22,4 +22,9 @@ class Admin
     {
         echo $this->view->render("product", []);
     }
+
+    public function productRegister ()
+    {
+        echo $this->view->render("product_register", []);
+    }
 }

@@ -33,6 +33,7 @@ $route->group("admin");
 // transformar em rota privade de admin
 $route->get("/", "Admin:home");
 $route->get("/produtos", "Admin:product");
+$route->get("/produtos/registrar", "Admin:productRegister");
 
 $route->group(null);
 
