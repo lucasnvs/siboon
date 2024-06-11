@@ -30,8 +30,9 @@ $route->get("/perfil", "Web:profile"); // rota de user logado
 
 // Admin
 $route->group("admin");
-
-$route->get("/", "Admin:admin"); // transformar em rota privade de admin
+// transformar em rota privade de admin
+$route->get("/", "Admin:home");
+$route->get("/produtos", "Admin:product");
 
 $route->group(null);
 
