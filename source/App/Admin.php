@@ -13,8 +13,13 @@ class Admin
         $this->view = new Engine(__DIR__ . "/../../themes/admin", "php");
     }
 
-    public function admin ()
+    public function home ()
     {
-        echo $this->view->render("admin", []);
+        echo $this->view->render("home", []);
+    }
+
+    public function product ()
+    {
+        echo $this->view->render("product", []);
     }
 }
