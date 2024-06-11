@@ -22,7 +22,15 @@ class Product extends Model {
      * @param $price_brl
      * @param $res_path
      */
-    public function __construct($id, $name, $description, $color, $size, $price_brl, $res_path)
+    public function __construct(
+        $id = null,
+        $name = null,
+        $description = null,
+        $color = null,
+        $size = null,
+        $price_brl = null,
+        $res_path = null
+    )
     {
         $this->id = $id;
         $this->name = $name;
