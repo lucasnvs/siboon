@@ -25,7 +25,7 @@
             <div class="info col">
                 <p>Frete - Digite seu CEP</p>
                 <div class="input-container">
-                    <input id="cep" placeholder="Digite seu CEP">
+                    <input type="text" id="cep" placeholder="Digite seu CEP">
                     <button>Calcular</button>
                 </div>
             </div>
