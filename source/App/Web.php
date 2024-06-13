@@ -9,10 +9,13 @@ use Source\Models\Faq\Type;
 class Web
 {
     private $view;
+    private $router;
 
     public function __construct($router)
     {
         $this->view = new Engine(__DIR__ . "/../../themes/web","php");
+        $this->view->addFolder('shared', __DIR__ . '/../../themes/shared');
+
         $this->router = $router;
     }
 

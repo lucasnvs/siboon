@@ -11,6 +11,8 @@ class Admin
     public function __construct()
     {
         $this->view = new Engine(__DIR__ . "/../../themes/admin", "php");
+        $this->view->addFolder('shared', __DIR__ . '/../../themes/shared');
+
     }
 
     public function home ()
