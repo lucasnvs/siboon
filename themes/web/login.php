@@ -9,7 +9,7 @@
             <p>Quero Entrar</p>
             <div class="input-container">
                 <label for="email-login">Email:</label>
-                <input id="email-login">
+                <input type="text" id="email-login">
             </div>
             <div class="input-container">
                 <label for="password-login">Senha:</label>
@@ -23,15 +23,15 @@
             <p>Desejo me cadastrar</p>
             <div class="input-container">
                 <label for="name">Name:</label>
-                <input id="name">
+                <input type="text" id="name">
             </div>
             <div class="input-container">
                 <label for="lastname">Sobrenome:</label>
-                <input id="lastname">
+                <input type="text" id="lastname">
             </div>
             <div class="input-container">
                 <label for="email-signin">Email:</label>
-                <input id="email-signin">
+                <input type="text" id="email-signin">
             </div>
             <div class="input-container">
                 <label for="password-signin">Senha:</label>

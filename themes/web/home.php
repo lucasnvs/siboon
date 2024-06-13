@@ -4,11 +4,12 @@
 <?php $this->end(); ?>
 <?php $this->start("specific-style"); ?>
     <link rel="stylesheet" href="<?= assets('web', 'css/home.css') ?>">
+    <link rel="stylesheet" href="<?= assets('web', 'css/components/product-item.css') ?>">
 <?php $this->end(); ?>
 
 <section class="main">
     <div class="banner">
-        <img src="assets/imgs/background.png">
+        <img src="<?= assets('web', 'imgs/background.png') ?>">
     </div>
     <!-- banner -->
     <!-- seção rápida scroll horizontal -->
