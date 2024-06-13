@@ -1,4 +1,3 @@
-
 <table class="default-table">
     <thead>
         <?php foreach ($header as $th): ?>
