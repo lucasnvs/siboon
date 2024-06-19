@@ -9,11 +9,11 @@
             <p>Quero Entrar</p>
             <div class="input-container">
                 <label for="email-login">Email:</label>
-                <input type="text" id="email-login">
+                <input class="default-input" type="text" id="email-login">
             </div>
             <div class="input-container">
                 <label for="password-login">Senha:</label>
-                <input type="password" id="password-login">
+                <input class="default-input" type="password" id="password-login">
             </div>
             <a>Esqueci minha senha</a>
             <input class="btn" type="button" value="Entrar">
@@ -23,23 +23,23 @@
             <p>Desejo me cadastrar</p>
             <div class="input-container">
                 <label for="name">Name:</label>
-                <input type="text" id="name">
+                <input class="default-input" type="text" id="name">
             </div>
             <div class="input-container">
                 <label for="lastname">Sobrenome:</label>
-                <input type="text" id="lastname">
+                <input class="default-input" type="text" id="lastname">
             </div>
             <div class="input-container">
                 <label for="email-signin">Email:</label>
-                <input type="text" id="email-signin">
+                <input class="default-input" type="text" id="email-signin">
             </div>
             <div class="input-container">
                 <label for="password-signin">Senha:</label>
-                <input type="password" id="password-signin">
+                <input class="default-input" type="password" id="password-signin">
             </div>
             <div class="input-container">
                 <label for="password-confirm">Confirme a senha:</label>
-                <input type="password" id="password-confirm">
+                <input class="default-input" type="password" id="password-confirm">
             </div>
             <input class="btn" type="button" value="Entrar">
         </div>
