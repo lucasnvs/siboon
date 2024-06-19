@@ -1,3 +1,14 @@
+header a,
+footer a {
+    color: #FFF;
+    cursor: pointer;
+}
+header a:hover,
+footer a:hover {
+    transition: linear 150ms;
+    color: var(--primary-color);
+}
+
 header {
     display: flex;
     flex-direction: row;

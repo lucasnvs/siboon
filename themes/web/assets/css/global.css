@@ -15,16 +15,6 @@ a {
     text-decoration: none;
 }
 
-header a,
-footer a {
-    color: #FFF;
-    cursor: pointer;
-}
-header a:hover,
-footer a:hover {
-    transition: linear 150ms;
-    color: var(--primary-color);
-}
 .background-blur {
     display: none;  /* change to none */
     z-index: 1;
@@ -107,8 +97,7 @@ footer a:hover {
     gap: 3px;
 }
 
-input[type=text],
-input[type=password],
+.default-input,
 select,
 textarea {
     outline: 0;
