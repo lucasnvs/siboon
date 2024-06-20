@@ -1,0 +1,22 @@
+#form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.col {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+#available-sizes {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+}
