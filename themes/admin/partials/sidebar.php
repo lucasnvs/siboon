@@ -1,5 +1,10 @@
 
 <aside class="sidebar">
+
+    <div id="button-toggle-sidebar">
+        <i class="material-symbols-outlined">arrow_left</i>
+    </div>
+
     <header>
         <img class="logo-img" src="<?= assets(resourcePath: "icons/siboon-logo.png") ?>">
     </header>
