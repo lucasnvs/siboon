@@ -1,0 +1,41 @@
+.quantity {
+    align-items: center;
+    border-bottom: 1px solid #0d93a4;
+    display: flex;
+    flex-shrink: 0;
+    height: 40px;
+    justify-content: center;
+    width: 90px;
+}
+
+.quantity-box {
+    align-items: center;
+    display: flex;
+    gap: 4px;
+    font-size: 16px;
+    font-weight: 700;
+    justify-content: space-evenly;
+    margin: 0 5px;
+}
+
+.quantity .quantity-box span {
+    -webkit-user-select: none;
+    align-items: center;
+    cursor: pointer;
+    display: flex;
+    flex: 1;
+    justify-content: center;
+}
+.quantity .quantity-box span:hover {
+    color: #f16423;
+}
+
+.quantity .quantity-box input {
+    background: 0 0;
+    border: 0;
+    flex-shrink: 0;
+    font-size: 16px;
+    font-weight: 700;
+    text-align: center;
+    width: 42px;
+}
