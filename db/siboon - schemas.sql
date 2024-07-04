@@ -51,7 +51,7 @@ CREATE TABLE products(
 
 CREATE TABLE stock(
 	id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    id_product INT NOT NULL,
+    product_id INT NOT NULL,
 	quantity INT
 );
 
@@ -62,8 +62,8 @@ CREATE TABLE stock(
 -- important infos about order like, total price, send method, address, sale date,
 CREATE TABLE orders(
 	id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    id_user INT NOT NULL,
-    id_address INT NOT NULL,
+    user_id INT NOT NULL,
+    address_id INT NOT NULL,
     sale_date DATE NOT NULL,
     total_price DOUBLE NOT NULL,
     `status` ENUM("PENDENT", "SENDED", "FINISHED") NOT NULL
@@ -71,8 +71,8 @@ CREATE TABLE orders(
 
 CREATE TABLE orders_products(
 	id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    id_order INT NOT NULL,
-    id_product INT NOT NULL,
+    order_id INT NOT NULL,
+    product_id INT NOT NULL,
     quantity INT NOT NULL
 );
 
