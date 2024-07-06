@@ -27,12 +27,15 @@ CREATE TABLE users(
 
 CREATE TABLE user_address(
 	id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    user_id INT NOT NULL,
     cep VARCHAR(10),
     street_avenue VARCHAR(255),
     `number` INT,
     district VARCHAR(255),
     city VARCHAR(255),
-    state VARCHAR(255)
+    state VARCHAR(255),
+    FOREIGN KEY (user_id) REFERENCES users(id)
+		ON DELETE CASCADE
 );
 
 -- ---- --
@@ -51,8 +54,10 @@ CREATE TABLE products(
 
 CREATE TABLE stock(
 	id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    id_product INT NOT NULL,
-	quantity INT
+    product_id INT NOT NULL,
+	quantity INT,
+	FOREIGN KEY (product_id) REFERENCES products(id)
+		ON DELETE CASCADE
 );
 
 -- ------ - ----- --
@@ -62,18 +67,21 @@ CREATE TABLE stock(
 -- important infos about order like, total price, send method, address, sale date,
 CREATE TABLE orders(
 	id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    id_user INT NOT NULL,
-    id_address INT NOT NULL,
+    user_id INT NOT NULL,
+    address_id INT NOT NULL,
     sale_date DATE NOT NULL,
     total_price DOUBLE NOT NULL,
-    `status` ENUM("PENDENT", "SENDED", "FINISHED") NOT NULL
+    `status` ENUM("PENDENT", "SENDED", "FINISHED") NOT NULL,
+	FOREIGN KEY (user_id) REFERENCES users(id),
+	FOREIGN KEY (address_id) REFERENCES user_address(id)
 ); 
 
 CREATE TABLE orders_products(
 	id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    id_order INT NOT NULL,
-    id_product INT NOT NULL,
-    quantity INT NOT NULL
+    order_id INT NOT NULL,
+    product_id INT NOT NULL,
+    quantity INT NOT NULL,
+	FOREIGN KEY (order_id) REFERENCES orders(id)
 );
 
 -- ---- --
@@ -89,7 +97,9 @@ CREATE TABLE faq_questions(
 	id INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
     type_id INT,
     question VARCHAR(255),
-	answer TEXT
+	answer TEXT,
+	FOREIGN KEY (type_id) REFERENCES faq_types(id)
+		ON DELETE CASCADE
 );
 
 
