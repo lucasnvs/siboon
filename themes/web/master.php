@@ -8,13 +8,13 @@
     <link rel="stylesheet" href="<?= assets('web', 'css/global.css') ?>">
     <link rel="stylesheet" href="<?= assets('web', 'css/layout_web.css') ?>">
     <link rel="stylesheet" href="<?= assets('web', 'css/cart.css') ?>">
+    <link rel="stylesheet" href="<?= assets('shared', 'css/components/input-quantity.css') ?>">
     <?php if ($this->section("specific-style")): ?>
         <?= $this->section("specific-style") ?>
     <?php endif; ?>
     <script src="<?= assets('web', 'js/Models/CartProduct.js')?>"></script>
     <script src="<?= assets('web', 'js/ModifiedLocalStorage.js') ?>"></script>
-    <script src="<?= assets('web', 'js/Components/ItemCart.js') ?>"></script>
-    <script src="<?= assets('web', 'js/scripts-master.js') ?>" async></script>
+    <script type="module" src="<?= assets('web', 'js/scripts-master.js') ?>" async></script>
     <?php if ($this->section("specific-script")): ?>
         <?= $this->section("specific-script"); ?>
     <?php endif; ?>

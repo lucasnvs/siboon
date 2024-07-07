@@ -4,6 +4,7 @@ namespace Source\Core;
 
 use PDO;
 use PDOException;
+use ReflectionMethod;
 
 abstract class Model
 {
@@ -59,4 +60,15 @@ abstract class Model
 
     }
 
+    public function get_attributes_array() {
+        $attributes = [];
+
+        $publicProperties = get_object_vars($this);
+        foreach ($publicProperties as $key => $value) {
+            if($key == "entity" || $key == "message") continue;
+            $attributes[$key] = $value;
+        }
+
+        return $attributes;
+    }
 }

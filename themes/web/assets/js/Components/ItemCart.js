@@ -1,39 +1,46 @@
-class ItemCart {
-    constructor(title, color, size, resPath, value, quantity) {
+import {Component} from "../../../../shared/assets/js/components/Component.js";
+import {InputQuantity} from "../../../../shared/assets/js/components/InputQuantity.js";
+
+export class ItemCart extends Component {
+    constructor(parentId = null, id = null, title, color, size, resPath, value, quantity) {
+        super(parentId)
+        this.id = id;
         this.title = title;
         this.color = color;
         this.size = size;
         this.resPath = resPath;
         this.value = value;
         this.quantity = quantity;
-    }
 
-    #criarCard() {
-        let HTML =
-            `
-            <div class="item-cart">
-                    <img src="${this.resPath}" alt="Imagem de ${this.title}">
-                    <div class="item-cart-desc">
-                        <h2>Tênis Tesla Shine Black Reflect</h2>
-                        <p>Cor: ${this.color} | Tamanho: ${this.size}</p>
-                        <p>${this.value}</p>
+        const itemCart = document.createElement('div');
+        itemCart.classList.add('item-cart');
 
-                        <!-- input quantity number -->
-                        <!-- button icon trash -->
-                    </div>
-            </div>
-            `
-        return HTML;
-    }
+        const image = document.createElement('img');
+        image.src = resPath;
+        image.alt = `Imagem de ${title}`;
 
-    appendCardToParentBySelector(parentSelector) {
-        const cardElement = this.#criarCard();
-        const container = document.querySelector(parentSelector);
-        container.append(cardElement);
-    }
+        const itemCartDesc = document.createElement('div');
+        itemCartDesc.classList.add('item-cart-desc');
 
-    appendCardToParent(parent) {
-        const cardElement = this.#criarCard();
-        parent.insertAdjacentHTML("beforeend", cardElement);
+        const titleElement = document.createElement('h2');
+        titleElement.textContent = title;
+
+        const description = document.createElement('p');
+        description.textContent = `Cor: ${color} | Tamanho: ${size}`;
+
+        const priceSpan = document.createElement('span');
+        priceSpan.textContent = value;
+
+
+        itemCartDesc.appendChild(titleElement);
+        itemCartDesc.appendChild(description);
+        itemCartDesc.appendChild(priceSpan);
+        // Append input and button elements here
+        itemCartDesc.appendChild(new InputQuantity(id, `${id}-quantity`).inflateLocal())
+
+        itemCart.appendChild(image);
+        itemCart.appendChild(itemCartDesc);
+
+        this.body = itemCart;
     }
 }

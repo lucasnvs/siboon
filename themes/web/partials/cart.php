@@ -6,7 +6,7 @@
         </div>
         <div id="cart-catalog">
             <div class="item-cart">
-                <img src="" alt="Imagem de ...">
+                <img src="<?= assets("web", "imgs/black-tshirt.jpg") ?>" alt="Imagem de ...">
                 <div class="item-cart-desc">
                     <h2>Tênis Tesla Shine Black Reflect</h2>
                     <p>Cor: Black Reflect | Tamanho: 38</p>
@@ -25,7 +25,7 @@
             <div class="info col">
                 <p>Frete - Digite seu CEP</p>
                 <div class="input-container">
-                    <input type="text" id="cep" placeholder="Digite seu CEP">
+                    <input class="default-input" type="text" id="cep" placeholder="Digite seu CEP">
                     <button>Calcular</button>
                 </div>
             </div>

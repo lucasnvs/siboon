@@ -1,4 +1,13 @@
-const TEST_PRODUCT = new CartProduct(23, "Tênis Tesla Shine Black Reflect", "Black Reflect", 38, 320.00, "R$ 320,00", 1, "../imgs/tesla.jpg");
+import {ItemCart} from "./Components/ItemCart.js";
+
+const TEST_PRODUCT = new CartProduct(23,
+    "Tênis Tesla Shine Black Reflect",
+    "Black Reflect",
+    38,
+    320.00,
+    "R$ 320,00",
+    1,
+    "./themes/web/assets/imgs/black-tshirt.jpg");
 
 // localStorage.pushToItem("cart", TEST_PRODUCT);
 
@@ -35,7 +44,7 @@ function updateCart() {
     if(cart.length > 0) {
         cart.forEach( product => {
             console.log("Running...")
-            new ItemCart(product.name, product.color, product.size, product.resPath, product.formated_price, product.quantity).appendCardToParent(CART_ELEMENTS.catalog)
+            new ItemCart(CART_ELEMENTS.catalog.id, product.id, product.name, product.color, product.size, product.resPath, product.formated_price, product.quantity).inflate()
         })
         return;
     }

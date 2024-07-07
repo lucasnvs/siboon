@@ -102,3 +102,36 @@
         right: 0px;
     }
 }
+
+
+/* Carrinho Item*/
+
+.item-cart {
+    display: flex;
+    flex-direction: row;
+    gap: 6px;
+}
+
+.item-cart img {
+    width: 150px;
+    border-radius: 6px;
+}
+
+.item-cart-desc {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.item-cart-desc h2 {
+    font-size: 20px;
+}
+
+.item-cart-desc > p {
+    font-size: 16px;
+}
+
+.item-cart-desc > span {
+    margin-top: 10px;
+    font-size: 17px;
+}

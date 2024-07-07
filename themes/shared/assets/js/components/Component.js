@@ -10,4 +10,8 @@ export class Component {
     inflate()  {
         document.getElementById(this.parentId).appendChild(this.body);
     }
+
+    inflateLocal() {
+        return this.body
+    }
 }
