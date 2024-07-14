@@ -77,6 +77,11 @@ class User extends Model {
 
         $conn = Connect::getInstance();
 
+        if(!filter_var($this->email, FILTER_VALIDATE_EMAIL)){
+            $this->message = "E-mail inválido!";
+            return false;
+        }
+
         $query = "SELECT * FROM users WHERE email LIKE :email";
         $stmt = $conn->prepare($query);
         $stmt->bindParam(":email", $this->email);
@@ -99,6 +104,7 @@ class User extends Model {
 
         try {
             $stmt->execute();
+            $this->message = "Usuário cadastrado com sucesso!";
             return $conn->lastInsertId();
         } catch (PDOException) {
             $this->message = "Por favor, informe todos os campos!";

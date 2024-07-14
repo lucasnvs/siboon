@@ -11,10 +11,10 @@ $route = new Router(url("api"),":");
 $route->namespace("Source\App\Api");
 
 $route->group("usuarios");
-//$route->get("/", "Users:listUsers");         // Not implemented yet
+$route->get("/", "Users:listUsers");         // Not implemented yet
 $route->get("/{id}", "Users:getUser");      // Not tested yet
 $route->post("/", "Users:insertUser");      // Not tested yet
-//$route->put("/{id}", "Users:updateUser");      // Not implemented yet
+$route->put("/{id}", "Users:updateUser");
 $route->delete("/{id}", "Users:deleteUser");// Not tested yet
 
 $route->get("/login", "Users:login");   // Not tested yet
