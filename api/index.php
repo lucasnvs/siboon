@@ -10,15 +10,24 @@ $route = new Router(url("api"),":");
 
 $route->namespace("Source\App\Api");
 
+$route->group("usuarios");
+//$route->get("/", "Users:listUsers");         // Not implemented yet
+$route->get("/{id}", "Users:getUser");      // Not tested yet
+$route->post("/", "Users:insertUser");      // Not tested yet
+//$route->put("/{id}", "Users:updateUser");      // Not implemented yet
+$route->delete("/{id}", "Users:deleteUser");// Not tested yet
+
+$route->get("/login", "Users:login");   // Not tested yet
+
 $route->group("faq");
-$route->get("/","Faqs:getFaqs");
+$route->get("/","Faqs:listFaqs");
 $route->get("/{id}", "Faqs:getFaq");
 
 $route->group("produtos"); // Recurso Produto // necessário add middleware
-$route->get("/", "Products:getProducts");
+$route->get("/", "Products:listProducts");
 $route->get("/{id}", "Products:getProduct");
-$route->post("/", "Products:postProduct");
-$route->put("/{id}", "Products:putProduct");
+$route->post("/", "Products:insertProduct");
+$route->put("/{id}", "Products:updateProduct");
 $route->delete("/{id}", "Products:deleteProduct");
 
 $route->dispatch();

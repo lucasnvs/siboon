@@ -7,7 +7,7 @@ use Source\Models\Product;
 
 class Products extends Api
 {
-    public function getProducts(): void
+    public function listProducts(): void
     {
         try {
             $products = (new Product())->selectAll();
@@ -31,7 +31,7 @@ class Products extends Api
         }
     }
 
-    public function postProduct(): void
+    public function insertProduct(): void
     {
 
         $data = json_decode(file_get_contents('php://input'), true);
@@ -52,7 +52,7 @@ class Products extends Api
         }
     }
 
-    public function putProduct(int $id, array $data): void
+    public function updateProduct(int $id, array $data): void
     {
 
     }
