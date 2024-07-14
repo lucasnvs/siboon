@@ -1,12 +1,12 @@
 <?php $this->layout("master", ['title' => $title]); ?>
 <?php $this->start("specific-style"); ?>
-    <link rel="stylesheet" href="<?= assets('web', 'css/about.css') ?>">
+    <link rel="stylesheet" href="<?= assets('about/about.css') ?>">
 <?php $this->end(); ?>
 
 <div id="container-about">
     <div>
         <div class="picture-card">
-            <img src="<?= assets('web', 'imgs/picture-loja.png') ?>">
+            <img src="<?= assets('assets/imgs/picture-loja.png') ?>">
             <p>S I B O O N</p>
         </div>
     </div>

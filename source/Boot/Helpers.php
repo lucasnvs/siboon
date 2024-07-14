@@ -13,9 +13,9 @@ function url(string $path = null): string
     }
     return CONF_URL_BASE;
 }
-function assets(string $theme = "web", string $resourcePath = null): string
+function assets(string $resource, string $theme = "web"): string
 {
-    return url("themes/$theme/assets/$resourcePath");
+    return url("themes/$theme/$resource");
 }
 
 function buildStringFriendlyURL(string $string = ""): string

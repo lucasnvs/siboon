@@ -1,4 +1,4 @@
-import {InputQuantity} from "../../../shared/assets/js/components/InputQuantity.js";
+import {InputQuantity} from "../../shared/assets/js/components/InputQuantity.js";
 
 console.log("PRODUCT REGISTER - Running...")
 

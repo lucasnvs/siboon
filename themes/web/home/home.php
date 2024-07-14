@@ -1,15 +1,15 @@
 <?php $this->layout("master", ['title' => $title, 'products' => $products]); ?>
 <?php $this->start("specific-script"); ?>
-    <script src="<?= assets('web', 'js/scripts-home.js') ?>" async></script>
+    <script src="<?= assets('home/scripts-home.js') ?>" async></script>
 <?php $this->end(); ?>
 <?php $this->start("specific-style"); ?>
-    <link rel="stylesheet" href="<?= assets('web', 'css/home.css') ?>">
-    <link rel="stylesheet" href="<?= assets('web', 'css/components/product-item.css') ?>">
+    <link rel="stylesheet" href="<?= assets('faq/home.css') ?>">
+    <link rel="stylesheet" href="<?= assets('assets/css/components/product-item.css') ?>">
 <?php $this->end(); ?>
 
 <section class="main">
     <div class="banner">
-        <img src="<?= assets('web', 'imgs/background.png') ?>">
+        <img src="<?= assets('assets/imgs/background.png') ?>">
     </div>
     <!-- banner -->
     <!-- seção rápida scroll horizontal -->
@@ -24,6 +24,5 @@
         </div>
     </section>
     <!-- banner -->
-
 
 </section>

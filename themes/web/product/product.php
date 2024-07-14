@@ -1,16 +1,16 @@
 <?php $this->layout("master", ['title' => $title]); ?>
 <?php $this->start("specific-style"); ?>
-    <link rel="stylesheet" href="<?= assets('web', 'css/product.css') ?>">
+    <link rel="stylesheet" href="<?= assets('product/product.css') ?>">
 <?php $this->end(); ?>
 
 <div id="product-image-container">
     <div class="side-images-container">
-        <img src="<?= assets('web', 'imgs/black-tshirt.jpg') ?>" class="side-image">
-        <img src="<?= assets('web', 'imgs/black-tshirt.jpg') ?>" class="side-image">
-        <img src="<?= assets('web', 'imgs/black-tshirt.jpg') ?>" class="side-image">
-        <img src="<?= assets('web', 'imgs/black-tshirt.jpg') ?>" class="side-image">
+        <img src="<?= assets('assets/imgs/black-tshirt.jpg') ?>" class="side-image">
+        <img src="<?= assets('assets/imgs/black-tshirt.jpg') ?>" class="side-image">
+        <img src="<?= assets('assets/imgs/black-tshirt.jpg') ?>" class="side-image">
+        <img src="<?= assets('assets/imgs/black-tshirt.jpg') ?>" class="side-image">
     </div>
-    <img src="<?= assets('web', 'imgs/black-tshirt.jpg') ?>"  id="principal-image">
+    <img src="<?= assets('assets/imgs/black-tshirt.jpg') ?>"  id="principal-image">
 </div>
 
 <div id="product-description-container">

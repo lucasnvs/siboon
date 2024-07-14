@@ -1,6 +1,6 @@
 <?php $this->layout("master"); ?>
 <?php $this->start("specific-style"); ?>
-    <link rel="stylesheet" href="<?= assets('web', 'css/section.css') ?>">
+    <link rel="stylesheet" href="<?= assets('section/section.css') ?>">
 <?php $this->end(); ?>
 
 <!-- transformar para se buildar de acordo com o tipo de seção e produto, por enquanto exemplo: SALE -->
@@ -36,7 +36,7 @@
         <div class="product-container">
             <a href="<?= url("product") ?>">
                 <div class="image-container">
-                    <img src="assets/imgs/camisa-independent.jpeg">
+                    <img src="../assets/imgs/camisa-independent.jpeg">
                 </div>
                 <div class="product-description">
                     <p class="title">CAMISA INDEPENDENT BLACK OVERSIZED - Truck Co.</p>
@@ -58,7 +58,7 @@
         <div class="product-container">
             <a href="<?= url("product") ?>">
                 <div class="image-container">
-                    <img src="assets/imgs/camisa-independent.jpeg">
+                    <img src="../assets/imgs/camisa-independent.jpeg">
                 </div>
                 <div class="product-description">
                     <p class="title">CAMISA INDEPENDENT BLACK OVERSIZED - Truck Co.</p>
@@ -80,7 +80,7 @@
         <div class="product-container">
             <a href="<?= url("product") ?>">
                 <div class="image-container">
-                    <img src="assets/imgs/camisa-independent.jpeg">
+                    <img src="../assets/imgs/camisa-independent.jpeg">
                 </div>
                 <div class="product-description">
                     <p class="title">CAMISA INDEPENDENT BLACK OVERSIZED - Truck Co.</p>
@@ -102,7 +102,7 @@
         <div class="product-container">
             <a href="<?= url("product") ?>">
                 <div class="image-container">
-                    <img src="assets/imgs/camisa-independent.jpeg">
+                    <img src="../assets/imgs/camisa-independent.jpeg">
                 </div>
                 <div class="product-description">
                     <p class="title">CAMISA INDEPENDENT BLACK OVERSIZED - Truck Co.</p>
@@ -124,7 +124,7 @@
         <div class="product-container">
             <a href="<?= url("product") ?>">
                 <div class="image-container">
-                    <img src="assets/imgs/camisa-independent.jpeg">
+                    <img src="../assets/imgs/camisa-independent.jpeg">
                 </div>
                 <div class="product-description">
                     <p class="title">CAMISA INDEPENDENT BLACK OVERSIZED - Truck Co.</p>
@@ -146,7 +146,7 @@
         <div class="product-container">
             <a href="<?= url("product") ?>">
                 <div class="image-container">
-                    <img src="assets/imgs/camisa-independent.jpeg">
+                    <img src="../assets/imgs/camisa-independent.jpeg">
                 </div>
                 <div class="product-description">
                     <p class="title">CAMISA INDEPENDENT BLACK OVERSIZED - Truck Co.</p>
@@ -168,7 +168,7 @@
         <div class="product-container">
             <a href="<?= url("product") ?>">
                 <div class="image-container">
-                    <img src="assets/imgs/camisa-independent.jpeg">
+                    <img src="../assets/imgs/camisa-independent.jpeg">
                 </div>
                 <div class="product-description">
                     <p class="title">CAMISA INDEPENDENT BLACK OVERSIZED - Truck Co.</p>
@@ -190,7 +190,7 @@
         <div class="product-container">
             <a href="<?= url("product") ?>">
                 <div class="image-container">
-                    <img src="assets/imgs/camisa-independent.jpeg">
+                    <img src="../assets/imgs/camisa-independent.jpeg">
                 </div>
                 <div class="product-description">
                     <p class="title">CAMISA INDEPENDENT BLACK OVERSIZED - Truck Co.</p>
@@ -212,7 +212,7 @@
         <div class="product-container">
             <a href="<?= url("product") ?>">
                 <div class="image-container">
-                    <img src="assets/imgs/camisa-independent.jpeg">
+                    <img src="../assets/imgs/camisa-independent.jpeg">
                 </div>
                 <div class="product-description">
                     <p class="title">CAMISA INDEPENDENT BLACK OVERSIZED - Truck Co.</p>
@@ -234,7 +234,7 @@
         <div class="product-container">
             <a href="<?= url("product") ?>">
                 <div class="image-container">
-                    <img src="assets/imgs/camisa-independent.jpeg">
+                    <img src="../assets/imgs/camisa-independent.jpeg">
                 </div>
                 <div class="product-description">
                     <p class="title">CAMISA INDEPENDENT BLACK OVERSIZED - Truck Co.</p>
@@ -256,7 +256,7 @@
         <div class="product-container">
             <a href="<?= url("product") ?>">
                 <div class="image-container">
-                    <img src="assets/imgs/camisa-independent.jpeg">
+                    <img src="../assets/imgs/camisa-independent.jpeg">
                 </div>
                 <div class="product-description">
                     <p class="title">CAMISA INDEPENDENT BLACK OVERSIZED - Truck Co.</p>
@@ -278,7 +278,7 @@
         <div class="product-container">
             <a href="<?= url("product") ?>">
                 <div class="image-container">
-                    <img src="assets/imgs/camisa-independent.jpeg">
+                    <img src="../assets/imgs/camisa-independent.jpeg">
                 </div>
                 <div class="product-description">
                     <p class="title">CAMISA INDEPENDENT BLACK OVERSIZED - Truck Co.</p>

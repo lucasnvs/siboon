@@ -1,6 +1,6 @@
 <?php $this->layout("master", ['title' => $title]); ?>
 <?php $this->start("specific-style"); ?>
-    <link rel="stylesheet" href="<?= assets('web', 'css/login.css') ?>">
+    <link rel="stylesheet" href="<?= assets('login/login.css') ?>">
 <?php $this->end(); ?>
 
 <section>

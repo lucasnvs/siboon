@@ -23,7 +23,7 @@ class Web
     {
         $productName = "T-Shirt Diamond Black Piano";
 
-        echo $this->view->render("home",[
+        echo $this->view->render("home/home",[
             "title" => "Home",
             "products" => [
                 ["url" => buildStringFriendlyURL($productName)],
@@ -34,14 +34,14 @@ class Web
 
     public function contact ()
     {
-        echo $this->view->render("contact",[
+        echo $this->view->render("contact/contact",[
             "title" => "Contato"
         ]);
     }
 
     public function login ()
     {
-        echo $this->view->render("login", [
+        echo $this->view->render("login/login", [
             "title" => "Entrar"
         ]);
     }
@@ -79,7 +79,7 @@ class Web
             $finalObject[$typeDescription] = $questions;
         }
 
-        echo $this->view->render("faq", [
+        echo $this->view->render("faq/faq", [
             "title" => "FAQ",
             "faqs" => $finalObject,
         ]);
@@ -87,7 +87,7 @@ class Web
 
     public function about ()
     {
-        echo $this->view->render("about", [
+        echo $this->view->render("about/about", [
             "title" => "Contato"
         ]);
     }
@@ -100,7 +100,7 @@ class Web
             "name" => buildStringFriendlyURL($productName)
         ]);
 
-        echo $this->view->render("product", [
+        echo $this->view->render("product/product", [
             "title" => $productName
         ]);
 
@@ -108,13 +108,13 @@ class Web
 
     public function profile () // remover daq e colocar em local de user logado
     {
-        echo $this->view->render("profile", [
+        echo $this->view->render("profile/profile", [
             "title" => "Perfil"
         ]);
     }
     public function section ()
     {
-        echo $this->view->render("section", []);
+        echo $this->view->render("section/section", []);
     }
     public function error(array $data)
     {
