@@ -4,7 +4,6 @@ namespace Source\App\Api;
 
 class Code
 {
-
     // 200 Family
     public static int $OK = 200;
     public static int $CREATED = 201;
