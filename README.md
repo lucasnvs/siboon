@@ -32,14 +32,14 @@ utilizando um padrão de projeto MVC.
 
 - Recurso **USUÁRIO e LOGIN**
 
-  | Método   | Rota                   | Descrição                           |
-  |----------|------------------------|-------------------------------------|
-  | `POST`   | **api/usuarios/login** | Realiza o Login do usuário.         |
-  | `GET`    | **api/usuarios**       | Devolve todas as FAQS existentes.   |
-  | `GET`    | **api/usuarios/{id}**  | Devolve uma FAQ existente por id.   |
-  | `POST`   | **api/usuarios**       | Cria um usuário.                    |
-  | `PUT`    | **api/usuarios/{id}**  | Atualiza um usuário por id.         |
-  | `DELETE` | **api/usuarios/{id}**  | Deleta um usuário por id.           |
+| Método   | Rota                   | Descrição                           |
+|----------|------------------------|-------------------------------------|
+| `POST`   | **api/usuarios/login** | Realiza o Login do usuário.         |
+| `GET`    | **api/usuarios**       | Devolve todas as FAQS existentes.   |
+| `GET`    | **api/usuarios/{id}**  | Devolve uma FAQ existente por id.   |
+| `POST`   | **api/usuarios**       | Cria um usuário.                    |
+| `PUT`    | **api/usuarios/{id}**  | Atualiza um usuário por id.         |
+| `DELETE` | **api/usuarios/{id}**  | Deleta um usuário por id.           |
 
 - Recurso **FAQ**
 
