@@ -1,10 +1,10 @@
 <?php $this->layout("master"); ?>
 <?php $this->start("specific-style"); ?>
-    <link rel="stylesheet" href="<?= assets('admin', 'css/product_register.css') ?>">
-    <link rel="stylesheet" href="<?= assets('shared', 'css/components/input-quantity.css') ?>">
+    <link rel="stylesheet" href="<?= assets('css/product_register.css', 'admin') ?>">
+    <link rel="stylesheet" href="<?= assets('components/InputQuantity/InputQuantity.css', 'shared') ?>">
 <?php $this->end(); ?>
 <?php $this->start("specific-script"); ?>
-    <script type="module" src="<?= assets('admin', 'js/product_register.js') ?>" async></script>
+    <script type="module" src="<?= assets('product_register/product_register.js', 'admin') ?>" async></script>
 <?php $this->end(); ?>
 
 <a href="<?= url("admin/produtos") ?>"> <- Voltar</a>

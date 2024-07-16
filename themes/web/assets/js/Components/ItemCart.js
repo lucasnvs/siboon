@@ -1,5 +1,5 @@
-import {Component} from "../../../../shared/assets/js/components/Component.js";
-import {InputQuantity} from "../../../../shared/assets/js/components/InputQuantity.js";
+import {Component} from "../../../../shared/assets/js/Component.js";
+import {InputQuantity} from "../../../../shared/components/InputQuantity/InputQuantity.js";
 
 export class ItemCart extends Component {
     constructor(parentId = null, id = null, title, color, size, resPath, value, quantity) {

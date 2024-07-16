@@ -8,7 +8,7 @@ Storage.prototype.pushToItem = function (key, value) {
 }
 
 Storage.prototype.get = function (key) {
-    return JSON.parse(this.getItem(key));
+    return JSON.parse(this.getItem(key)) || [];
 }
 
 Storage.prototype.set = function (key, value){

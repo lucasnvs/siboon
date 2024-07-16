@@ -1,7 +1,7 @@
 <?php $this->layout("master"); ?>
 <?php $this->start("specific-style"); ?>
-    <link rel="stylesheet" href="<?= assets('admin', 'css/product.css') ?>">
-    <link rel="stylesheet" href="<?= assets('shared', 'css/components/table.css') ?>">
+    <link rel="stylesheet" href="<?= assets('product/product.css', 'admin') ?>">
+    <link rel="stylesheet" href="<?= assets('components/table/table.css', 'shared') ?>">
 <?php $this->end(); ?>
 
 <?php
@@ -18,6 +18,6 @@
         <p>Tabela de Produtos</p>
     </div>
     <div class="container-section-body">
-        <?= $this->insert("shared::components/table", ["header" => $header, "data" => $data]) ?>
+        <?= $this->insert("shared::components/table/table", ["header" => $header, "data" => $data]) ?>
     </div>
 </div>

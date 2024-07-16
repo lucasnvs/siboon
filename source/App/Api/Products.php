@@ -12,8 +12,11 @@ class Products extends Api
         try {
             $products = (new Product())->selectAll();
             $this->back($products, Code::$OK);
-        } catch (\Exception $e) {
-            $this->back(['error' => $e->getMessage()], Code::$INTERNAL_SERVER_ERROR);
+        } catch (Exception $e) {
+            $this->back([
+                "type" => "error",
+                "message" => $e->getMessage()
+            ], Code::$INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -26,29 +29,41 @@ class Products extends Api
                 return;
             }
             $this->back($product, Code::$OK);
-        } catch (\Exception $e) {
-            $this->back(['error' => $e->getMessage()], Code::$INTERNAL_SERVER_ERROR);
+        } catch (Exception $e) {
+            $this->back([
+                "type" => "error",
+                'message' => $e->getMessage()
+            ], Code::$INTERNAL_SERVER_ERROR);
         }
     }
 
-    public function insertProduct(): void
+    public function insertProduct(array $data): void
     {
-
-        $data = json_decode(file_get_contents('php://input'), true);
+        $REQUIRED_FIELDS = ["name", "description", "color", "size", "price_brl", "res_path"];
+        $request_body = $this->handleRequestData($REQUIRED_FIELDS, $data);
+        if(is_null($request_body)) return;
 
         try {
             $product = new Product(
-                name: $data["name"],
-                description: $data["description"],
-                color: $data["color"],
-                size: $data["size"],
-                price_brl: $data["price_brl"],
-                res_path: $data["res_path"],
+                name: $request_body["name"],
+                description: $request_body["description"],
+                color: $request_body["color"],
+                size: $request_body["size"],
+                price_brl: $request_body["price_brl"],
+                res_path: $request_body["res_path"],
             );
             
-            $this->back($product->get_attributes_array(), Code::$CREATED);
+            $this->back([
+                "type" => "success",
+                "message" => $product->getMessage(),
+                "product" => $product->get_attributes_array()
+            ], Code::$CREATED);
+
         } catch (Exception $e) {
-            $this->back(['error' => "Erro"], Code::$INTERNAL_SERVER_ERROR);
+            $this->back([
+                "type" => "error",
+                "message" => $e->getMessage()
+            ], Code::$INTERNAL_SERVER_ERROR);
         }
     }
 

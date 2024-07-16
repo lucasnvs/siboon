@@ -11,7 +11,7 @@
     <?php if ($this->section("specific-style")): ?>
         <?= $this->section("specific-style") ?>
     <?php endif; ?>
-    <script src="<?= assets("assets/js/admin.js") ?>" async></script>
+    <script src="<?= assets("assets/js/admin.js", 'admin') ?>" async></script>
     <?php if ($this->section("specific-script")): ?>
         <?= $this->section("specific-script"); ?>
     <?php endif; ?>

@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="<?= assets('assets/css/global.css') ?>">
     <link rel="stylesheet" href="<?= assets('assets/css/layout_web.css') ?>">
     <link rel="stylesheet" href="<?= assets('assets/css/cart.css') ?>">
-    <link rel="stylesheet" href="<?= assets('assets/css/components/input-quantity.css','shared') ?>">
+    <link rel="stylesheet" href="<?= assets('assets/css/components/InputQuantity.css','shared') ?>">
     <?php if ($this->section("specific-style")): ?>
         <?= $this->section("specific-style") ?>
     <?php endif; ?>

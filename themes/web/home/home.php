@@ -3,8 +3,8 @@
     <script src="<?= assets('home/scripts-home.js') ?>" async></script>
 <?php $this->end(); ?>
 <?php $this->start("specific-style"); ?>
-    <link rel="stylesheet" href="<?= assets('faq/home.css') ?>">
-    <link rel="stylesheet" href="<?= assets('assets/css/components/product-item.css') ?>">
+    <link rel="stylesheet" href="<?= assets('home/home.css') ?>">
+    <link rel="stylesheet" href="<?= assets('components/ProductItem/ProductItem.css', 'shared') ?>">
 <?php $this->end(); ?>
 
 <section class="main">
@@ -18,7 +18,7 @@
         <h2>EM ALTA</h2>
         <div class="container-grid-section">
             <?php foreach($products as $product): ?>
-                <?php $this->insert('components/product-item', ['product' => $product]) ?>
+                <?php $this->insert('shared::components/ProductItem/ProductItem', ['product' => $product]) ?>
             <?php endforeach ?>
 
         </div>

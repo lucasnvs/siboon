@@ -17,16 +17,16 @@ class Admin
 
     public function home ()
     {
-        echo $this->view->render("home", []);
+        echo $this->view->render("home/home", []);
     }
 
     public function product ()
     {
-        echo $this->view->render("product", []);
+        echo $this->view->render("product/product", []);
     }
 
     public function productRegister ()
     {
-        echo $this->view->render("product_register", []);
+        echo $this->view->render("product_register/product_register", []);
     }
 }
