@@ -67,11 +67,52 @@ class Users extends Api
         }
     }
 
-    public function updateUser(array $data){
+    public function updateUser(array $data)
+    {
+        $REQUIRED_FIELDS = ["id", "name", "email"];
+        $request_body = $this->handleRequestData($REQUIRED_FIELDS, $data);
+        if(is_null($request_body)) return;
+
+        if(!$this->userAuth){
+            $this->back([
+                "type" => "error",
+                "message" => "Você não tem permissão."
+            ], Code::$UNAUTHORIZED);
+            return;
+        }
+
+        $this->back([], Code::$OK);
+    }
+
+    public function deleteUser(array $data)
+    {
 
     }
 
-    public function login (array $data) {
+    public function changePassword(array $data)
+    {
+        $REQUIRED_FIELDS = ["password", "newPassword", "confirmNewPassword"];
+        $request_body = $this->handleRequestData($REQUIRED_FIELDS, $data);
+        if(is_null($request_body)) return;
+
+        $user = new User($this->userAuth->id);
+
+        if(!$user->updatePassword($request_body["password"], $request_body["newPassword"], $request_body["confirmNewPassword"])){
+            $this->back([
+                "type" => "error",
+                "message" => $user->getMessage()
+            ]);
+            return;
+        }
+
+        $this->back([
+            "type" => "success",
+            "message" => $user->getMessage()
+        ]);
+    }
+
+    public function login (array $data)
+    {
         $REQUIRED_FIELDS = ["email", "password"];
         $request_body = $this->handleRequestData($REQUIRED_FIELDS, $data);
         if(is_null($request_body)) return;
