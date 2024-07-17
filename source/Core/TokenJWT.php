@@ -4,6 +4,8 @@ namespace Source\Core;
 use DateTimeImmutable;
 use Firebase\JWT\JWT;
 use Exception;
+use Firebase\JWT\Key;
+use stdClass;
 
 class TokenJWT
 {
@@ -35,17 +37,16 @@ class TokenJWT
         );
     }
 
-    public function verify (string $token) : bool
+    public function verify (string $token) : bool | stdClass
     {
         try {
-            $headers = [self::algorithm];
-            $this->token = JWT::decode((string)$token, $this->secretKey, $headers);
+            $this->token = JWT::decode($token, new Key($this->secretKey, self::algorithm));
             $now = new DateTimeImmutable();
             $serverName = url();
             if ($this->token->iss !== $serverName || $this->token->nbf > $now->getTimestamp() || $this->token->exp < $now->getTimestamp()) {
                 return false;
             }
-            return true;
+            return $this->token->data;
         } catch (Exception $exception) {
             return false;
         }
