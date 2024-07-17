@@ -3,16 +3,21 @@
 namespace Source\App\Api;
 
 use Exception;
+use Source\Core\TokenJWT;
 
 class Api
 {
-    protected $headers;
-    protected $ALLOWED_REQUEST_TYPES = ["application/json", "multipart/form-data"];
+    protected array|false $headers;
+    protected \stdClass|bool $userAuth;
+    protected array $ALLOWED_REQUEST_TYPES = ["application/json", "multipart/form-data"];
 
     public function __construct()
     {
         header('Content-Type: application/json; charset=UTF-8');
         $this->headers = getallheaders();
+        echo json_encode($this->headers);
+        $token = (string) $this->headers["Authorization"];
+        $this->userAuth = (new TokenJWT)->verify($token);
     }
 
     protected function back (array $response, int $code = 200) : void
@@ -28,7 +33,7 @@ class Api
         if (!in_array($content_type, $this->ALLOWED_REQUEST_TYPES)) {
             $this->back([
                 "type" => "error",
-                "message" => "Content-Type must be application/json or multipart/form-data"
+                "message" => "Os 'Content-Type' aceitos são application/json e multipart/form-data, ou você não enviou conteúdo."
             ], Code::$BAD_REQUEST);
             return null;
         }
@@ -61,7 +66,7 @@ class Api
             if(!isset($request_body[$field])){
                 $this->back([
                     "type" => "error",
-                    "message" => "Todos os campos devem estar presentes!"],
+                    "message" => "Todos os campos devem estar presentes! Campo não enviado: $field"],
                     Code::$BAD_REQUEST);
                 return null;
             }

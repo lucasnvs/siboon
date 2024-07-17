@@ -23,6 +23,7 @@ $route->group("faq");
 $route->get("/","Faqs:listFaqs");
 $route->get("/{id}", "Faqs:getFaq");
 $route->post("/{id}", "Faqs:insertFaq");
+$route->put("/{id}", "Faqs:updateFaq");
 
 $route->group("produtos"); // Recurso Produto // necessário add middleware
 $route->get("/", "Products:listProducts");
