@@ -15,7 +15,6 @@ class Api
     {
         header('Content-Type: application/json; charset=UTF-8');
         $this->headers = getallheaders();
-        echo json_encode($this->headers);
         $token = (string) $this->headers["Authorization"];
         $this->userAuth = (new TokenJWT)->verify($token);
     }
@@ -26,14 +25,22 @@ class Api
         echo json_encode($response, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
     }
 
-    private function handleContentType () : ?string
+    private function validateContentType () : ?string
     {
+        if(empty($_SERVER['CONTENT_LENGTH'])) {
+            $this->back([
+                "type" => "error",
+                "message" => "Você deve enviar conteúdo."
+            ], Code::$BAD_REQUEST);
+            return null;
+        }
+
         $content_type = isset($_SERVER['CONTENT_TYPE']) ? explode(";", $_SERVER['CONTENT_TYPE'])[0] : '';
 
         if (!in_array($content_type, $this->ALLOWED_REQUEST_TYPES)) {
             $this->back([
                 "type" => "error",
-                "message" => "Os 'Content-Type' aceitos são application/json e multipart/form-data, ou você não enviou conteúdo."
+                "message" => "Os 'Content-Type' aceitos são application/json e multipart/form-data."
             ], Code::$BAD_REQUEST);
             return null;
         }
@@ -41,13 +48,13 @@ class Api
         return $content_type;
     }
 
-    protected function handleRequestData ($REQUIRED_FIELDS, $arrData) : ?array
+    protected function validateRequestData ($REQUIRED_FIELDS, $arrData) : ?array
     {
         $request_body = null;
-        $content_type = $this->handleContentType();
+        $content_type = $this->validateContentType();
 
         switch ($content_type) {
-            case "application/json": $request_body = json_decode(file_get_contents("php://input"), true);
+            case "application/json": $request_body = json_decode(file_get_contents('php://input', false, null, 0, $_SERVER['CONTENT_LENGTH']), true);
                 break;
             case "multipart/form-data": $request_body = $arrData;
                 break;
