@@ -3,31 +3,28 @@
 namespace Source\App\Api;
 
 use Exception;
+use Source\Core\ApiController;
 use Source\Models\Product;
+use Source\Response\Code;
+use Source\Response\Response;
 
-class Products extends Api
+class Products extends ApiController
 {
-    public function listProducts(): void
+    public function listProducts()
     {
-        try {
-            $products = (new Product())->find()->fetch(true);
-            if(!$products) {
-                $this->back(["type" => "success", "message" => "Nenhum produto encontrado."], Code::$NO_CONTENT);
-                return;
-            }
+        parent::setAccessToEndpoint($this->ACCESS_ADMIN);
 
-            $response = [];
-            foreach ($products as $product) {
-                $response[] = $product->data();
-            }
-
-            $this->back($response, Code::$OK);
-        } catch (Exception $e) {
-            $this->back([
-                "type" => "error",
-                "message" => $e->getMessage()
-            ], Code::$INTERNAL_SERVER_ERROR);
+        $products = (new Product())->find()->fetch(true);
+        if (!$products) {
+            return Response::success(message: "Nenhum produto encontrado.", code: Code::$NO_CONTENT);
         }
+
+        $response = [];
+        foreach ($products as $product) {
+            $response[] = $product->data();
+        }
+
+        return Response::success($response, code: Code::$OK);
     }
 
     public function getProduct(array $data): void
@@ -39,10 +36,10 @@ class Products extends Api
                 $this->back(["message" => "Produto com id $id não encontrado."], Code::$NOT_FOUND);
                 return;
             }
-            $this->back((array) $product, Code::$OK);
+            $this->back((array)$product, Code::$OK);
 
         } catch (Exception $e) {
-            if($e->getCode()) {
+            if ($e->getCode()) {
                 $this->back([
                     "type" => "error",
                     "message" => $e->getMessage()
@@ -80,7 +77,7 @@ class Products extends Api
             ], Code::$CREATED);
 
         } catch (Exception $e) {
-            if($e->getCode()) {
+            if ($e->getCode()) {
                 $this->back([
                     "type" => "error",
                     "message" => $e->getMessage()
