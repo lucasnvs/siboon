@@ -10,8 +10,18 @@ class Products extends Api
     public function listProducts(): void
     {
         try {
-            $products = (new Product())->selectAll();
-            $this->back($products, Code::$OK);
+            $products = (new Product())->find()->fetch(true);
+            if(!$products) {
+                $this->back(["type" => "success", "message" => "Nenhum produto encontrado."], Code::$NO_CONTENT);
+                return;
+            }
+
+            $response = [];
+            foreach ($products as $product) {
+                $response[] = $product->data();
+            }
+
+            $this->back($response, Code::$OK);
         } catch (Exception $e) {
             $this->back([
                 "type" => "error",
@@ -24,12 +34,12 @@ class Products extends Api
     {
         $id = $data['id'];
         try {
-            $product = (new Product())->selectById($id);
+            $product = (new Product())->findById($id);
             if (!$product) {
-                $this->back(["message" => "Product with id $id not found."], Code::$NOT_FOUND);
+                $this->back(["message" => "Produto com id $id não encontrado."], Code::$NOT_FOUND);
                 return;
             }
-            $this->back($product, Code::$OK);
+            $this->back((array) $product, Code::$OK);
 
         } catch (Exception $e) {
             if($e->getCode()) {
@@ -46,26 +56,27 @@ class Products extends Api
         }
     }
 
-    public function insertProduct(): void
+    public function insertProduct(array $data): void
     {
         $REQUIRED_FIELDS = ["name", "description", "color", "size", "price_brl", "res_path"];
 
         try {
-            $request_body = $this->validateRequestData($REQUIRED_FIELDS);
+            $request_body = $this->validateRequestData($data, $REQUIRED_FIELDS);
 
-            $product = new Product(
-                name: $request_body["name"],
-                description: $request_body["description"],
-                color: $request_body["color"],
-                size: $request_body["size"],
-                price_brl: $request_body["price_brl"],
-                res_path: $request_body["res_path"],
-            );
-            
+            $product = new Product();
+
+            $product->name = $request_body["name"];
+            $product->description = $request_body["description"];
+            $product->color = $request_body["color"];
+            $product->size = $request_body["size"];
+            $product->price_brl = $request_body["price_brl"];
+            $product->res_path = $request_body["res_path"];
+
+            $product->save();
+
             $this->back([
                 "type" => "success",
                 "message" => $product->getMessage(),
-                "product" => $product->get_attributes_array()
             ], Code::$CREATED);
 
         } catch (Exception $e) {
