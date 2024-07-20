@@ -5,7 +5,6 @@
 [![PHP from Packagist](https://img.shields.io/packagist/php-v/coffeecode/router.svg?style=flat-square)](https://packagist.org/packages/coffeecode/router)
 [![Latest Version](https://img.shields.io/github/release/robsonvleite/router.svg?style=flat-square)](https://github.com/robsonvleite/router/releases)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat-square)](LICENSE)
-[![Build](https://img.shields.io/scrutinizer/build/g/robsonvleite/router.svg?style=flat-square)](https://scrutinizer-ci.com/g/robsonvleite/router)
 [![Quality Score](https://img.shields.io/scrutinizer/g/robsonvleite/router.svg?style=flat-square)](https://scrutinizer-ci.com/g/robsonvleite/router)
 [![Total Downloads](https://img.shields.io/packagist/dt/coffeecode/router.svg?style=flat-square)](https://packagist.org/packages/coffeecode/router)
 
@@ -36,7 +35,7 @@ equipe UpInside. Com eles você executa tarefas rotineiras com poucas linhas, es
 Router is available via Composer:
 
 ```bash
-"coffeecode/router": "1.0.*"
+"coffeecode/router": "2.0.*"
 ```
 
 or run
@@ -53,7 +52,7 @@ Para mais detalhes sobre como usar o router, veja a pasta de exemplo com detalhe
 o router é preciso redirecionar sua navegação para o arquivo raiz de rotas (index.php) onde todo o tráfego deve ser
 tratado. O exemplo abaixo mostra como:
 
-#### apache
+#### Apache
 
 ```apacheconfig
 RewriteEngine On
@@ -74,7 +73,7 @@ RewriteCond %{SCRIPT_FILENAME} !-d
 RewriteRule ^(.*)$ index.php?route=/$1 [L,QSA]
 ```
 
-#### nginx
+#### Nginx
 
 ````nginxconfig
 location / {
@@ -88,7 +87,6 @@ location / {
 
 ```php
 <?php
-require __DIR__ . "/../vendor/autoload.php";
 
 use CoffeeCode\Router\Router;
 
@@ -113,6 +111,7 @@ $router->delete("/route/{id}", "Controller:method");
  * The controller must be in the namespace Dash\Controller
  */
 $router->group("admin")->namespace("Dash");
+
 $router->get("/route", "Controller:method");
 $router->post("/route/{id}", "Controller:method");
 
@@ -120,6 +119,7 @@ $router->post("/route/{id}", "Controller:method");
  * sub group
  */
 $router->group("admin/support");
+
 $router->get("/tickets", "Controller:method");
 $router->post("/ticket/{id}", "Controller:method");
 
@@ -147,7 +147,6 @@ if ($router->error()) {
 
 ```php
 <?php
-require __DIR__ . "/../vendor/autoload.php";
 
 use CoffeeCode\Router\Router;
 
@@ -179,6 +178,8 @@ if ($router->error()) {
 ###### Named Controller Example
 
 ```php
+<?php
+
 class Name
 {
     public function __construct($router)
@@ -204,11 +205,11 @@ class Name
 ###### Named Params
 
 ````php
-//route
-$router->get("/params/{category}/page/{page}", "Name:params", "name.params");
+<?php
 
-//$this->route = return URL
-//$this->redirect = redirect URL
+use CoffeeCode\Router\Router;
+
+$router = new Router("https://www.youdomain.com");
 
 $this->router->route("name.params", [
     "category" => 22,
@@ -216,7 +217,7 @@ $this->router->route("name.params", [
 ]);
 
 //result
-https://www.{}/name/params/22/page/2
+//https://www.youdomain.com/name/params/22/page/2
 
 $this->router->route("name.params", [
     "category" => 22,
@@ -226,12 +227,18 @@ $this->router->route("name.params", [
 ]);
 
 //result
-https://www.{}/name/params/22/page/2?argument1=most+filter&argument2=most+search
+//https://www.youdomain.com/name/params/22/page/2?argument1=most+filter&argument2=most+search
 ````
 
 ##### Callable
 
 ```php
+<?php
+
+use CoffeeCode\Router\Router;
+
+$router = new Router("https://www.youdomain.com");
+
 /**
  * GET httpMethod
  */
@@ -282,6 +289,67 @@ $router->delete("/", function ($data) {
 });
 
 $router->dispatch();
+```
+
+##### Simple Middleware
+
+```php
+<?php
+
+use CoffeeCode\Router\Router;
+
+$router = new Router("https://www.youdomain.com");
+
+//simple
+$router->get("/edit/{id}", "Coffee:edit", middleware: \Http\Guest::class);
+$router->get("/denied", "Coffee:denied", "coffe.denied", \Http\Group::class);
+
+//multiple
+$router->get("/logado", "Coffee:logged", middleware: [\Http\Guest::class, \Http\Group::class]);
+
+//callable
+$router->get("/call", function ($data, Router $router){
+    //code here
+}, middleware: \Http\Guest::class);
+```
+
+##### Simple Middleware Group
+
+```php
+<?php
+
+use CoffeeCode\Router\Router;
+
+$router = new Router("https://www.youdomain.com");
+
+//group single or multiple
+$router->group("name", \Http\Guest::class);
+$router->get("/", "Name:home", "name.home");
+$router->get("/hello", "Name:hello", "name.hello");
+$router->get("/redirect", "Name:redirect", "name.redirect");
+```
+
+##### Simple Middleware Class Example
+
+```php
+<?php
+
+namespace Http;
+
+use CoffeeCode\Router\Router;
+
+class User
+{
+    public function handle(Router $router): bool
+    {
+        $user = true;
+        if ($user) {
+            var_dump($router->current());
+            return true;
+        }
+        return false;
+    }
+}
 ```
 
 ##### Form Spoofing
