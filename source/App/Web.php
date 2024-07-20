@@ -118,7 +118,9 @@ class Web
     }
     public function error(array $data)
     {
-        var_dump($data);
+        echo $this->view->render("error/error", [
+            "title" => $data["errcode"]
+        ]);
     }
 
 }
