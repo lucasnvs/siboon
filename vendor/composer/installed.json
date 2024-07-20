@@ -58,25 +58,25 @@
         },
         {
             "name": "coffeecode/router",
-            "version": "2.0.2",
-            "version_normalized": "2.0.2.0",
+            "version": "2.0.0",
+            "version_normalized": "2.0.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/robsonvleite/router.git",
-                "reference": "a16770ae952ce3f91a04035a09be610a030e049c"
+                "reference": "ac2e1595fe3ae152d267f634b7b99cd7382dfb92"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/robsonvleite/router/zipball/a16770ae952ce3f91a04035a09be610a030e049c",
-                "reference": "a16770ae952ce3f91a04035a09be610a030e049c",
+                "url": "https://api.github.com/repos/robsonvleite/router/zipball/ac2e1595fe3ae152d267f634b7b99cd7382dfb92",
+                "reference": "ac2e1595fe3ae152d267f634b7b99cd7382dfb92",
                 "shasum": ""
             },
             "require": {
                 "php": ">=8.0"
             },
-            "time": "2022-04-23T16:01:23+00:00",
+            "time": "2022-04-05T21:28:22+00:00",
             "type": "library",
-            "installation-source": "dist",
+            "installation-source": "source",
             "autoload": {
                 "psr-4": {
                     "CoffeeCode\\Router\\": "src"
@@ -104,7 +104,7 @@
             ],
             "support": {
                 "issues": "https://github.com/robsonvleite/router/issues",
-                "source": "https://github.com/robsonvleite/router/tree/2.0.2"
+                "source": "https://github.com/robsonvleite/router/tree/2.0.0"
             },
             "install-path": "../coffeecode/router"
         },
