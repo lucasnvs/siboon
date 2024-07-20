@@ -20,6 +20,10 @@ class Users extends ApiController
         $user = new User();
         $users = $user->find()->fetch(true);
 
+        if (!$users) {
+            return Response::success(message: "Nenhum usuário encontrado.", code: Code::$NO_CONTENT);
+        }
+
         $response = [];
         foreach ($users as $user) {
             $response[] = [
@@ -65,7 +69,7 @@ class Users extends ApiController
         $insert = $user->save();
 
         if (!$insert) {
-            throw new PDOException($user->getMessage(), code: Code::$BAD_REQUEST);
+            throw new PDOException($user->fail(), code: Code::$BAD_REQUEST);
         }
 
         $response = [
@@ -84,8 +88,7 @@ class Users extends ApiController
     public function updateUser(array $data)
     {
         $id = $data['id'];
-        // Campos Aceitos: "name", "email"
-        $request_body = $this->validateRequestData($data);
+        $request_body = $this->validateRequestData($data); // Campos Aceitos: "name", "email"
 
         parent::setAccessToEndpoint($this->ACCESS_LOGGED, $id);
 
@@ -95,20 +98,14 @@ class Users extends ApiController
             $user->name = $request_body["name"];
         }
         if (isset($request_body["email"])) {
-            var_dump("Existe email");
             $user->email = $request_body["email"];
         }
 
         if (!$user->updateUser()) {
-            $this->back([
-                "type" => "error",
-                "message" => $user->getMessage()
-            ], Code::$BAD_REQUEST);
-            return;
+            throw new PDOException($user->getMessage(), code: Code::$BAD_REQUEST);
         }
 
-
-        return Response::success(code: Code::$OK, message: $user->getMessage());
+        return Response::success(message: $user->getMessage(), code: Code::$OK);
 
     }
 
@@ -124,7 +121,7 @@ class Users extends ApiController
             throw new PDOException($user->fail(), code: Code::$INTERNAL_SERVER_ERROR);
         }
 
-        return Response::success(code: Code::$OK, message: "Usuário deletado com sucesso!");
+        return Response::success(message: "Usuário deletado com sucesso.", code: Code::$NO_CONTENT);
     }
 
     public function changePassword(array $data)
