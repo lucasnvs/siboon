@@ -1,10 +1,9 @@
 <?php
-
-ob_start();
-
 require  __DIR__ . "/../vendor/autoload.php";
 
 use CoffeeCode\Router\Router;
+
+ob_start();
 
 $route = new Router(url("api"),":");
 

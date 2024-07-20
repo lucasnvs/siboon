@@ -26,13 +26,13 @@ class Users extends Api
         ], Code::$OK);
     }
 
-    public function insertUser(array $data)
+    public function insertUser()
     {
         $REQUIRED_FIELDS = ["name", "email", "password"];
-        $request_body = $this->handleRequestData($REQUIRED_FIELDS, $data);
-        if(is_null($request_body)) return;
 
         try {
+            $request_body = $this->validateRequestData($REQUIRED_FIELDS);
+
             $user = new User(
                 NULL,
                 $request_body["name"],
@@ -60,64 +60,99 @@ class Users extends Api
                 ], Code::$CREATED
             ]);
         } catch (Exception $e) {
-            $this->back([
-                "type" => "error",
-                "message" => $e->getMessage()
-            ], Code::$INTERNAL_SERVER_ERROR);
+            if($e->getCode()) {
+                $this->back([
+                    "type" => "error",
+                    "message" => $e->getMessage()
+                ], $e->getCode());
+            } else {
+                $this->back([
+                    "type" => "error",
+                    "message" => $e->getMessage()
+                ], Code::$INTERNAL_SERVER_ERROR);
+            }
         }
     }
 
-    public function updateUser(array $data)
+    public function updateUser()
     {
         $REQUIRED_FIELDS = ["id", "name", "email"];
-        $request_body = $this->handleRequestData($REQUIRED_FIELDS, $data);
-        if(is_null($request_body)) return;
+        try {
+            $request_body = $this->validateRequestData($REQUIRED_FIELDS);
 
-        if(!$this->userAuth){
-            $this->back([
-                "type" => "error",
-                "message" => "Você não tem permissão."
-            ], Code::$UNAUTHORIZED);
-            return;
+            if(!$this->userAuth){
+                $this->back([
+                    "type" => "error",
+                    "message" => "Você não tem permissão."
+                ], Code::$UNAUTHORIZED);
+                return;
+            }
+
+            $this->back([], Code::$OK);
+
+        } catch (Exception $e) {
+            if($e->getCode()) {
+                $this->back([
+                    "type" => "error",
+                    "message" => $e->getMessage()
+                ], $e->getCode());
+            } else {
+                $this->back([
+                    "type" => "error",
+                    "message" => $e->getMessage()
+                ], Code::$INTERNAL_SERVER_ERROR);
+            }
         }
-
-        $this->back([], Code::$OK);
     }
 
-    public function deleteUser(array $data)
+    public function deleteUser()
     {
 
     }
 
-    public function changePassword(array $data)
+    public function changePassword()
     {
         $REQUIRED_FIELDS = ["password", "newPassword", "confirmNewPassword"];
-        $request_body = $this->handleRequestData($REQUIRED_FIELDS, $data);
-        if(is_null($request_body)) return;
-
-        $user = new User($this->userAuth->id);
-
-        if(!$user->updatePassword($request_body["password"], $request_body["newPassword"], $request_body["confirmNewPassword"])){
-            $this->back([
-                "type" => "error",
-                "message" => $user->getMessage()
-            ]);
-            return;
-        }
-
-        $this->back([
-            "type" => "success",
-            "message" => $user->getMessage()
-        ]);
-    }
-
-    public function login (array $data)
-    {
-        $REQUIRED_FIELDS = ["email", "password"];
-        $request_body = $this->handleRequestData($REQUIRED_FIELDS, $data);
-        if(is_null($request_body)) return;
 
         try {
+            $request_body = $this->validateRequestData($REQUIRED_FIELDS);
+            $user = new User($this->userAuth->id);
+
+            if(!$user->updatePassword($request_body["password"], $request_body["newPassword"], $request_body["confirmNewPassword"])){
+                $this->back([
+                    "type" => "error",
+                    "message" => $user->getMessage()
+                ]);
+                return;
+            }
+
+            $this->back([
+                "type" => "success",
+                "message" => $user->getMessage()
+            ]);
+
+        } catch (Exception $e) {
+            if($e->getCode()) {
+                $this->back([
+                    "type" => "error",
+                    "message" => $e->getMessage()
+                ], $e->getCode());
+            } else {
+                $this->back([
+                    "type" => "error",
+                    "message" => $e->getMessage()
+                ], Code::$INTERNAL_SERVER_ERROR);
+            }
+        }
+    }
+
+    public function login ()
+    {
+        $REQUIRED_FIELDS = ["email", "password"];
+
+        try {
+            $request_body = $this->validateRequestData($REQUIRED_FIELDS);
+
             $user = new User();
 
             if(!$user->login($request_body["email"],$request_body["password"])){
@@ -144,7 +179,17 @@ class Users extends Api
                 ]
             ], Code::$OK);
         } catch (Exception $e) {
-            $this->back(['error' => $e->getMessage()], Code::$INTERNAL_SERVER_ERROR);
+            if($e->getCode()) {
+                $this->back([
+                    "type" => "error",
+                    "message" => $e->getMessage()
+                ], $e->getCode());
+            } else {
+                $this->back([
+                    "type" => "error",
+                    "message" => $e->getMessage()
+                ], Code::$INTERNAL_SERVER_ERROR);
+            }
         }
     }
 }

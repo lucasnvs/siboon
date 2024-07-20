@@ -20,8 +20,9 @@ class Products extends Api
         }
     }
 
-    public function getProduct(int $id): void
+    public function getProduct(array $data): void
     {
+        $id = $data['id'];
         try {
             $product = (new Product())->selectById($id);
             if (!$product) {
@@ -29,21 +30,29 @@ class Products extends Api
                 return;
             }
             $this->back($product, Code::$OK);
+
         } catch (Exception $e) {
-            $this->back([
-                "type" => "error",
-                'message' => $e->getMessage()
-            ], Code::$INTERNAL_SERVER_ERROR);
+            if($e->getCode()) {
+                $this->back([
+                    "type" => "error",
+                    "message" => $e->getMessage()
+                ], $e->getCode());
+            } else {
+                $this->back([
+                    "type" => "error",
+                    "message" => $e->getMessage()
+                ], Code::$INTERNAL_SERVER_ERROR);
+            }
         }
     }
 
-    public function insertProduct(array $data): void
+    public function insertProduct(): void
     {
         $REQUIRED_FIELDS = ["name", "description", "color", "size", "price_brl", "res_path"];
-        $request_body = $this->handleRequestData($REQUIRED_FIELDS, $data);
-        if(is_null($request_body)) return;
 
         try {
+            $request_body = $this->validateRequestData($REQUIRED_FIELDS);
+
             $product = new Product(
                 name: $request_body["name"],
                 description: $request_body["description"],
@@ -60,14 +69,21 @@ class Products extends Api
             ], Code::$CREATED);
 
         } catch (Exception $e) {
-            $this->back([
-                "type" => "error",
-                "message" => $e->getMessage()
-            ], Code::$INTERNAL_SERVER_ERROR);
+            if($e->getCode()) {
+                $this->back([
+                    "type" => "error",
+                    "message" => $e->getMessage()
+                ], $e->getCode());
+            } else {
+                $this->back([
+                    "type" => "error",
+                    "message" => $e->getMessage()
+                ], Code::$INTERNAL_SERVER_ERROR);
+            }
         }
     }
 
-    public function updateProduct(int $id, array $data): void
+    public function updateProduct(array $data): void
     {
 
     }

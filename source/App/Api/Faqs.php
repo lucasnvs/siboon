@@ -20,13 +20,13 @@ class Faqs extends Api
         $this->back($faq, Code::$OK);
     }
 
-    public function insertFaq(array $data): void
+    public function insertFaq(): void
     {
         $REQUIRED_FIELDS = ["idType", "question", "answer"];
-        $request_body = $this->handleRequestData($REQUIRED_FIELDS, $data);
-        if(is_null($request_body)) return;
 
         try {
+            $request_body = $this->validateRequestData($REQUIRED_FIELDS);
+
             $newQuestion = new Question(
                 idType: $request_body["idType"],
                 question: $request_body["question"],
@@ -50,10 +50,17 @@ class Faqs extends Api
             ], Code::$CREATED);
 
         } catch (Exception $e) {
-              $this->back([
-                  "type" => "error",
-                  "message" => $e->getMessage()
-              ], Code::$INTERNAL_SERVER_ERROR);
+            if($e->getCode()) {
+                $this->back([
+                    "type" => "error",
+                    "message" => $e->getMessage()
+                ], $e->getCode());
+            } else {
+                $this->back([
+                    "type" => "error",
+                    "message" => $e->getMessage()
+                ], Code::$INTERNAL_SERVER_ERROR);
+            }
         }
     }
 

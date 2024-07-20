@@ -25,59 +25,40 @@ class Api
         echo json_encode($response, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
     }
 
-    private function validateContentType () : ?string
+    /**
+     * @throws Exception
+     */
+    private function validateContentType () : void
     {
         if(empty($_SERVER['CONTENT_LENGTH'])) {
-            $this->back([
-                "type" => "error",
-                "message" => "Você deve enviar conteúdo."
-            ], Code::$BAD_REQUEST);
-            return null;
+            throw new Exception("Você deve enviar conteúdo.", Code::$BAD_REQUEST);
         }
 
         $content_type = isset($_SERVER['CONTENT_TYPE']) ? explode(";", $_SERVER['CONTENT_TYPE'])[0] : '';
 
         if (!in_array($content_type, $this->ALLOWED_REQUEST_TYPES)) {
-            $this->back([
-                "type" => "error",
-                "message" => "Os 'Content-Type' aceitos são application/json e multipart/form-data."
-            ], Code::$BAD_REQUEST);
-            return null;
+            throw new Exception("Os 'Content-Type' aceitos são application/json e multipart/form-data.", Code::$BAD_REQUEST);
         }
-
-        return $content_type;
     }
 
-    protected function validateRequestData ($REQUIRED_FIELDS, $arrData) : ?array
+    /**
+     * @throws Exception
+     */
+    protected function validateRequestData ($REQUIRED_FIELDS) : array | null
     {
-        $request_body = null;
-        $content_type = $this->validateContentType();
+        $this->validateContentType();
+        $request_body = (array) json_decode(file_get_contents('php://input', true));
 
-        switch ($content_type) {
-            case "application/json": $request_body = json_decode(file_get_contents('php://input', false, null, 0, $_SERVER['CONTENT_LENGTH']), true);
-                break;
-            case "multipart/form-data": $request_body = $arrData;
-                break;
-            case null: return null;
-        }
-
-        if(is_null($request_body)) {
-            $this->back([
-                "type" => "error",
-                "message" => "O Body não pode estar nulo"],
-                Code::$BAD_REQUEST);
-            return null;
+        if(sizeof($request_body) == 0) {
+            throw new Exception("Body sem campos.", Code::$BAD_REQUEST);
         }
 
         foreach ($REQUIRED_FIELDS as $field) {
             if(!isset($request_body[$field])){
-                $this->back([
-                    "type" => "error",
-                    "message" => "Todos os campos devem estar presentes! Campo não enviado: $field"],
-                    Code::$BAD_REQUEST);
-                return null;
+                throw new Exception("Todos os campos devem estar presentes! Campo não enviado: $field", Code::$BAD_REQUEST);
             }
         }
+
         return $request_body;
     }
 }
