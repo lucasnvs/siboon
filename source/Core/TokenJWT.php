@@ -37,7 +37,7 @@ class TokenJWT
         );
     }
 
-    public function verify (string $token) : bool | stdClass
+    public function verify (string $token) : bool
     {
         try {
             $this->token = JWT::decode($token, new Key($this->secretKey, self::algorithm));
@@ -46,7 +46,7 @@ class TokenJWT
             if ($this->token->iss !== $serverName || $this->token->nbf > $now->getTimestamp() || $this->token->exp < $now->getTimestamp()) {
                 return false;
             }
-            return $this->token->data;
+            return true;
         } catch (Exception $exception) {
             return false;
         }
