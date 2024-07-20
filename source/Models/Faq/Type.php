@@ -1,41 +1,21 @@
 <?php
 
 namespace Source\Models\Faq;
-use Source\Core\Connect;
-use Source\Core\Model;
+use CoffeeCode\DataLayer\DataLayer;
 
-class Type extends Model {
-    private $id;
-    private $description;
+class Type extends DataLayer {
+    private $message;
 
-    public function __construct(
-        int $id = null,
-        string $description = null
-    )
+    public function __construct()
     {
-        $this->id = $id;
-        $this->description = $description;
-        $this->entity = "faq_types";
+        parent::__construct("faq_types", []);
     }
 
-    public function getId(): ?int
+    /**
+     * @return mixed
+     */
+    public function getMessage()
     {
-        return $this->id;
+        return $this->message;
     }
-
-    public function setId(?int $id): void
-    {
-        $this->id = $id;
-    }
-
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
-    public function setDescription(?string $description): void
-    {
-        $this->description = $description;
-    }
-
 }
