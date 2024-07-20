@@ -13,22 +13,23 @@ $route->group("usuarios");
 $route->get("/", "Users:listUsers");        // Not implemented yet
 $route->get("/{id}", "Users:getUser");      // Not tested yet
 $route->post("/", "Users:insertUser");      // Not tested yet
-$route->put("/{id}", "Users:updateUser");
+$route->post("/update/{id}", "Users:updateUser");
 $route->delete("/{id}", "Users:deleteUser");// Not tested yet
 
 $route->post("/login", "Users:login");
+$route->post("/change-password", "Users:changePassword");
 
 $route->group("faq");
 $route->get("/","Faqs:listFaqs");
 $route->get("/{id}", "Faqs:getFaq");
 $route->post("/{id}", "Faqs:insertFaq");
-$route->put("/{id}", "Faqs:updateFaq");
+$route->post("/update/{id}", "Faqs:updateFaq");
 
 $route->group("produtos"); // Recurso Produto // necessário add middleware
 $route->get("/", "Products:listProducts");
 $route->get("/{id}", "Products:getProduct");
 $route->post("/", "Products:insertProduct");
-$route->put("/{id}", "Products:updateProduct");
+$route->post("/update/{id}", "Products:updateProduct");
 $route->delete("/{id}", "Products:deleteProduct");
 
 $route->group(null);
