@@ -3,14 +3,20 @@
 namespace Source\App\Api;
 
 use Exception;
+use InvalidArgumentException;
+use PDOException;
+use Source\Core\ApiController;
 use Source\Core\TokenJWT;
 use Source\Models\User;
+use Source\Response\Code;
+use Source\Response\Response;
 
-class Users extends Api
+class Users extends ApiController
 {
-    // todo: separar funcao de autorizacao e Exception Return
     public function listUsers()
     {
+        $this->setAccessToEndpoint($this->ACCESS_ADMIN);
+
         $user = new User();
         $users = $user->find()->fetch(true);
 
@@ -24,279 +30,158 @@ class Users extends Api
             ];
         }
 
-        $this->back($response, Code::$OK);
+        return Response::success($response, code: Code::$OK);
     }
 
     public function getUser(array $data)
     {
+
         $user = (new User())->findById($data['id']);
 
         if (!$user) {
-            $this->back([
-                "type" => "success",
-                "message" => "Usuário não existe."
-            ], Code::$NOT_FOUND);
-            return;
+            return Response::success(message: "Usuário não existe.", code: Code::$NO_CONTENT);
         }
 
-        $this->back([
+        $response = [
             "id" => $user->id,
             "name" => $user->name,
             "email" => $user->email,
-        ], Code::$OK);
+        ];
+
+        return Response::success($response, Code::$OK);
     }
 
     public function insertUser(array $data)
     {
         $REQUIRED_FIELDS = ["name", "email", "password"];
 
-        try {
-            $request_body = $this->validateRequestData($data, $REQUIRED_FIELDS);
+        $request_body = $this->validateRequestData($data, $REQUIRED_FIELDS);
 
-            $user = new User();
-            $user->name = $request_body["name"];
-            $user->email = $request_body["email"];
-            $user->password = $request_body["password"];
+        $user = new User();
+        $user->name = $request_body["name"];
+        $user->email = $request_body["email"];
+        $user->password = $request_body["password"];
 
-            $insert = $user->save();
+        $insert = $user->save();
 
-            if(!$insert){
-                $this->back([
-                    "type" => "error",
-                    "message" => $user->getMessage()
-                ], Code::$BAD_REQUEST);
-                return;
-            }
-
-            $this->back([
-                "type" => "success",
-                "message" => $user->getMessage(),
-                "user" => [
-                    "id" => $insert,
-                    "name" => $user->name,
-                    "email" => $user->email
-                ]
-            ], Code::$CREATED);
-        } catch (Exception $e) {
-            if($e->getCode() && gettype($e->getCode()) == "integer") {
-                $this->back([
-                    "type" => "error",
-                    "message" => $e->getMessage()
-                ], $e->getCode());
-            } else {
-                $this->back([
-                    "type" => "error",
-                    "message" => $e->getMessage()
-                ], Code::$INTERNAL_SERVER_ERROR);
-            }
+        if (!$insert) {
+            throw new PDOException($user->getMessage(), code: Code::$BAD_REQUEST);
         }
+
+        $response = [
+            "type" => "success",
+            "message" => $user->getMessage(),
+            "user" => [
+                "id" => $insert,
+                "name" => $user->name,
+                "email" => $user->email
+            ]
+        ];
+
+        return Response::success($response, Code::$CREATED);
     }
 
     public function updateUser(array $data)
     {
         $id = $data['id'];
         // Campos Aceitos: "name", "email"
-        try {
-            $request_body = $this->validateRequestData($data);
+        $request_body = $this->validateRequestData($data);
 
-            if(!$this->userAuth){
-                $this->back([
-                    "type" => "error",
-                    "message" => "Você não tem permissão."
-                ], Code::$UNAUTHORIZED);
-                return;
-            }
+        parent::setAccessToEndpoint($this->ACCESS_LOGGED, $id);
 
-            if($this->userAuth->id != $id){
-                $this->back([
-                    "type" => "error",
-                    "message" => "Você não tem permissão."
-                ], Code::$UNAUTHORIZED);
-                return;
-            }
+        $user = (new User())->findById($id);
 
-            $user = (new User())->findById($id);
-
-            if(isset($request_body["name"])){
-                $user->name = $request_body["name"];
-            }
-            if(isset($request_body["email"])){
-                var_dump("Existe email");
-                $user->email = $request_body["email"];
-            }
-
-            if(!$user->updateUser()) {
-                $this->back([
-                    "type" => "error",
-                    "message" => $user->getMessage()
-                ], Code::$BAD_REQUEST);
-                return;
-            }
-
-            $this->back([
-                "type" => "success",
-                "message" => $user->getMessage()
-            ], Code::$OK);
-
-        } catch (Exception $e) {
-            if($e->getCode()) {
-                $this->back([
-                    "type" => "error",
-                    "message" => $e->getMessage()
-                ], $e->getCode());
-            } else {
-                $this->back([
-                    "type" => "error",
-                    "message" => $e->getMessage()
-                ], Code::$INTERNAL_SERVER_ERROR);
-            }
+        if (isset($request_body["name"])) {
+            $user->name = $request_body["name"];
         }
+        if (isset($request_body["email"])) {
+            var_dump("Existe email");
+            $user->email = $request_body["email"];
+        }
+
+        if (!$user->updateUser()) {
+            $this->back([
+                "type" => "error",
+                "message" => $user->getMessage()
+            ], Code::$BAD_REQUEST);
+            return;
+        }
+
+
+        return Response::success(code: Code::$OK, message: $user->getMessage());
+
     }
 
     public function deleteUser(array $data)
     {
         $id = $data['id'];
 
-        if(!$this->userAuth){
-            $this->back([
-                "type" => "error",
-                "message" => "Você não tem permissão."
-            ], Code::$UNAUTHORIZED);
-            return;
-        }
-
-        if($this->userAuth->id != $id){
-            $this->back([
-                "type" => "error",
-                "message" => "Você não tem permissão."
-            ], Code::$UNAUTHORIZED);
-            return;
-        }
+        parent::setAccessToEndpoint($this->ACCESS_LOGGED, $id);
 
         $user = new User();
         $isDestroyed = $user->findById($id)->destroy();
-        if(!$isDestroyed){
-            $this->back([
-                "type" => "error",
-                "message" => $user->fail()
-            ]);
-            return;
+        if (!$isDestroyed) {
+            throw new PDOException($user->fail(), code: Code::$INTERNAL_SERVER_ERROR);
         }
 
-        $this->back([
-            "type" => "success",
-            "message" => "Usuário deletado com sucesso!",
-        ], Code::$OK);
+        return Response::success(code: Code::$OK, message: "Usuário deletado com sucesso!");
     }
 
     public function changePassword(array $data)
     {
         $REQUIRED_FIELDS = ["id", "password", "newPassword", "confirmNewPassword"];
 
-        try {
-            $request_body = $this->validateRequestData($data, $REQUIRED_FIELDS);
+        $request_body = $this->validateRequestData($data, $REQUIRED_FIELDS);
 
-            if(!$this->userAuth){
-                $this->back([
-                    "type" => "error",
-                    "message" => "Você não tem permissão."
-                ], Code::$UNAUTHORIZED);
-                return;
-            }
+        parent::setAccessToEndpoint($this->ACCESS_LOGGED, $request_body["id"]);
 
-            if($this->userAuth->id != $request_body["id"]){
-                $this->back([
-                    "type" => "error",
-                    "message" => "Você não tem permissão."
-                ], Code::$UNAUTHORIZED);
-                return;
-            }
-
-            $user = new User();
-            $exist = $user->findById($request_body["id"]);
-            if(!$exist) {
-                $this->back([
-                    "type" => "error",
-                    "message" => "Usuário não existe."
-                ], Code::$NO_CONTENT);
-                return;
-            }
-
-            $isChanged = $exist->updatePassword($request_body["password"], $request_body["newPassword"], $request_body["confirmNewPassword"]);
-            if(!$isChanged){
-                $this->back([
-                    "type" => "error",
-                    "message" => $exist->getMessage(),
-                ], Code::$INTERNAL_SERVER_ERROR);
-                return;
-            }
-
-            $this->back([
-                "type" => "success",
-                "message" => $exist->getMessage()
-            ]);
-
-        } catch (Exception $e) {
-            if($e->getCode()) {
-                $this->back([
-                    "type" => "error",
-                    "message" => $e->getMessage()
-                ], $e->getCode());
-            } else {
-                $this->back([
-                    "type" => "error",
-                    "message" => $e->getMessage()
-                ], Code::$INTERNAL_SERVER_ERROR);
-            }
+        $user = new User();
+        $exist = $user->findById($request_body["id"]);
+        if (!$exist) {
+            throw new PDOException("Usuário não existe.", code: Code::$BAD_REQUEST);
         }
+
+        $isChanged = $exist->updatePassword($request_body["password"], $request_body["newPassword"], $request_body["confirmNewPassword"]);
+
+        if (!$isChanged) {
+            throw new InvalidArgumentException($exist->getMessage(), code: Code::$BAD_REQUEST);
+        }
+
+        return Response::success(message: "Senha alterada com sucesso.", code: Code::$OK);
     }
 
-    public function login (array $data)
+    public function login(array $data)
     {
         $REQUIRED_FIELDS = ["email", "password"];
 
-        try {
-            $request_body = $this->validateRequestData($data, $REQUIRED_FIELDS);
-            var_dump($data);
+        $request_body = $this->validateRequestData($data, $REQUIRED_FIELDS);
 
-            $user = new User();
-            $login = $user->login($request_body["email"], $request_body["password"]);
+        $user = new User();
+        $login = $user->login($request_body["email"], $request_body["password"]);
 
-            if(!$login){
-                $this->back([
-                    "type" => "error",
-                    "message" => $user->getMessage()
-                ]);
-                return;
-            }
-
-            $token = new TokenJWT();
-            $this->back([
-                "type" => "success",
-                "message" => $user->getMessage(),
-                "user" => [
-                    "id" => $user->id,
-                    "name" => $user->name,
-                    "email" => $user->email,
-                    "token" => $token->create([
-                        "id" => $user->id,
-                        "name" => $user->name,
-                        "email" => $user->email
-                    ])
-                ]
-            ], Code::$OK);
-        } catch (Exception $e) {
-            if($e->getCode()) {
-                $this->back([
-                    "type" => "error",
-                    "message" => $e->getMessage()
-                ], $e->getCode());
-            } else {
-                $this->back([
-                    "type" => "error",
-                    "message" => $e->getMessage()
-                ], Code::$INTERNAL_SERVER_ERROR);
-            }
+        if (!$login) {
+            throw new InvalidArgumentException($user->getMessage(), Code::$BAD_REQUEST);
         }
+
+        $access = 0;
+        match ($user->role) {
+            "CLIENT" => $access = $this->ACCESS_LOGGED,
+            "ADMIN" => $access = $this->ACCESS_ADMIN,
+        };
+
+        $token = new TokenJWT();
+        $response = [
+            "id" => $user->id,
+            "name" => $user->name,
+            "email" => $user->email,
+            "token" => $token->create([
+                "id" => $user->id,
+                "name" => $user->name,
+                "email" => $user->email,
+                "access" => $access
+            ])
+        ];
+
+        return Response::success($response, message: $user->getMessage(), code: Code::$OK);
     }
 }

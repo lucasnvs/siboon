@@ -52,4 +52,8 @@ class TokenJWT
         }
     }
 
+    public function decode (string $token): stdClass
+    {
+        return JWT::decode($token, new Key($this->secretKey, self::algorithm))->data;
+    }
 }

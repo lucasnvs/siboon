@@ -1,6 +1,6 @@
 <?php
 
-namespace Source\App\Api;
+namespace Source\Response;
 
 class Code
 {
@@ -21,4 +21,5 @@ class Code
     public static int $NOT_IMPLEMENTED = 501;
     public static int $BAD_GATEWAY = 502;
     public static int $SERVICE_UNAVAILABLE = 503;
+    public static int $UNKNOWN_ERROR = 520;
 }

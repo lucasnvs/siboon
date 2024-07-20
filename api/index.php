@@ -2,51 +2,51 @@
 require  __DIR__ . "/../vendor/autoload.php";
 
 use CoffeeCode\Router\Router;
+use Source\App\Api\ErrorController;
+use Source\Exceptions\RouterException;
+use Source\Response\Code;
 
-ob_start();
+try {
 
-$route = new Router(url("api"),":");
+    ob_start();
 
-$route->namespace("Source\App\Api");
+    $route = new Router(url("api"),":");
 
-$route->group("usuarios");
-$route->get("/", "Users:listUsers");        // Not implemented yet
-$route->get("/{id}", "Users:getUser");      // Not tested yet
-$route->post("/", "Users:insertUser");      // Not tested yet
-$route->post("/update/{id}", "Users:updateUser");
-$route->delete("/{id}", "Users:deleteUser");// Not tested yet
+    $route->namespace("Source\App\Api");
 
-$route->post("/login", "Users:login");
-$route->post("/change-password", "Users:changePassword");
+    $route->group("usuarios"); // Working
+    $route->get("/", "Users:listUsers");
+    $route->get("/{id}", "Users:getUser");
+    $route->post("/", "Users:insertUser");
+    $route->post("/update/{id}", "Users:updateUser");
+    $route->delete("/{id}", "Users:deleteUser");
+    $route->post("/login", "Users:login");
+    $route->post("/change-password", "Users:changePassword");
 
-$route->group("faq");
-$route->get("/","Faqs:listFaqs");
-$route->get("/{id}", "Faqs:getFaq");
-$route->post("/{id}", "Faqs:insertFaq");
-$route->post("/update/{id}", "Faqs:updateFaq");
+    $route->group("faq");
+    $route->get("/","Faqs:listFaqs");
+    $route->get("/{id}", "Faqs:getFaq");
+    $route->post("/{id}", "Faqs:insertFaq");
+    $route->post("/update/{id}", "Faqs:updateFaq");
 
-$route->group("produtos"); // Recurso Produto // necessário add middleware
-$route->get("/", "Products:listProducts");
-$route->get("/{id}", "Products:getProduct");
-$route->post("/", "Products:insertProduct");
-$route->post("/update/{id}", "Products:updateProduct");
-$route->delete("/{id}", "Products:deleteProduct");
+    $route->group("produtos");
+    $route->get("/", "Products:listProducts");
+    $route->get("/{id}", "Products:getProduct");
+    $route->post("/", "Products:insertProduct");
+    $route->post("/update/{id}", "Products:updateProduct");
+    $route->delete("/{id}", "Products:deleteProduct");
 
-$route->group(null);
+    $route->group(null);
 
-$route->dispatch();
+    $route->dispatch();
 
-/** ERROR REDIRECT */
-if ($route->error()) {
-    header('Content-Type: application/json; charset=UTF-8');
-    http_response_code(404);
+    /** ERROR REDIRECT */
+    if ($route->error()) {
+        header('Content-Type: application/json; charset=UTF-8');
+        throw new RouterException("endpoint_not_found", Code::$NOT_FOUND);
+    }
 
-    echo json_encode([
-        "errors" => [
-            "type " => "endpoint_not_found",
-            "message" => "Não foi possível processar a requisição"
-        ]
-    ], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+    ob_end_flush();
+} catch (Exception $e) {
+    return ErrorController::getErrorMessage($e);
 }
-
-ob_end_flush();
