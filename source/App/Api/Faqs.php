@@ -3,74 +3,35 @@
 namespace Source\App\Api;
 
 use Exception;
+use Source\Core\ApiController;
 use Source\Models\Faq\Question;
+use Source\Models\Faq\Type;
+use Source\Response\Code;
+use Source\Response\Response;
 
-class Faqs extends Api
+class Faqs extends ApiController
 {
 
-    public function listFaqs(): void
+    public function listFaqs()
     {
+        $response = [];
+
+        $type = new Type();
         $questions = new Question();
-        $this->back($questions->selectAll(), Code::$OK);
-    }
 
-    public function getFaq(array $data): void
-    {
-        $faq = (new Question())->selectById($data['id'])[0];
-        $this->back($faq, Code::$OK);
-    }
+        $types = $type->find()->fetch(true);
 
-    public function insertFaq(): void
-    {
-        $REQUIRED_FIELDS = ["idType", "question", "answer"];
-
-        try {
-            $request_body = $this->validateRequestData($REQUIRED_FIELDS);
-
-            $newQuestion = new Question(
-                idType: $request_body["idType"],
-                question: $request_body["question"],
-                answer: $request_body["answer"],
-            );
-
-            $isCreated = $newQuestion->insert();
-
-            if(!$isCreated) {
-                $this->back([
-                    "type" => "error",
-                    "message" => $newQuestion->getMessage()
-                ], Code::$BAD_REQUEST);
-                return;
+        foreach ($types as $type) {
+            $params = http_build_query(["type_id" => $type->id]);
+            $obj["type"] = $type->description;
+            $finded = (array) $questions->find("type_id = :type_id", $params)->fetch(true);
+            foreach ($finded as $q) {
+                $obj["data"][] = ["question" => $q->question, "answer" => $q->answer];
             }
 
-            $this->back([
-                "type" => "success",
-                "message" => $newQuestion->getMessage(),
-                "question" => $newQuestion->get_attributes_array()
-            ], Code::$CREATED);
-
-        } catch (Exception $e) {
-            if($e->getCode()) {
-                $this->back([
-                    "type" => "error",
-                    "message" => $e->getMessage()
-                ], $e->getCode());
-            } else {
-                $this->back([
-                    "type" => "error",
-                    "message" => $e->getMessage()
-                ], Code::$INTERNAL_SERVER_ERROR);
-            }
+            $response[] = $obj;
         }
-    }
 
-    public function updateFaq(): void
-    {
-
-    }
-
-    public function deleteFaq(): void
-    {
-
+        return Response::success($response, code: Code::$OK);
     }
 }

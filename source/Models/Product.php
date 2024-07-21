@@ -5,14 +5,6 @@ namespace Source\Models;
 use CoffeeCode\DataLayer\DataLayer;
 
 class Product extends DataLayer {
-    protected $id;
-    protected $name;
-    protected $description;
-    protected $color;
-    protected $size;
-    protected $price_brl;
-    protected $res_path;
-
     private $message;
 
     public function __construct()

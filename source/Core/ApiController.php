@@ -22,17 +22,19 @@ class ApiController
 
         $headers = getallheaders();
 
-        if(!isset($headers["Authorization"])){
-            throw new AuthorizationException("Authorization Bearer não foi encontrado no header da requisição.");
+        if(isset($headers["Authorization"])){
+            $this->authorizationBearer = str_replace('Bearer ', '', $headers['Authorization']);
+            $this->authorizationBearer = htmlspecialchars($this->authorizationBearer);
         }
-
-        $this->authorizationBearer = str_replace('Bearer ', '', $headers['Authorization']);
-        $this->authorizationBearer = htmlspecialchars($this->authorizationBearer);
     }
 
     public function setAccessToEndpoint(int $access, $id = null): void
     {
         $this->endpointAccess = $access;
+
+        if($this->authorizationBearer == null) {
+            throw new AuthorizationException("Authorization Bearer não foi encontrado no header da requisição.");
+        }
 
         $this->checkBearerIsValid();
         $this->checkPermissionBearer($id);

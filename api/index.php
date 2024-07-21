@@ -25,11 +25,8 @@ try {
 
     $route->group("faq");
     $route->get("/","Faqs:listFaqs");
-    $route->get("/{id}", "Faqs:getFaq");
-    $route->post("/{id}", "Faqs:insertFaq");
-    $route->post("/update/{id}", "Faqs:updateFaq");
 
-    $route->group("produtos");
+    $route->group("produtos"); // Working
     $route->get("/", "Products:listProducts");
     $route->get("/{id}", "Products:getProduct");
     $route->post("/", "Products:insertProduct");
