@@ -5,12 +5,13 @@ use DateTimeImmutable;
 use Firebase\JWT\JWT;
 use Exception;
 use Firebase\JWT\Key;
+use Source\Helpers\Env;
 use stdClass;
 
 class TokenJWT
 {
     public $token;
-    private $secretKey = 'my_secret_sequence_siboon_token_api';
+    private $secretKey = JWT_SECRET_KEY;
 
     private const algorithm = 'HS256';
 
