@@ -3,6 +3,7 @@
 namespace Source\App;
 
 use League\Plates\Engine;
+use Source\App\Api\Faqs;
 use Source\Models\Faq\Question;
 use Source\Models\Faq\Type;
 
@@ -48,40 +49,10 @@ class Web
 
     public function faq()
     {
-        $faq = new Question();
-        $dataQuestions = $faq->selectAll();
-
-        $faqTypes = new Type();
-        $dataTypes = $faqTypes->selectAll();
-
-
-        $groupedQuestions = [];
-        foreach ($dataQuestions as $question) {
-            $typeId = $question->type_id;
-
-            if (!isset($groupedQuestions[$typeId])) {
-                $groupedQuestions[$typeId] = [];
-            }
-
-            $groupedQuestions[$typeId][] = $question;
-        }
-
-        $finalObject = [];
-        foreach ($dataTypes as $type) {
-            $typeId = $type->id;
-            $typeDescription = $type->description;
-
-            $questions= [];
-            if (isset($groupedQuestions[$typeId])) {
-                $questions = $groupedQuestions[$typeId];
-            }
-
-            $finalObject[$typeDescription] = $questions;
-        }
-
+        $faqs = (new Faqs())->listFaqs();
         echo $this->view->render("faq/faq", [
             "title" => "FAQ",
-            "faqs" => $finalObject,
+            "faqs" => $faqs,
         ]);
     }
 

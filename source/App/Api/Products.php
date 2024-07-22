@@ -64,7 +64,7 @@ class Products extends ApiController
         return Response::success( message: "Produto criado com sucesso.", code: Code::$CREATED);
     }
 
-    public function updateProduct(array $data): void
+    public function updateProduct(array $data)
     {
         parent::setAccessToEndpoint($this->ACCESS_ADMIN);
 
@@ -72,7 +72,31 @@ class Products extends ApiController
         $request_body = $this->validateRequestData($data);
 
         $product = (new Product())->findById($id);
-        // todo: issets check
+
+        if (isset($request_body["name"])) {
+            $product->name = $request_body["name"];
+        }
+        if (isset($request_body["description"])) {
+            $product->description = $request_body["description"];
+        }
+        if (isset($request_body["color"])) {
+            $product->color = $request_body["color"];
+        }
+        if (isset($request_body["size"])) {
+            $product->size = $request_body["size"];
+        }
+        if (isset($request_body["price_brl"])) {
+            $product->price_brl = $request_body["price_brl"];
+        }
+        if (isset($request_body["res_path"])) {
+            $product->res_path = $request_body["res_path"];
+        }
+
+        if (!$product->save()) {
+            throw new PDOException($product->fail(), code: Code::$BAD_REQUEST);
+        }
+
+        return Response::success(message: "Produto atualizado com sucesso.", code: Code::$OK);
     }
 
 
