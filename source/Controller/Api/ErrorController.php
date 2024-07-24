@@ -1,5 +1,5 @@
 <?php
-namespace Source\App\Api;
+namespace Source\Controller\Api;
 
 use Exception;
 use Source\Response\Response;

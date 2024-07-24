@@ -1,6 +1,6 @@
 <?php
 
-namespace Source\App\Api;
+namespace Source\Controller\Api;
 
 use Exception;
 use InvalidArgumentException;
@@ -11,7 +11,7 @@ use Source\Models\User;
 use Source\Response\Code;
 use Source\Response\Response;
 
-class Users extends ApiController
+class UserController extends ApiController
 {
     public function listUsers()
     {
@@ -57,19 +57,20 @@ class Users extends ApiController
 
     public function insertUser(array $data)
     {
-        $REQUIRED_FIELDS = ["name", "email", "password"];
+        $REQUIRED_FIELDS = ["first_name", "last_name", "email", "password"];
 
         $request_body = $this->validateRequestData($data, $REQUIRED_FIELDS);
 
         $user = new User();
-        $user->name = $request_body["name"];
+        $user->first_name = $request_body["first_name"];
+        $user->last_name = $request_body["last_name"];
         $user->email = $request_body["email"];
         $user->password = $request_body["password"];
 
         $insert = $user->save();
 
         if (!$insert) {
-            throw new PDOException($user->fail(), code: Code::$BAD_REQUEST);
+            throw new PDOException($user->getMessage(), code: Code::$BAD_REQUEST);
         }
 
         $response = [
@@ -169,11 +170,11 @@ class Users extends ApiController
         $token = new TokenJWT();
         $response = [
             "id" => $user->id,
-            "name" => $user->name,
+            "name" => $user->first_name,
             "email" => $user->email,
             "token" => $token->create([
                 "id" => $user->id,
-                "name" => $user->name,
+                "name" => $user->first_name,
                 "email" => $user->email,
                 "access" => $access
             ])

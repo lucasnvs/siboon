@@ -2,7 +2,7 @@
 require  __DIR__ . "/../vendor/autoload.php";
 
 use CoffeeCode\Router\Router;
-use Source\App\Api\ErrorController;
+use Source\Controller\Api\ErrorController;
 use Source\Exceptions\RouterException;
 use Source\Response\Code;
 
@@ -12,26 +12,26 @@ try {
 
     $route = new Router(url("api"),":");
 
-    $route->namespace("Source\App\Api");
+    $route->namespace("Source\Controller\Api");
 
     $route->group("usuarios"); // Working
-    $route->get("/", "Users:listUsers");
-    $route->get("/{id}", "Users:getUser");
-    $route->post("/", "Users:insertUser");
-    $route->post("/update/{id}", "Users:updateUser");
-    $route->delete("/{id}", "Users:deleteUser");
-    $route->post("/login", "Users:login");
-    $route->post("/change-password", "Users:changePassword");
+    $route->get("/", "UserController:listUsers");
+    $route->get("/{id}", "UserController:getUser");
+    $route->post("/", "UserController:insertUser");
+    $route->post("/update/{id}", "UserController:updateUser");
+    $route->delete("/{id}", "UserController:deleteUser");
+    $route->post("/login", "UserController:login");
+    $route->post("/change-password", "UserController:changePassword");
 
     $route->group("faq");
-    $route->get("/","Faqs:listFaqs");
+    $route->get("/","FaqController:listFaqs");
 
     $route->group("produtos"); // Working
-    $route->get("/", "Products:listProducts");
-    $route->get("/{id}", "Products:getProduct");
-    $route->post("/", "Products:insertProduct");
-    $route->post("/update/{id}", "Products:updateProduct");
-    $route->delete("/{id}", "Products:deleteProduct");
+    $route->get("/", "ProductController:listProducts");
+    $route->get("/{id}", "ProductController:getProduct");
+    $route->post("/", "ProductController:insertProduct");
+    $route->post("/update/{id}", "ProductController:updateProduct");
+    $route->delete("/{id}", "ProductController:deleteProduct");
 
     $route->group(null);
 

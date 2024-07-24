@@ -1,10 +1,10 @@
 <?php
 
-namespace Source\App;
+namespace Source\Controller;
 
 use League\Plates\Engine;
 
-class Admin
+class AdminController
 {
     private $view;
 

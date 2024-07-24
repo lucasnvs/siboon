@@ -1,6 +1,6 @@
 <?php
 
-namespace Source\App\Api;
+namespace Source\Controller\Api;
 
 use Exception;
 use Source\Core\ApiController;
@@ -9,7 +9,7 @@ use Source\Models\Faq\Type;
 use Source\Response\Code;
 use Source\Response\Response;
 
-class Faqs extends ApiController
+class FaqController extends ApiController
 {
 
     public function listFaqs()

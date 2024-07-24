@@ -1,14 +1,15 @@
 <?php
 
-namespace Source\App;
+namespace Source\Controller;
 
 use League\Plates\Engine;
-use Source\App\Api\Faqs;
+use Source\Controller\Api\FaqController;
 use Source\Models\Faq\Question;
 use Source\Models\Faq\Type;
 
-class Web
+class WebController
 {
+    /** @var Engine */
     private $view;
     private $router;
 
@@ -49,7 +50,7 @@ class Web
 
     public function faq()
     {
-        $faqs = (new Faqs())->listFaqs();
+        $faqs = (new FaqController())->listFaqs();
         echo $this->view->render("faq/faq", [
             "title" => "FAQ",
             "faqs" => $faqs,

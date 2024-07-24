@@ -1,6 +1,6 @@
 <?php
 
-namespace Source\App\Api;
+namespace Source\Controller\Api;
 
 use Exception;
 use PDOException;
@@ -9,7 +9,7 @@ use Source\Models\Product;
 use Source\Response\Code;
 use Source\Response\Response;
 
-class Products extends ApiController
+class ProductController extends ApiController
 {
     public function listProducts()
     {

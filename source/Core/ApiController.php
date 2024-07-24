@@ -14,7 +14,7 @@ class ApiController
     protected int $endpointAccess;
     protected $ACCESS_LOGGED = 1;
     protected $ACCESS_ADMIN = 2;
-    private string $authorizationBearer;
+    private ?string $authorizationBearer = null;
 
     public function __construct()
     {
@@ -106,9 +106,8 @@ class ApiController
 
         if(isset($REQUIRED_FIELDS)) {
             foreach ($REQUIRED_FIELDS as $field) {
-                if(!isset($request_body[$field])){
-                    var_dump($request_body[$field]);
-                    throw new InvalidArgumentException("Todos os campos devem estar presentes! Campo não enviado: $field", Code::$BAD_REQUEST);
+                if(!$request_body[$field] || $request_body[$field] == "") {
+                    throw new InvalidArgumentException("Todos os campos devem estar presentes e preenchidos! Campo não enviado: $field", Code::$BAD_REQUEST);
                 }
             }
         }

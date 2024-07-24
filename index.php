@@ -8,32 +8,30 @@ ob_start();
 
 $route = new Router(url(), ":");
 
-$route->namespace("Source\App");
+$route->namespace("Source\Controller");
 
 $route->group(null);
 
 // Guest
-$route->get("/", "Web:home");
-$route->get("/contato", "Web:contact");
-$route->get("/entrar", "Web:login");
-$route->get("/sobre", "Web:about");
-$route->get("/faq", "Web:faq");
-$route->get("/secao", "Web:section"); // rota template
-$route->get("/ops/{errcode}", "Web:error");
+$route->get("/", "WebController:home");
+$route->get("/contato", "WebController:contact");
+$route->get("/entrar", "WebController:login");
+$route->get("/sobre", "WebController:about");
+$route->get("/faq", "WebController:faq");
+$route->get("/secao", "WebController:section"); // rota template
+$route->get("/ops/{errcode}", "WebController:error");
 
 $route->group("produto");
-$route->get("/{name}", "Web:product"); // rota template
+$route->get("/{name}", "WebController:product"); // rota template
 
 // Logged
-$route->get("/perfil", "Web:profile"); // rota de user logado
-
+$route->get("/perfil", "WebController:profile"); // rota de user logado
 
 // Admin
-$route->group("admin");
-// transformar em rota privade de admin
-$route->get("/", "Admin:home");
-$route->get("/produtos", "Admin:product");
-$route->get("/produtos/registrar", "Admin:productRegister");
+$route->group("admin"); // transformar em rota privada de admin
+$route->get("/", "AdminController:home");
+$route->get("/produtos", "AdminController:product");
+$route->get("/produtos/registrar", "AdminController:productRegister");
 
 $route->group(null);
 
