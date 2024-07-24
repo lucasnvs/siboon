@@ -10,7 +10,7 @@ class User extends DataLayer {
     private $message;
 
     public function __construct() {
-        parent::__construct("users", ["name", "email", "password"], timestamps: false);
+        parent::__construct("users", ["first_name", "last_name", "email", "password"], timestamps: false);
     }
 
     #[\Override]
@@ -96,7 +96,7 @@ class User extends DataLayer {
         $this->message = "Usuário logado com sucesso!";
 
         $this->id = $user->id;
-        $this->name = $user->name;
+        $this->first_name = $user->first_name;
         $this->email = $user->email;
         $this->role = $user->role;
 

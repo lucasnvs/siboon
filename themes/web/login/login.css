@@ -20,13 +20,13 @@
     gap: 5%;
 }
 
-#form {
+.form {
     display: flex;
     flex-direction: column;
     gap: 15px;
 }
 
-#form p {
+.form p {
     font-weight: 600;
     text-transform: uppercase;
 }

@@ -13,6 +13,12 @@ function url(string $path = null): string
     }
     return CONF_URL_BASE;
 }
+
+function api(string $resource): string
+{
+    return url("api/$resource");
+}
+
 function assets(string $resource, string $theme = "web"): string
 {
     return url("themes/$theme/$resource");
