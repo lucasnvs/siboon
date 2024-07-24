@@ -1,6 +1,6 @@
 <?php $this->layout("master"); ?>
 <?php $this->start("specific-style"); ?>
-    <link rel="stylesheet" href="<?= assets('css/product_register.css', 'admin') ?>">
+    <link rel="stylesheet" href="<?= assets('product_register/product_register.css', 'admin') ?>">
     <link rel="stylesheet" href="<?= assets('components/InputQuantity/InputQuantity.css', 'shared') ?>">
 <?php $this->end(); ?>
 <?php $this->start("specific-script"); ?>

@@ -16,7 +16,7 @@ a {
 }
 
 .background-blur {
-    display: block;  /* change to none */
+    display: none;  /* change to none */
     z-index: 1;
     position: fixed;
     top: 0;
