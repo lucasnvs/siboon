@@ -2,8 +2,17 @@
 
 use Source\Helpers\Env;
 
+# STORAGE DIRECTORIES
+const CONF_UPLOAD_DIR = "storage";
+const CONF_UPLOAD_IMAGE_DIR = "images";
+const CONF_UPLOAD_FILE_DIR = "files";
+
 # JWT
 define("JWT_SECRET_KEY", Env::get("JWT_SECRET_KEY"));
+
+# URL
+define("CONF_URL_TEST", Env::get("URL_TEST"));
+define("CONF_URL_BASE", Env::get("URL_BASE"));
 
 # DB
 define("CONF_DB_HOST", Env::get("DB_HOST"));
@@ -11,10 +20,6 @@ define("CONF_DB_USER", Env::get("DB_USER"));
 define("CONF_DB_PASS", Env::get("DB_PASS"));
 define("CONF_DB_NAME", Env::get("DB_NAME"));
 define("CONF_DB_PORT", Env::get("DB_PORT"));
-
-# URL
-define("CONF_URL_TEST", Env::get("URL_TEST"));
-define("CONF_URL_BASE", Env::get("URL_BASE"));
 
 const DATA_LAYER_CONFIG = [
     "driver" => "mysql",
