@@ -29,4 +29,10 @@ class ErrorController
         );
     }
 
+    public static function getExceptionName(Exception $e) {
+        $exceptions = self::getExceptions();
+        $exceptionName = get_class($e);
+
+        return $exceptions[$exceptionName] ?? "unknown";
+    }
 }

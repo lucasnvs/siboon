@@ -50,10 +50,8 @@ class WebController
 
     public function faq()
     {
-        $faqs = (new FaqController())->listFaqs();
         echo $this->view->render("faq/faq", [
             "title" => "FAQ",
-            "faqs" => $faqs,
         ]);
     }
 
@@ -67,10 +65,13 @@ class WebController
     public function product ()
     {
         $productName = "T-Shirt Diamond Black Piano";
-
         $this->router->route("produto/{name}", [
             "name" => buildStringFriendlyURL($productName)
         ]);
+
+        if($this->router->current()->path !== "/produto/".buildStringFriendlyURL($productName)) {
+            $this->router->redirect("/ops/404");
+        }
 
         echo $this->view->render("product/product", [
             "title" => $productName

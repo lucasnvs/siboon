@@ -83,7 +83,7 @@ class ApiController
         $content_type = isset($_SERVER['CONTENT_TYPE']) ? explode(";", $_SERVER['CONTENT_TYPE'])[0] : '';
 
         if (!in_array($content_type, $this->ALLOWED_REQUEST_TYPES)) {
-            throw new InvalidArgumentException("Os 'Content-Type' aceitos são application/json e multipart/form-data.", Code::$BAD_REQUEST);
+            throw new InvalidArgumentException("Os 'Content-Type' aceitos são application/json e multipart/form-data. $content_type é inválido.", Code::$BAD_REQUEST);
         }
 
         return $content_type;

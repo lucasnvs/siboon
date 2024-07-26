@@ -3,16 +3,18 @@
 namespace Source\Controller;
 
 use League\Plates\Engine;
+use Source\Core\ApiController;
 
-class AdminController
+class AdminController extends ApiController
 {
     private $view;
 
     public function __construct()
     {
+//        $this->setAccessToEndpoint($this->ACCESS_ADMIN);
+
         $this->view = new Engine(__DIR__ . "/../../themes/admin", "php");
         $this->view->addFolder('shared', __DIR__ . '/../../themes/shared');
-
     }
 
     public function home ()

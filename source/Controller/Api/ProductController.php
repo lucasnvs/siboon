@@ -2,7 +2,9 @@
 
 namespace Source\Controller\Api;
 
+use CoffeeCode\Uploader\Image;
 use Exception;
+use http\Exception\InvalidArgumentException;
 use PDOException;
 use Source\Core\ApiController;
 use Source\Models\Product;
@@ -42,18 +44,23 @@ class ProductController extends ApiController
 
     public function insertProduct(array $data)
     {
-        $REQUIRED_FIELDS = ["name", "description", "color", "size", "price_brl", "res_path"];
-
+        $REQUIRED_FIELDS = ["name", "description", "color", "size", "price_brl"];
         $request_body = $this->validateRequestData($data, $REQUIRED_FIELDS);
 
+        if (!$_FILES["product-img"]) throw new InvalidArgumentException("Você deve enviar a imagem do produto. Campo: 'product-img'", Code::$BAD_REQUEST);
+
         $product = new Product();
+
+        $image = new Image(CONF_UPLOAD_DIR, CONF_UPLOAD_IMAGE_DIR);
+        $name = md5(uniqid(rand(), true));
+        $upload = $image->upload($_FILES['product-img'], $name, 1000);
 
         $product->name = $request_body["name"];
         $product->description = $request_body["description"];
         $product->color = $request_body["color"];
         $product->size = $request_body["size"];
         $product->price_brl = $request_body["price_brl"];
-        $product->res_path = $request_body["res_path"];
+        $product->res_path = $upload;
 
         $isCreated = $product->save();
 
@@ -61,7 +68,7 @@ class ProductController extends ApiController
             throw new PDOException($product->fail(), Code::$BAD_REQUEST);
         }
 
-        return Response::success( message: "Produto criado com sucesso.", code: Code::$CREATED);
+        return Response::success(message: "Produto criado com sucesso.", code: Code::$CREATED);
     }
 
     public function updateProduct(array $data)
