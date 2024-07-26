@@ -1,5 +1,8 @@
+import {getAuthorization, URL_BASE_API} from "../../shared/Constants.js";
+
 const formSignup = document.getElementById("signup");
 const formLogin = document.getElementById("login");
+
 formSignup.addEventListener("submit",async (e) => {
     e.preventDefault();
 
@@ -12,26 +15,33 @@ formSignup.addEventListener("submit",async (e) => {
         return
     }
 
-    let action = formSignup.attributes.getNamedItem("data-action").value;
-    let options = {
-        method: "post",
-        body: formDataSignup
-    }
-
-    let response = await fetch(action, options).then(res => res.json());
-    console.log(response);
+    await signup(formDataSignup);
 })
 
 formLogin.addEventListener("submit", async (e) => {
     e.preventDefault();
 
     let formDataLogin = new FormData(formLogin);
-    let action = formLogin.attributes.getNamedItem("data-action").value;
-    let options = {
-        method: "post",
-        body: formDataLogin
-    }
+    await login(formDataLogin);
 
-    let response = await fetch(action, options).then(res => res.json());
-    console.log(response);
+    console.log(getAuthorization())
 })
+
+async function login(body) {
+    let res = await fetch(URL_BASE_API+"/usuarios/login", {
+        method: "POST",
+        body: body
+    });
+    if(!res.ok) throw res;
+    let responseBody = await res.json();
+
+    localStorage.setItem("authorization", responseBody.data.token);
+}
+
+async function signup() {
+    let res = await fetch(URL_BASE_API+"/usuarios", {
+        method: "POST",
+        body: body
+    });
+    if(!res.ok) throw res;
+}

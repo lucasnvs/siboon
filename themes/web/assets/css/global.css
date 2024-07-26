@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
 * {
     margin: 0;
     padding: 0;
@@ -16,14 +17,14 @@ a {
 }
 
 .background-blur {
-    display: none;  /* change to none */
+    display: none; /* change to none */
     z-index: 1;
     position: fixed;
     top: 0;
     bottom: 0;
     left: 0;
     right: 0;
-    background-color: rgba(0,0,0,0.45);
+    background-color: rgba(0, 0, 0, 0.45);
 }
 
 .btn {
@@ -37,10 +38,29 @@ a {
     background-color: var(--primary-color);
     color: #FFF;
     transition: all ease-in-out 200ms;
-}.btn:hover {
-     background-color: #FFF;
-     color: var(--primary-color);
- }
+}
+.btn:hover {
+    background-color: #FFF;
+    color: var(--primary-color)
+}
+
+.btn.red {
+    border-color: #a30e0e;
+    background-color: #a30e0e;
+}
+.btn.red:hover {
+    background-color: #FFF;
+    color: #a30e0e;
+}
+
+.btn.green {
+    border-color: #1f7c10;
+    background-color: #1f7c10;
+}
+.btn.green:hover {
+    background-color: #FFF;
+    color: #1f7c10;
+}
 
 #span-top {
     display: flex;
@@ -65,8 +85,9 @@ a {
     cursor: pointer;
     border-radius: 4px;
 }
+
 .close-x:hover {
-    background-color: rgba(46,46,46,0.52);
+    background-color: rgba(46, 46, 46, 0.52);
 }
 
 .close-x:before {
@@ -80,6 +101,7 @@ a {
     background-color: #FFFFFF;
     transform: rotate(45deg);
 }
+
 .close-x:after {
     content: "";
     width: 18px;

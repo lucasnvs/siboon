@@ -1,4 +1,4 @@
-import {Component} from "../../assets/js/Component.js";
+import {Component} from "../Component.js";
 export class InputQuantity extends Component {
     id;
     quantity = 0;

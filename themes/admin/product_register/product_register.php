@@ -7,23 +7,41 @@
     <script type="module" src="<?= assets('product_register/product_register.js', 'admin') ?>" async></script>
 <?php $this->end(); ?>
 
-<a href="<?= url("admin/produtos") ?>"> <- Voltar</a>
+<header>
+    <a href="<?= url("admin/produtos") ?>">
+        <i class="material-symbols-outlined">arrow_back</i>
+        Voltar
+    </a>
 
-<br><br><br>
+    <div class="options">
+        <button id="clear-form" class="btn red">Limpar</button>
+        <button id="create-product" class="btn green">Salvar Produto</button>
+    </div>
+</header>
 
-<div id="form">
-    <div class="row"> <!-- Row 1 -->
-        <div class="col"> <!-- Col 1-->
+<section>
+    <div class="row">
+        <div class="input-container">
+            <div class="container-img">
+                <input type="file" id="product-image">
+                <label for="product-image"><img id="image-view" src="<?= assets("assets/imgs/example.jpg", "admin")?>"></label>
+            </div>
+        </div>
+        <div class="col">
             <div class="input-container">
                 <label for="product-name">Nome do Produto:</label>
                 <input class="default-input" type="text" id="product-name">
             </div>
             <div class="input-container">
                 <label for="product-description">Descrição:</label>
-                <textarea id="product-description" rows="8" cols="10"></textarea>
+                <textarea id="product-description" rows="12" cols="10"></textarea>
             </div>
         </div>
-        <div class="col">  <!-- Col 2 -->
+        <div class="col">
+            <div class="input-container">
+                <label for="product-price">Preço BRL:</label>
+                <input class="default-input" type="text" id="product-price">
+            </div>
             <div class="input-container">
                 <label for="product-color">Cor:</label>
                 <input class="default-input" type="text" id="product-color">
@@ -37,6 +55,8 @@
                     <option value="unique">Tamanho Único</option>
                 </select>
             </div>
+        </div>
+        <div class="col big">
             <div  class="input-container">
                 <label>Quais tamanhos estão disponiveis?</label>
                 <div id="available-sizes">
@@ -46,14 +66,8 @@
             <div class="input-container">
                 <label>Quantidades por tamanho:</label>
                 <div id="product-quantity-by-size">
-                    <div class="row">
-                        <label>P</label>
-                    </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="row">
-
-    </div>
-</div>
+</section>

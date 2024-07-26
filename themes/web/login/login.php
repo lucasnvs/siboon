@@ -3,7 +3,7 @@
 <link rel="stylesheet" href="<?= assets('login/login.css') ?>">
 <?php $this->end(); ?>
 <?php $this->start("specific-script"); ?>
-<script src="<?= assets('login/login.js') ?>" async></script>
+<script src="<?= assets('login/login.js') ?>" type="module" async></script>
 <?php $this->end(); ?>
 
 <section>

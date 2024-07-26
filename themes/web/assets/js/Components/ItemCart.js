@@ -1,4 +1,4 @@
-import {Component} from "../../../../shared/assets/js/Component.js";
+import {Component} from "../../../../shared/components/Component.js";
 import {InputQuantity} from "../../../../shared/components/InputQuantity/InputQuantity.js";
 
 export class ItemCart extends Component {

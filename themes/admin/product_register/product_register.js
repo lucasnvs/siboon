@@ -1,15 +1,59 @@
 import {InputQuantity} from "../../shared/components/InputQuantity/InputQuantity.js";
+import {getAuthorization, URL_BASE_API} from "../../shared/Constants.js";
 
-console.log("PRODUCT REGISTER - Running...")
+var staticCheckedsList = [];
+function updateQuantityBySize() {
+    let checkboxes = FORM_ELEMENTS.divAvailableSizes.querySelectorAll("input[type=checkbox]");
+    let checkeds = Array.prototype.filter.call(checkboxes, item => item.checked === true)
+
+    FORM_ELEMENTS.divQuantityBySize.innerHTML = "";
+    checkeds.forEach(check => {
+        FORM_ELEMENTS.divQuantityBySize.insertAdjacentHTML("beforeend", `
+                <div id="${check.value}" class="row-quantity-size">
+                    <label>${check.value}</label>
+                </div>
+           `)
+
+        let exist = staticCheckedsList.find(value => value.id === `quantity-${check.value}`)
+        if (exist === undefined) {
+            let newInputQuantity = new InputQuantity(check.value, `quantity-${check.value}`)
+            staticCheckedsList.push(newInputQuantity)
+            newInputQuantity.inflate();
+            return
+        }
+        exist.inflate()
+    })
+}
+
+async function createProduct(authorization, body) {
+    let res = await fetch(URL_BASE_API+"produtos", {
+        method: "POST",
+        headers: {
+            "Authorization": "Bearer" + authorization
+        },
+        body: body,
+    })
+    if(!res.ok) throw await res.text();
+}
 
 
-new InputQuantity("product-quantity-by-size", "id").inflate()
+const ACTIONS = {
+    clearForm: document.getElementById("clear-form"),
+    createProduct: document.getElementById("create-product")
+}
 
 const FORM_ELEMENTS = {
     selectSizeType: document.getElementById("product-size-type"),
     divAvailableSizes: document.getElementById("available-sizes"),
     divQuantityBySize: document.getElementById("product-quantity-by-size"),
+    inputImage: document.getElementById("product-image")
 }
+
+ACTIONS.createProduct.addEventListener("click", async (e) => {
+
+
+    await createProduct(getAuthorization(), JSON.stringify({case: "values"}));
+});
 
 FORM_ELEMENTS.selectSizeType.addEventListener("change", (e) => {
     const allowedValues = {
@@ -38,29 +82,15 @@ FORM_ELEMENTS.selectSizeType.addEventListener("change", (e) => {
     })
 })
 
+FORM_ELEMENTS.inputImage.addEventListener("change", e => {
+    console.log(e)
+    if (!(e.target && e.target.files && e.target.files.length > 0)) {
+        return;
+    }
+    const r = new FileReader();
+    r.onload = function() {
+        document.getElementById("image-view").src = r.result;
+    }
 
-var staticCheckedsList = [];
-
-function updateQuantityBySize() {
-    let checkboxes = FORM_ELEMENTS.divAvailableSizes.querySelectorAll("input[type=checkbox]");
-    let checkeds = Array.prototype.filter.call(checkboxes, item => item.checked === true)
-
-    FORM_ELEMENTS.divQuantityBySize.innerHTML = "";
-    checkeds.forEach(check => {
-        FORM_ELEMENTS.divQuantityBySize.insertAdjacentHTML("beforeend", `
-                <div id="${check.value}" class="row">
-                    <label>${check.value}</label>
-                </div>
-           `)
-
-        let exist = staticCheckedsList.find(value => value.id === `quantity-${check.value}`)
-        if (exist === undefined) {
-            let newInputQuantity = new InputQuantity(check.value, `quantity-${check.value}`)
-            staticCheckedsList.push(newInputQuantity)
-            newInputQuantity.inflate();
-            return
-        }
-        exist.inflate()
-    })
-}
-
+    r.readAsDataURL(e.target.files[0]);
+})
