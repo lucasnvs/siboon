@@ -21,6 +21,7 @@
 }
 
 .form {
+    width: 400px;
     display: flex;
     flex-direction: column;
     gap: 15px;
@@ -29,4 +30,9 @@
 .form p {
     font-weight: 600;
     text-transform: uppercase;
+}
+
+#login-error-message {
+    font-size: 14px;
+    color: #dc0e0e;
 }

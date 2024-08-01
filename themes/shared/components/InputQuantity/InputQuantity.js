@@ -49,7 +49,7 @@ export class InputQuantity extends Component {
         })
 
         this.btnMinus.addEventListener("click", () => {
-            this.quantity = Number(this.quantity) - 1;
+            this.quantity = Number(this.quantity) - 1 > 0 ? Number(this.quantity) - 1 : 0;
             this.inputQuantity.value = this.quantity;
         })
     }

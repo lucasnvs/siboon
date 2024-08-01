@@ -121,3 +121,21 @@ body {
     opacity: 0;
     visibility: hidden;
 }
+
+.container-section {
+    width: 100%;
+    border: 1px solid #DDDDDD;
+    background-color: #FFFFFF;
+}
+
+.container-section-header {
+    padding: 10px;
+    font-weight: 500;
+    font-size: 18px;
+    background-color: #EFEFEF;
+    border-bottom: 1px solid #DDDDDD;
+}
+
+.container-section-body {
+    padding: 15px;
+}

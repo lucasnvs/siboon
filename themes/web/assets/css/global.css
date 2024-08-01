@@ -26,7 +26,9 @@ a {
     right: 0;
     background-color: rgba(0, 0, 0, 0.45);
 }
-
+/*
+    BUTTONS
+ */
 .btn {
     letter-spacing: 1px;
     cursor: pointer;
@@ -61,7 +63,9 @@ a {
     background-color: #FFF;
     color: #1f7c10;
 }
-
+/*
+    WEBSITE TOP MESSAGE
+ */
 #span-top {
     display: flex;
     align-items: center;
@@ -78,6 +82,9 @@ a {
     right: 10px;
 }
 
+/*
+    CLOSE BUTTON
+ */
 .close-x {
     position: relative;
     width: 20px;
@@ -112,8 +119,11 @@ a {
     background-color: #FFFFFF;
     transform: rotate(-45deg);
 }
-
+/*
+    INPUTS
+ */
 .input-container {
+    width: 100%;
     display: flex;
     flex-direction: column;
     gap: 3px;
@@ -123,7 +133,7 @@ a {
 select,
 textarea {
     outline: 0;
-    width: 400px;
+    width: 100%;
     min-height: 35px;
     padding: 6px 12px;
     font-weight: 500;
@@ -132,6 +142,23 @@ textarea {
 textarea {
     resize: none;
 }
+/*
+    SIZES
+ */
+.sizes {
+    display: flex;
+    gap: 6px;
+}
+
+.sizes .size {
+    border: 0;
+    background: none;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 2px 6px;
+}.sizes .size:hover {
+     color: var(--primary-color);
+ }
 
 /* Grid de produtos compartilhado entre páginas */
 

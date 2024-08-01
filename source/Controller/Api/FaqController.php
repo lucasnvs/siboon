@@ -2,7 +2,6 @@
 
 namespace Source\Controller\Api;
 
-use Exception;
 use Source\Core\ApiController;
 use Source\Models\Faq\Question;
 use Source\Models\Faq\Type;

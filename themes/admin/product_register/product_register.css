@@ -1,5 +1,6 @@
 #main {
     padding: 0;
+    overflow-y: scroll;
 }
 
 #main > header {
@@ -27,8 +28,13 @@
 }
 
 #main > section {
-    display: flex;
-    flex-direction: column;
+    display: grid;
+    -ms-grid-row-align: center;
+    justify-content: center;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    grid-auto-flow: row;
+    grid-auto-rows: max-content;
+    grid-gap: 15px;
     padding: 30px;
 }
 
@@ -47,15 +53,8 @@
 .col {
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 20px;
-}
-
-.col.big {
-    width: 430px;
-}
-.col.big .input-container > input[type="text"],
-.col.big select {
-    width: 100%;
 }
 
 #available-sizes {
@@ -63,20 +62,32 @@
     grid-template-columns: 1fr 1fr 1fr 1fr;
 }
 
-.container-img {
-    min-width: 100%;
-    height: 300px;
+#main > section > .images {
+    position: relative;
+    height: fit-content !important;
+    max-width: 450px;
     display: flex;
-    align-self: center;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
+    gap: 5px;
 }
 
-#product-image {
+#main > section > .images > .input-container {
+    width: fit-content;
+}
+.container-img {
+    width: fit-content;
+    height: 100%;
+    display: flex;
+}
+
+.images input[type="file"] {
     display: none;
 }
 
-label[for="product-image"] {
-    min-width: 100%;
+.product-image-label {
+    width: 100%;
     height: 100%;
     cursor: pointer;
     border: 3px solid var(--primary-neutral-color);
@@ -86,13 +97,20 @@ label[for="product-image"] {
     transition: all 125ms ease-in-out;
     padding: 6px;
 }
-label[for="product-image"]:hover {
+.product-image-label:hover {
     background-color: rgba(30, 30, 30, 0.6);
 }
 
 label img {
     max-width: 100%;
-    max-height: 100%;
+    height: 100%;
+    border-radius: 16px;
+}
+
+.additional-images {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
 }
 
 #product-quantity-by-size {

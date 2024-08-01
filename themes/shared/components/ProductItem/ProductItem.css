@@ -16,6 +16,11 @@
     color: black;
 }
 
+.product-container img {
+    width: 100%;
+    max-width: 250px;
+}
+
 .product-container:hover .sizes,
 .product-container:hover span,
 .product-container:hover .btn {
@@ -42,22 +47,6 @@
     font-size: 14px;
     font-weight: 600;
 }
-
-.sizes {
-    display: flex;
-    gap: 6px;
-    opacity: 0;
-}
-
-.sizes .size {
-    border: 0;
-    background: none;
-    font-weight: 600;
-    cursor: pointer;
-    padding: 2px 6px;
-}.sizes .size:hover {
-     color: var(--primary-color);
- }
 
 .product-container span {
     color: var(--primary-color);

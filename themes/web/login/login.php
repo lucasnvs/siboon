@@ -20,6 +20,7 @@
             </div>
             <a>Esqueci minha senha</a>
             <input class="btn" type="submit" value="Entrar">
+            <span id="login-error-message"></span>
         </form>
 
         <form id="signup" data-action="<?= api('usuarios')?>" class="form" method="post">

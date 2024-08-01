@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="<?= assets('assets/icons/siboon-logo-icon.svg') ?>">
-    <title> ADMIN | Siboon Skate Shop </title>
+    <title> <?= $this->e($title) ?> >> ADMIN SB </title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"/>
     <link rel="stylesheet" href="<?= assets('assets/css/global.css') ?>">
     <link rel="stylesheet" href="<?= assets('assets/css/layout_admin.css', 'admin') ?>">
@@ -27,15 +27,15 @@
         <nav id="navigation">
             <a href="<?= url("admin/") ?>">
                 <button>
-                    <span>
+                    <span title="Home">
                         <i class="material-symbols-outlined">home</i>
                         <span>Home</span>
                     </span>
                 </button>
             </a>
-            <a>
+            <a href="<?= url("admin/vendas") ?>">
                 <button>
-                    <span>
+                    <span title="Vendas">
                         <i class="material-symbols-outlined">store</i>
                         <span>Vendas</span>
                     </span>
@@ -43,23 +43,23 @@
             </a>
             <a href="<?= url("admin/produtos") ?>">
                 <button>
-                    <span>
+                    <span title="Produtos">
                         <i class="material-symbols-outlined">package_2</i>
                         <span>Produtos</span>
                     </span>
                 </button>
             </a>
-            <a>
+            <a href="<?= url("admin/clientes") ?>">
                 <button>
-                    <span>
+                    <span title="Clientes">
                         <i class="material-symbols-outlined">groups</i>
                         <span>Clientes</span>
                     </span>
                 </button>
             </a>
-            <a>
+            <a href="<?= url("admin/website") ?>">
                 <button>
-                    <span>
+                    <span title="Website">
                         <i class="material-symbols-outlined">public</i>
                         <span>Website</span>
                     </span>
@@ -67,7 +67,7 @@
             </a>
             <a href="<?= url("admin/faq") ?>">
                 <button>
-                    <span>
+                    <span title="Perguntas Frequentes">
                         <i class="material-symbols-outlined">quiz</i>
                         <span>FAQ</span>
                     </span>
@@ -75,7 +75,7 @@
             </a>
             <a href="<?= url("admin/institucional") ?>">
                 <button>
-                    <span>
+                    <span title="Institucional">
                         <i class="material-symbols-outlined">domain</i>
                         <span>Institucional</span>
                     </span>
@@ -84,16 +84,16 @@
         </nav>
 
         <footer>
-            <a href="<?= url("admin/institucional") ?>">
-                <button>
+            <a href="<?= url("admin/configuracoes") ?>">
+                <button title="Configurações">
                     <span>
                         <i class="material-symbols-outlined">settings</i>
                         <span>Configurações</span>
                     </span>
                 </button>
             </a>
-            <a href="<?= url("admin/institucional") ?>">
-                <button>
+            <a href="<?= url("/") ?>">
+                <button title="Sair">
                     <span>
                         <i class="material-symbols-outlined">arrow_back</i>
                         <span>Sair</span>

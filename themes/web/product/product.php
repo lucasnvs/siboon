@@ -1,27 +1,27 @@
-<?php $this->layout("master", ['title' => $title]); ?>
+<?php $this->layout("master", ['title' => $title, 'product' => $product]); ?>
 <?php $this->start("specific-style"); ?>
-    <link rel="stylesheet" href="<?= assets('product/product.css') ?>">
+<link rel="stylesheet" href="<?= assets('product/product.css') ?>">
+<?php $this->end(); ?>
+<?php $this->start("specific-script"); ?>
+<script src="<?= assets('product/product.js') ?>" type="module" async></script>
 <?php $this->end(); ?>
 
 <div id="product-image-container">
     <div class="side-images-container">
-        <img src="<?= assets('assets/imgs/black-tshirt.jpg') ?>" class="side-image">
-        <img src="<?= assets('assets/imgs/black-tshirt.jpg') ?>" class="side-image">
-        <img src="<?= assets('assets/imgs/black-tshirt.jpg') ?>" class="side-image">
-        <img src="<?= assets('assets/imgs/black-tshirt.jpg') ?>" class="side-image">
+        <img src="<?= url($product["res_path"]) ?>" class="side-image">
+        <img src="<?= url($product["res_path"]) ?>" class="side-image">
+        <img src="<?= url($product["res_path"]) ?>" class="side-image">
+        <img src="<?= url($product["res_path"]) ?>" class="side-image">
     </div>
-    <img src="<?= assets('assets/imgs/black-tshirt.jpg') ?>"  id="principal-image">
+    <img src="<?= url($product["res_path"]) ?>"  id="principal-image">
 </div>
 
 <div id="product-description-container">
-    <h2>CAMISA INDEPENDENT OVERSIZES - TRUCK CO.</h2>
-    <p>R$ 179,90</p>
-    <p>ou até 3x de R$ 59,97</p>
+    <h2><?= $product["name"] ?></h2>
+    <p><?= $product["formated_price_brl"] ?></p>
+    <p>ou até 3x de <?= "R$ ".number_format($product["price_brl"] / 3, 2, ",", ".") ?></p>
 
-    <p>Meia malha fio 26 feita 100% de algodão, com processo biopolimento que
-        elimina fibras soltas. Lavagem anti-encolhimento, com amaciamento com
-        silicone para maior maciez; Algodão Sustentável Certificado, com selo
-        BCI (Better Cotton Initiative); Silk a base d’água e etiquetas localizadas.</p>
+    <p><?= $product["description"] ?></p>
 
     <p>TAMANHO</p>
     <div class="sizes">
@@ -31,13 +31,9 @@
         <button class="size">GG</button>
     </div>
 
-    <div>
+    <div id="quantity-container">
         <p>QUANTIDADE</p>
-        <div class="quantity-container">
-            <button id="quantity-plus">+</button>
-            <input type="number">
-            <button id="quantity-minus">-</button>
-        </div>
-        <button class="btn">COMPRAR</button>
     </div>
+    <button class="btn">COMPRAR</button>
+
 </div>

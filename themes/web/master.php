@@ -5,10 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="<?= assets('assets/icons/siboon-logo-icon.svg') ?>">
     <title> <?=$this->e($title)?> - Siboon Skate Shop </title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"/>
     <link rel="stylesheet" href="<?= assets('assets/css/global.css') ?>">
     <link rel="stylesheet" href="<?= assets('assets/css/layout_web.css') ?>">
     <link rel="stylesheet" href="<?= assets('assets/css/cart.css') ?>">
-    <link rel="stylesheet" href="<?= assets('assets/css/components/InputQuantity.css','shared') ?>">
+    <link rel="stylesheet" href="<?= assets('components/InputQuantity/InputQuantity.css','shared') ?>">
     <?php if ($this->section("specific-style")): ?>
         <?= $this->section("specific-style") ?>
     <?php endif; ?>
@@ -80,9 +81,14 @@
         </div>
 
         <div id="option-menu">
-            <img src="<?= assets('assets/icons/search.svg') ?>">
-            <a href="<?= url("entrar") ?>"><img src="<?= assets('assets/icons/user.svg') ?>"></a>
-            <img id="cart-button" src="<?= assets('assets/icons/shopping-bag.svg') ?>">
+            <i class="material-symbols-outlined">search</i>
+<!--            <img src="--><?php //= assets('assets/icons/search.svg') ?><!--">-->
+            <?php if (isset($isLogged) && $this->e($isLogged)): ?>
+                <a href="<?= url("/app/perfil") ?>"><i class="material-symbols-outlined">account_circle</i></a>
+                <?php else: ?>
+                <a href="<?= url("entrar") ?>"><i class="material-symbols-outlined">account_circle</i></a>
+            <?php endif; ?>
+            <i id="cart-button" class="material-symbols-outlined">shopping_bag</i>
         </div>
     </header>
 

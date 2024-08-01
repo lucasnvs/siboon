@@ -1,61 +1,69 @@
-import {InputQuantity} from "../../shared/components/InputQuantity/InputQuantity.js";
 import {getAuthorization, URL_BASE_API} from "../../shared/Constants.js";
-
-var staticCheckedsList = [];
-function updateQuantityBySize() {
-    let checkboxes = FORM_ELEMENTS.divAvailableSizes.querySelectorAll("input[type=checkbox]");
-    let checkeds = Array.prototype.filter.call(checkboxes, item => item.checked === true)
-
-    FORM_ELEMENTS.divQuantityBySize.innerHTML = "";
-    checkeds.forEach(check => {
-        FORM_ELEMENTS.divQuantityBySize.insertAdjacentHTML("beforeend", `
-                <div id="${check.value}" class="row-quantity-size">
-                    <label>${check.value}</label>
-                </div>
-           `)
-
-        let exist = staticCheckedsList.find(value => value.id === `quantity-${check.value}`)
-        if (exist === undefined) {
-            let newInputQuantity = new InputQuantity(check.value, `quantity-${check.value}`)
-            staticCheckedsList.push(newInputQuantity)
-            newInputQuantity.inflate();
-            return
-        }
-        exist.inflate()
-    })
-}
-
-async function createProduct(authorization, body) {
-    let res = await fetch(URL_BASE_API+"produtos", {
-        method: "POST",
-        headers: {
-            "Authorization": "Bearer" + authorization
-        },
-        body: body,
-    })
-    if(!res.ok) throw await res.text();
-}
-
 
 const ACTIONS = {
     clearForm: document.getElementById("clear-form"),
     createProduct: document.getElementById("create-product")
 }
 
+const inputsImages = [
+    document.getElementById("product-image"),
+    document.getElementById("product-image-additional-1"),
+    document.getElementById("product-image-additional-2"),
+    document.getElementById("product-image-additional-3"),
+]
+
 const FORM_ELEMENTS = {
+    inputsImages,
+    inputImage: document.getElementById("product-image"),
+    inputName: document.getElementById("product-name"),
+    inputDescription: document.getElementById("product-description"),
+    inputPrice: document.getElementById("product-price"),
+    inputColor: document.getElementById("product-color"),
     selectSizeType: document.getElementById("product-size-type"),
-    divAvailableSizes: document.getElementById("available-sizes"),
-    divQuantityBySize: document.getElementById("product-quantity-by-size"),
-    inputImage: document.getElementById("product-image")
+}
+
+console.log(document.querySelector("#product-image .image-view"))
+async function createProduct(headers, body) {
+    let res = await fetch(URL_BASE_API+"produtos", {
+        method: "POST",
+        headers: headers,
+        body: body,
+    })
+    if(!res.ok) throw await res.text();
+
+    return await res.json();
 }
 
 ACTIONS.createProduct.addEventListener("click", async (e) => {
+    const formData = new FormData();
+    // formData.append("image", FORM_ELEMENTS.inputImage.files[0])
+    formData.append("name", FORM_ELEMENTS.inputName.value)
+    formData.append("description", FORM_ELEMENTS.inputDescription.value)
+    formData.append("price_brl", FORM_ELEMENTS.inputPrice.value)
+    formData.append("color", FORM_ELEMENTS.inputColor.value)
+    formData.append("size_type", FORM_ELEMENTS.selectSizeType.value)
 
+    const headers = {
+        "Authorization": "Bearer" + getAuthorization(),
+    }
 
-    await createProduct(getAuthorization(), JSON.stringify({case: "values"}));
+    let res = await createProduct(headers, formData);
+    console.log(res)
+});
+
+ACTIONS.clearForm.addEventListener("click", e => {
+    FORM_ELEMENTS.inputsImages.forEach(i => i.value = "")
+    document.querySelectorAll(".image-view").forEach( i => i.src = "../../themes/admin/assets/imgs/example.jpg");
+
+    FORM_ELEMENTS.inputName.value = "";
+    FORM_ELEMENTS.inputDescription.value = "";
+    FORM_ELEMENTS.inputPrice.value = "";
+    FORM_ELEMENTS.inputColor.value = "";
+    FORM_ELEMENTS.selectSizeType.value = "";
 });
 
 FORM_ELEMENTS.selectSizeType.addEventListener("change", (e) => {
+
     const allowedValues = {
         cloth: ["PP", "P", "M", "G", "GG", "GGG", "X", "XX", "XL", "XXL"],
         shoes: ["31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45"],
@@ -65,32 +73,20 @@ FORM_ELEMENTS.selectSizeType.addEventListener("change", (e) => {
     let value = e.target.value;
     let type = allowedValues[value];
     if (type === undefined) throw new Error(`Not Allowed Value: The value for the option "${value}", it is not allowed in the "allowedValues" variable.`)
-
-    FORM_ELEMENTS.divAvailableSizes.innerHTML = "";
-    type.forEach(type => { // escreve as checkboxes
-        FORM_ELEMENTS.divAvailableSizes.innerHTML += `
-                <div>
-                    <input id="size-${type}" name="size" value="${type}" type="checkbox">
-                    <label for="size-${type}">${type}</label>
-                </div>
-        `
-    })
-    FORM_ELEMENTS.divAvailableSizes.querySelectorAll("input[type=checkbox]").forEach(checkbox => {
-        checkbox.addEventListener("change", () => { // add evento de change em todas checkboxes
-            updateQuantityBySize();
-        })
-    })
 })
 
-FORM_ELEMENTS.inputImage.addEventListener("change", e => {
-    console.log(e)
-    if (!(e.target && e.target.files && e.target.files.length > 0)) {
-        return;
-    }
-    const r = new FileReader();
-    r.onload = function() {
-        document.getElementById("image-view").src = r.result;
-    }
 
-    r.readAsDataURL(e.target.files[0]);
+FORM_ELEMENTS.inputImage.value = "";
+FORM_ELEMENTS.inputsImages.forEach(input => {
+    input.addEventListener("change", e => {
+        if (!(e.target && e.target.files && e.target.files.length > 0)) {
+            return;
+        }
+        const r = new FileReader();
+        r.onload = function() {
+            document.querySelector(`label[for="${e.target.id}"] .image-view`).src = r.result;
+        }
+
+        r.readAsDataURL(e.target.files[0]);
+    })
 })

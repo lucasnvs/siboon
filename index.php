@@ -12,9 +12,10 @@ try {
 
     $route->namespace("Source\Controller");
 
+    /*
+     * WEB - GUEST
+     */
     $route->group(null);
-
-    // Guest
     $route->get("/", "WebController:home");
     $route->get("/contato", "WebController:contact");
     $route->get("/entrar", "WebController:login");
@@ -26,21 +27,32 @@ try {
     $route->group("produto");
     $route->get("/{name}", "WebController:product"); // rota template
 
-    $route->group(null);
-    // Logged
-    $route->get("/perfil", "WebController:profile"); // rota de user logado
+    /*
+     * APP - LOGGED
+     */
+    $route->group("app");
+    $route->get("/perfil", "AppController:profile");
 
-    // Admin
+    /*
+     * ADMIN
+     */
     $route->group("admin");
-    $route->get("/login", function () {
-        echo "Login de Admin";
-    });
+    $route->get("/login", function () {echo "Login de Admin";});
     $route->get("/", "AdminController:home");
-    $route->get("/produtos", "AdminController:product");
-    $route->get("/produtos/registrar", "AdminController:productRegister");
+    $route->get("/vendas", function () {echo "Vendas";});
+    $route->get("/website", function () {echo "Website";});
+    $route->get("/faq", function () {echo "Faq";});
+    $route->get("/institucional", function () {echo "Institucional";});
+    $route->get("/configuracoes", function () {echo "Configurações";});
+
+    $route->get("/clientes", "AdminController:client");
+
+    $route->group("admin/produtos");
+    $route->get("/", "AdminController:product");
+    $route->get("/registrar", "AdminController:productRegister");
+    $route->get("/{id}/editar", "AdminController:productEdit");
 
     $route->group(null);
-
     $route->dispatch();
 
     if ($route->error()) {

@@ -1,4 +1,4 @@
-<?php $this->layout("master"); ?>
+<?php $this->layout("master", ["title" => $title]); ?>
 <?php $this->start("specific-style"); ?>
     <link rel="stylesheet" href="<?= assets('product_register/product_register.css', 'admin') ?>">
     <link rel="stylesheet" href="<?= assets('components/InputQuantity/InputQuantity.css', 'shared') ?>">
@@ -20,11 +20,33 @@
 </header>
 
 <section>
-    <div class="row">
-        <div class="input-container">
-            <div class="container-img">
-                <input type="file" id="product-image">
-                <label for="product-image"><img id="image-view" src="<?= assets("assets/imgs/example.jpg", "admin")?>"></label>
+        <div class="images">
+            <div class="input-container">
+                <div class="container-img">
+                    <input type="file" id="product-image">
+                    <label class="product-image-label" for="product-image"><img class="image-view" src="<?= assets("assets/imgs/example.jpg", "admin")?>"></label>
+                </div>
+            </div>
+
+            <div class="additional-images">
+                <div class="input-container">
+                    <div class="container-img">
+                        <input type="file" id="product-image-additional-1">
+                        <label class="product-image-label" for="product-image-additional-1"><img class="image-view" src="<?= assets("assets/imgs/example.jpg", "admin")?>"></label>
+                    </div>
+                </div>
+                <div class="input-container">
+                    <div class="container-img">
+                        <input type="file" id="product-image-additional-2">
+                        <label class="product-image-label" for="product-image-additional-2"><img class="image-view" src="<?= assets("assets/imgs/example.jpg", "admin")?>"></label>
+                    </div>
+                </div>
+                <div class="input-container">
+                    <div class="container-img">
+                        <input type="file" id="product-image-additional-3">
+                        <label class="product-image-label" for="product-image-additional-3"><img class="image-view" src="<?= assets("assets/imgs/example.jpg", "admin")?>"></label>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="col">
@@ -56,18 +78,26 @@
                 </select>
             </div>
         </div>
-        <div class="col big">
-            <div  class="input-container">
-                <label>Quais tamanhos estão disponiveis?</label>
-                <div id="available-sizes">
-                    <h4>Por favor selecione um tipo de tamanho.</h4>
-                </div>
+        <div class="col">
+            <div class="input-container">
+                <label for="product-installments">Limite de parcelas:</label>
+                <select id="product-installments">
+                    <option selected value="1">1x</option>
+                    <option value="2">2x</option>
+                    <option value="3">4x</option>
+                    <option value="5">5x</option>
+                    <option value="6">6x</option>
+                    <option value="7">7x</option>
+                    <option value="8">8x</option>
+                    <option value="9">9x</option>
+                    <option value="10">10x</option>
+                    <option value="11">11x</option>
+                    <option value="12">12x</option>
+                </select>
             </div>
             <div class="input-container">
-                <label>Quantidades por tamanho:</label>
-                <div id="product-quantity-by-size">
-                </div>
+                <label for="product-discount">Desconto % no PIX:</label>
+                <input class="default-input" type="text" id="product-discount">
             </div>
         </div>
-    </div>
 </section>

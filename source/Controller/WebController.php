@@ -4,14 +4,21 @@ namespace Source\Controller;
 
 use League\Plates\Engine;
 use Source\Controller\Api\FaqController;
+use Source\Controller\Api\ProductController;
+use Source\Core\Controller;
 use Source\Models\Faq\Question;
 use Source\Models\Faq\Type;
+use Source\Models\Product;
+use Source\Response\Code;
+use Source\Response\Response;
 
-class WebController
+class WebController extends Controller
 {
     /** @var Engine */
     private $view;
     private $router;
+
+    private bool $isLogged = false;
 
     public function __construct($router)
     {
@@ -19,18 +26,24 @@ class WebController
         $this->view->addFolder('shared', __DIR__ . '/../../themes/shared');
 
         $this->router = $router;
+
+        if(isset($this->userAuth)) {
+            $this->isLogged = true;
+        }
     }
 
     public function home ()
     {
-        $productName = "T-Shirt Diamond Black Piano";
+        $products = (new ProductController())->listProducts(isLocalReq: true);
+
+        foreach ($products as $product) {
+            $product->url = $product->id;
+        }
 
         echo $this->view->render("home/home",[
             "title" => "Home",
-            "products" => [
-                ["url" => buildStringFriendlyURL($productName)],
-                ["url" => buildStringFriendlyURL($productName)]
-            ]
+            "products" => json_decode(json_encode($products), true),
+            "isLogged" => $this->isLogged
         ]);
     }
 
@@ -62,19 +75,17 @@ class WebController
         ]);
     }
 
-    public function product ()
+    public function product (array $data)
     {
-        $productName = "T-Shirt Diamond Black Piano";
-        $this->router->route("produto/{name}", [
-            "name" => buildStringFriendlyURL($productName)
-        ]);
+        $product = (new ProductController())->getProduct(["id" => $data["name"]], true);
 
-        if($this->router->current()->path !== "/produto/".buildStringFriendlyURL($productName)) {
+        if(!$product) {
             $this->router->redirect("/ops/404");
         }
 
         echo $this->view->render("product/product", [
-            "title" => $productName
+            "title" => $product->name,
+            "product" => json_decode(json_encode($product), true)
         ]);
 
     }

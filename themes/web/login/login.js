@@ -1,4 +1,4 @@
-import {getAuthorization, URL_BASE_API} from "../../shared/Constants.js";
+import {URL_BASE_API} from "../../shared/Constants.js";
 
 const formSignup = document.getElementById("signup");
 const formLogin = document.getElementById("login");
@@ -16,15 +16,27 @@ formSignup.addEventListener("submit",async (e) => {
     }
 
     await signup(formDataSignup);
+
+    e.target.reset();
 })
 
 formLogin.addEventListener("submit", async (e) => {
     e.preventDefault();
 
     let formDataLogin = new FormData(formLogin);
-    await login(formDataLogin);
+    let res = await login(formDataLogin);
 
-    console.log(getAuthorization())
+    let types = {
+        error: false,
+        success: true,
+    }
+    if(types[res.type]) {
+        document.getElementById("login-error-message").innerHTML = res.message;
+    } else {
+        console.log(res.message);
+    }
+
+    e.target.reset();
 })
 
 async function login(body) {
@@ -32,16 +44,13 @@ async function login(body) {
         method: "POST",
         body: body
     });
-    if(!res.ok) throw res;
-    let responseBody = await res.json();
-
-    localStorage.setItem("authorization", responseBody.data.token);
+    return await res.json();
 }
 
-async function signup() {
+async function signup(body) {
     let res = await fetch(URL_BASE_API+"/usuarios", {
         method: "POST",
         body: body
     });
-    if(!res.ok) throw res;
+    if(!res.ok) throw await res.text();
 }

@@ -19,7 +19,7 @@ class TokenJWT
     {
         $tokenId    = base64_encode(random_bytes(16));
         $issuedAt   = new DateTimeImmutable();
-        $expire     = $issuedAt->modify('+90 minutes')->getTimestamp();
+        $expire     = $issuedAt->modify('+24 hour')->getTimestamp();
         $serverName = url();
 
         $data = [

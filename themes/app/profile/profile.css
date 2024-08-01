@@ -1,0 +1,51 @@
+#main {
+    display: flex;
+    flex-direction: row;
+    padding: 4%;
+    gap: 30px;
+}
+
+.info-card {
+    width: 100%;
+    height: fit-content;
+    border: 2px solid #9f9f9f;
+    border-radius: 2px;
+    transition: all 150ms linear;
+}
+
+.info-card header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    cursor: pointer;
+}
+.info-card header i {
+    font-size: 40px;
+}
+
+.info-card .content {
+    display: none;
+    height: fit-content;
+    padding: 20px;
+    background-color: #e7e7e7;
+}
+
+.appear .content {
+    display: block;
+}
+
+.appear header i {
+    transform: rotate(180deg);
+}
+
+.col {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    min-width: 40%;
+}
+
+.col.big {
+    width: 100%;
+}

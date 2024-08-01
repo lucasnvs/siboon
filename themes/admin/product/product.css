@@ -3,34 +3,3 @@
     gap: 10px;
     margin-bottom: 30px;
 }
-
-.big-button {
-    cursor: pointer;
-    border-radius: 4px;
-    color: white;
-    background-color: #28B779;
-    border: 0;
-    padding: 20px 30px;
-    transition: all linear 125ms;
-}.big-button:hover {
-    background-color: #FFFFFF;
-    color: #28B779;
- }
-
-.container-section {
-    width: 100%;
-    border: 1px solid #DDDDDD;
-    background-color: #FFFFFF;
-}
-
-.container-section-header {
-    padding: 10px;
-    font-weight: 500;
-    font-size: 18px;
-    background-color: #EFEFEF;
-    border-bottom: 1px solid #DDDDDD;
-}
-
-.container-section-body {
-    padding: 15px;
-}

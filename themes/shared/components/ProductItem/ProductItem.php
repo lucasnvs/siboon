@@ -1,13 +1,13 @@
 
 <div class="product-container">
-    <a href="<?= url("produto/".$product["url"]) ?>">
+    <a href="<?= url("produto/". $product["url"]) ?>">
         <div class="image-container">
-            <img src="<?= assets('assets/imgs/camisa-independent.jpeg') ?>">
+            <img src="<?= url($product["res_path"]) ?>">
         </div>
         <div class="product-description">
-            <p class="title">CAMISA INDEPENDENT BLACK OVERSIZED - Truck Co.</p>
-            <p class="price">R$ 199,90</p>
-            <p class="price">ou R$180,00 no PIX</p>
+            <p class="title"><?= $product["name"] ?></p>
+            <p class="price"><?= $product["formated_price_brl"] ?></p>
+            <p class="price">ou <?= $product["formated_price_brl_with_discount"]?> no PIX</p>
         </div>
     </a>
     <div class="sizes">

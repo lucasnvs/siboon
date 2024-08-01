@@ -2,7 +2,6 @@
 
 namespace Source\Controller\Api;
 
-use Exception;
 use InvalidArgumentException;
 use PDOException;
 use Source\Core\ApiController;
@@ -13,7 +12,7 @@ use Source\Response\Response;
 
 class UserController extends ApiController
 {
-    public function listUsers()
+    public function listUsers(array $data = null, $isLocalReq = false)
     {
         $this->setAccessToEndpoint($this->ACCESS_ADMIN);
 
@@ -27,17 +26,19 @@ class UserController extends ApiController
         $response = [];
         foreach ($users as $user) {
             $response[] = [
-                "id" => $user->data()->id,
-                "name" => $user->data()->name,
-                "email" => $user->data()->email,
-                "role" => $user->data()->role
+                "id" => $user->id,
+                "name" => $user->first_name." ".$user->last_name,
+                "email" => $user->email,
+                "role" => $user->role
             ];
         }
+
+        if ($isLocalReq) return $response;
 
         return Response::success($response, code: Code::$OK);
     }
 
-    public function getUser(array $data)
+    public function getUser(array $data, $isLocalReq = false)
     {
 
         $user = (new User())->findById($data['id']);
@@ -50,7 +51,10 @@ class UserController extends ApiController
             "id" => $user->id,
             "name" => $user->name,
             "email" => $user->email,
+            "role" => $user->role,
         ];
+
+        if ($isLocalReq) return $response;
 
         return Response::success($response, Code::$OK);
     }
@@ -168,17 +172,22 @@ class UserController extends ApiController
         };
 
         $token = new TokenJWT();
+
+        $signature = $token->create([
+            "id" => $user->id,
+            "name" => $user->first_name,
+            "email" => $user->email,
+            "access" => $access
+        ]);
+
         $response = [
             "id" => $user->id,
             "name" => $user->first_name,
             "email" => $user->email,
-            "token" => $token->create([
-                "id" => $user->id,
-                "name" => $user->first_name,
-                "email" => $user->email,
-                "access" => $access
-            ])
+            "token" => $signature
         ];
+
+        setcookie("AUTHORIZATION", "Bearer ".$signature, (time() + (24*60*60)), "/");
 
         return Response::success($response, message: $user->getMessage(), code: Code::$OK);
     }

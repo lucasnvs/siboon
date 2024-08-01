@@ -20,6 +20,10 @@
     color: var(--primary-color);
 }
 
+.sizes {
+    opacity: 0;
+}
+
 .banner {
     width: 100%;
     margin-bottom: 30px;

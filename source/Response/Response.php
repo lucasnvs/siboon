@@ -6,6 +6,8 @@ class Response
 {
     private static function back (array $response, int $code = 200) : void
     {
+        header('Content-Type: application/json; charset=UTF-8');
+
         http_response_code($code);
         echo json_encode($response, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
     }
