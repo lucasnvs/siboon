@@ -32,13 +32,17 @@ class WebController extends Controller
     {
         $products = (new ProductController())->listProducts(isLocalReq: true);
 
-        foreach ($products as $product) {
-            $product->url = $product->id;
+        if(!empty($products)) {
+            foreach ($products as $product) {
+                $product->url = $product->id;
+            }
+
+            $convertData = json_decode(json_encode($products), true);
         }
 
         echo $this->view->render("home/home",[
             "title" => "Home",
-            "products" => json_decode(json_encode($products), true),
+            "products" => !empty($convertData) ? $convertData : [],
         ]);
     }
 

@@ -34,6 +34,8 @@ class ProductController extends ApiController
     public function listProducts(array $data = null, $isLocalReq = false)
     {
         $products = (new Product())->find()->fetch(true);
+        if(!$products && $isLocalReq) return [];
+
         if (!$products) {
             return Response::success(message: "Nenhum produto encontrado.", code: Code::$NO_CONTENT);
         }

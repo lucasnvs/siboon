@@ -15,9 +15,20 @@ formSignup.addEventListener("submit",async (e) => {
         return
     }
 
-    await signup(formDataSignup);
+    let types = {
+        error: true,
+        success: false,
+    }
 
-    e.target.reset();
+    let res = await signup(formDataSignup);
+
+    if(types[res.type]) {
+        alert(res.message);
+        e.target.reset();
+        return;
+    }
+
+    alert("Logado!");
 })
 
 formLogin.addEventListener("submit", async (e) => {
@@ -41,7 +52,7 @@ formLogin.addEventListener("submit", async (e) => {
 })
 
 async function login(body) {
-    let res = await fetch(URL_BASE_API+"/usuarios/login", {
+    let res = await fetch(URL_BASE_API+"usuarios/login", {
         method: "POST",
         body: body
     });
@@ -49,9 +60,9 @@ async function login(body) {
 }
 
 async function signup(body) {
-    let res = await fetch(URL_BASE_API+"/usuarios", {
+    let res = await fetch(URL_BASE_API+"usuarios", {
         method: "POST",
         body: body
     });
-    if(!res.ok) throw await res.text();
+    return await res.json()
 }

@@ -43,6 +43,11 @@ CREATE TABLE user_address
 -- ---- --
 -- Shop --
 -- ---- --
+CREATE TABLE product_size_type
+(
+    id   INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    name VARCHAR(30) NOT NULL
+);
 
 CREATE TABLE products
 (
@@ -57,18 +62,13 @@ CREATE TABLE products
     FOREIGN KEY (size_type_id) REFERENCES product_size_type (id)
 );
 
-CREATE TABLE product_size_type
-(
-    id   INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    name VARCHAR(30) NOT NULL
-)
 
 CREATE TABLE product_images
 (
     id         INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
     image      varchar(255) NOT NULL,
     product_id INT          NOT NULL,
-    type       ENUM("PRINCIPAL", "ADDITIONAL") NOT NULL
+    type       ENUM("PRINCIPAL", "ADDITIONAL") NOT NULL,
     FOREIGN KEY (product_id) REFERENCES products(id)
 );
 
