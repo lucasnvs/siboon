@@ -1,7 +1,25 @@
 #main {
     display: flex;
+    flex-direction: column;
+    padding: 3.4%;
+    gap: 10px;
+}
+
+.option-header {
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    gap: 10px;
+}
+.option-header .btn {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+}
+
+#main > .container {
+    display: flex;
     flex-direction: row;
-    padding: 4%;
     gap: 30px;
 }
 

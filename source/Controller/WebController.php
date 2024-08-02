@@ -3,14 +3,8 @@
 namespace Source\Controller;
 
 use League\Plates\Engine;
-use Source\Controller\Api\FaqController;
 use Source\Controller\Api\ProductController;
 use Source\Core\Controller;
-use Source\Models\Faq\Question;
-use Source\Models\Faq\Type;
-use Source\Models\Product;
-use Source\Response\Code;
-use Source\Response\Response;
 
 class WebController extends Controller
 {
@@ -18,7 +12,7 @@ class WebController extends Controller
     private $view;
     private $router;
 
-    private bool $isLogged = false;
+    private $loggedUser = null;
 
     public function __construct($router)
     {
@@ -28,8 +22,10 @@ class WebController extends Controller
         $this->router = $router;
 
         if(isset($this->userAuth)) {
-            $this->isLogged = true;
+            $this->loggedUser = $this->userAuth;
         }
+
+        $this->view->addData(["loggedUser" => $this->loggedUser]);
     }
 
     public function home ()
@@ -43,7 +39,6 @@ class WebController extends Controller
         echo $this->view->render("home/home",[
             "title" => "Home",
             "products" => json_decode(json_encode($products), true),
-            "isLogged" => $this->isLogged
         ]);
     }
 

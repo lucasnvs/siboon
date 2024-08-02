@@ -83,7 +83,7 @@
         <div id="option-menu">
             <i class="material-symbols-outlined">search</i>
 <!--            <img src="--><?php //= assets('assets/icons/search.svg') ?><!--">-->
-            <?php if (isset($isLogged) && $this->e($isLogged)): ?>
+            <?php if (isset($loggedUser)): ?>
                 <a href="<?= url("/app/perfil") ?>"><i class="material-symbols-outlined">account_circle</i></a>
                 <?php else: ?>
                 <a href="<?= url("entrar") ?>"><i class="material-symbols-outlined">account_circle</i></a>

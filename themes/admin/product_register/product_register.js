@@ -35,20 +35,20 @@ async function createProduct(headers, body) {
 }
 
 ACTIONS.createProduct.addEventListener("click", async (e) => {
-    const formData = new FormData();
-    // formData.append("image", FORM_ELEMENTS.inputImage.files[0])
-    formData.append("name", FORM_ELEMENTS.inputName.value)
-    formData.append("description", FORM_ELEMENTS.inputDescription.value)
-    formData.append("price_brl", FORM_ELEMENTS.inputPrice.value)
-    formData.append("color", FORM_ELEMENTS.inputColor.value)
-    formData.append("size_type", FORM_ELEMENTS.selectSizeType.value)
-
-    const headers = {
-        "Authorization": "Bearer" + getAuthorization(),
-    }
-
-    let res = await createProduct(headers, formData);
-    console.log(res)
+    // const formData = new FormData();
+    // // formData.append("image", FORM_ELEMENTS.inputImage.files[0])
+    // formData.append("name", FORM_ELEMENTS.inputName.value)
+    // formData.append("description", FORM_ELEMENTS.inputDescription.value)
+    // formData.append("price_brl", FORM_ELEMENTS.inputPrice.value)
+    // formData.append("color", FORM_ELEMENTS.inputColor.value)
+    // formData.append("size_type", FORM_ELEMENTS.selectSizeType.value)
+    //
+    // const headers = {
+    //     "Authorization": "Bearer" + getAuthorization(),
+    // }
+    //
+    // let res = await createProduct(headers, formData);
+    // console.log(res)
 });
 
 ACTIONS.clearForm.addEventListener("click", e => {

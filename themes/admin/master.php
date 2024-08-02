@@ -92,7 +92,7 @@
                     </span>
                 </button>
             </a>
-            <a href="<?= url("/") ?>">
+            <a href="<?= url("/app/perfil") ?>">
                 <button title="Sair">
                     <span>
                         <i class="material-symbols-outlined">arrow_back</i>

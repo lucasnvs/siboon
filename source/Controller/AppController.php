@@ -12,6 +12,8 @@ class AppController extends Controller
     private $view;
     private $router;
 
+    private $loggedUser = null;
+
     public function __construct($router)
     {
         parent::__construct();
@@ -21,6 +23,12 @@ class AppController extends Controller
         $this->view->addFolder('shared', __DIR__ . '/../../themes/shared');
 
         $this->router = $router;
+
+        if(isset($this->userAuth)) {
+            $this->loggedUser = $this->userAuth;
+        }
+
+        $this->view->addData(["loggedUser" => $this->loggedUser]);
     }
 
     public function profile()
@@ -28,8 +36,7 @@ class AppController extends Controller
         $loggedUser = (new User())->findById($this->userAuth->id);
         echo $this->view->render("profile/profile", [
             "title" => "Perfil",
-            "user" => $loggedUser->data(),
-            "isLogged" => true
+            "user" => $loggedUser->data()
         ]);
     }
 }

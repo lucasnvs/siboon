@@ -27,13 +27,14 @@ formLogin.addEventListener("submit", async (e) => {
     let res = await login(formDataLogin);
 
     let types = {
-        error: false,
-        success: true,
+        error: true,
+        success: false,
     }
     if(types[res.type]) {
         document.getElementById("login-error-message").innerHTML = res.message;
     } else {
-        console.log(res.message);
+        document.getElementById("login-error-message").innerHTML = "";
+        window.location.href = "app/perfil";
     }
 
     e.target.reset();

@@ -29,10 +29,10 @@ CREATE TABLE users
 CREATE TABLE user_address
 (
     id            INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    user_id       INT NOT NULL,
-    cep           VARCHAR(10) NOT NULL,
+    user_id       INT          NOT NULL,
+    cep           VARCHAR(10)  NOT NULL,
     street_avenue VARCHAR(255) NOT NULL,
-    `number`      INT NOT NULL,
+    `number`      INT          NOT NULL,
     district      VARCHAR(255) NOT NULL,
     city          VARCHAR(255) NOT NULL,
     state         VARCHAR(255) NOT NULL,
@@ -46,15 +46,30 @@ CREATE TABLE user_address
 
 CREATE TABLE products
 (
-    id            INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    `name`        VARCHAR(255) NOT NULL,
-    `description` TEXT,
-    color         VARCHAR(100) NOT NULL,
-    size_type 	  VARCHAR(20) NOT NULL,
-    price_brl     DOUBLE NOT NULL DEFAULT 0.0,
-    max_installments TINYINT DEFAULT 1,
+    id                      INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    `name`                  VARCHAR(255) NOT NULL,
+    `description`           TEXT,
+    color                   VARCHAR(100) NOT NULL,
+    size_type_id            INT          NOT NULL,
+    price_brl DOUBLE NOT NULL DEFAULT 0.0,
+    max_installments        TINYINT NOT NULL DEFAULT 1,
     discount_brl_percentage TINYINT DEFAULT 0,
-    res_path      VARCHAR(255)
+    FOREIGN KEY (size_type_id) REFERENCES product_size_type (id)
+);
+
+CREATE TABLE product_size_type
+(
+    id   INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    name VARCHAR(30) NOT NULL
+)
+
+CREATE TABLE product_images
+(
+    id         INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    image      varchar(255) NOT NULL,
+    product_id INT          NOT NULL,
+    type       ENUM("PRINCIPAL", "ADDITIONAL") NOT NULL
+    FOREIGN KEY (product_id) REFERENCES products(id)
 );
 
 CREATE TABLE stock
@@ -62,7 +77,7 @@ CREATE TABLE stock
     id         INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
     product_id INT NOT NULL,
     quantity   INT,
-    size VARCHAR(20),
+    size       VARCHAR(20),
     FOREIGN KEY (product_id) REFERENCES products (id)
         ON DELETE CASCADE
 );

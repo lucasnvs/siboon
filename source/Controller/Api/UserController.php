@@ -177,6 +177,7 @@ class UserController extends ApiController
             "id" => $user->id,
             "name" => $user->first_name,
             "email" => $user->email,
+            "role" => $user->role,
             "access" => $access
         ]);
 

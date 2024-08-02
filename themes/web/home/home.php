@@ -1,4 +1,4 @@
-<?php $this->layout("master", ['title' => $title, 'products' => $products, 'isLogged' => $isLogged]); ?>
+<?php $this->layout("master", ['title' => $title, 'products' => $products]); ?>
 <?php $this->start("specific-script"); ?>
     <script src="<?= assets('home/scripts-home.js') ?>" async></script>
 <?php $this->end(); ?>

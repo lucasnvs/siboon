@@ -7,7 +7,7 @@ use CoffeeCode\Uploader\Image;
 use http\Exception\InvalidArgumentException;
 use PDOException;
 use Source\Core\ApiController;
-use Source\Models\Product;
+use Source\Models\Product\Product;
 use Source\Response\Code;
 use Source\Response\Response;
 
