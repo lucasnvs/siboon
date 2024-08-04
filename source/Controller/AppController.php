@@ -24,16 +24,14 @@ class AppController extends Controller
 
         $this->router = $router;
 
-        if(isset($this->userAuth)) {
-            $this->loggedUser = $this->userAuth;
-        }
+        $this->loggedUser = $this->userAuth;
 
         $this->view->addData(["loggedUser" => $this->loggedUser]);
     }
 
     public function profile()
     {
-        $loggedUser = (new User())->findById($this->userAuth->id);
+        $loggedUser = (new User())->findById($this->loggedUser->id);
         echo $this->view->render("profile/profile", [
             "title" => "Perfil",
             "user" => $loggedUser->data()

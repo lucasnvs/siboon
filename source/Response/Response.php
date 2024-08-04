@@ -4,7 +4,7 @@ use Source\Response\Code;
 
 class Response
 {
-    private static function back (array $response, int $code = 200) : void
+    private static function back ($response, int $code = 200) : void
     {
         header('Content-Type: application/json; charset=UTF-8');
 
@@ -12,7 +12,7 @@ class Response
         echo json_encode($response, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
     }
 
-    public static function success(array $response = null, string $message = null, int $code = null): void
+    public static function success($response = null, string $message = null, int $code = null): void
     {
         $back = ["type" => "success"];
         if(isset($message)) $back["message"] = $message;

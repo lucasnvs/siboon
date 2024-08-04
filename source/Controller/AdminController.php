@@ -30,10 +30,8 @@ class AdminController extends Controller
 
     public function product ()
     {
-        $products = (new ProductController())->listProducts(isLocalReq: true);
         echo $this->view->render("product/product", [
             "title" => "Produtos",
-            "products" => json_decode(json_encode($products), true)
         ]);
     }
 
@@ -46,10 +44,9 @@ class AdminController extends Controller
 
     public function productEdit(array $data)
     {
-//        $product = (new ProductController())->getProduct($data, isLocalReq: true);
         echo $this->view->render("product_edit/product_edit", [
             "title" => "Editar Produto",
-//            "product" => $product
+            "productId" => $data["id"],
         ]);
     }
 

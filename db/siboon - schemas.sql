@@ -59,6 +59,8 @@ CREATE TABLE products
     price_brl DOUBLE NOT NULL DEFAULT 0.0,
     max_installments        TINYINT NOT NULL DEFAULT 1,
     discount_brl_percentage TINYINT DEFAULT 0,
+    created_at DATE,
+    updated_at DATE,
     FOREIGN KEY (size_type_id) REFERENCES product_size_type (id)
 );
 
@@ -133,6 +135,16 @@ CREATE TABLE faq_questions
 INSERT INTO faq_types(`description`)
 VALUES ("Vendas"),
        ("Trocas e Devoluções");
+
+
+-- ------- --
+-- INSERTS --
+-- ------- --
+
+INSERT INTO  product_size_type(`name`) VALUES
+("Roupa"),
+("Sapato"),
+("Tamanho Único");
 
 -- INSERT DE TROCAS E DEVOLUÇÕES
 INSERT INTO faq_questions(type_id, question, answer)

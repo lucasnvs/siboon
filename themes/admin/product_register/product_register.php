@@ -1,7 +1,6 @@
 <?php $this->layout("master", ["title" => $title]); ?>
 <?php $this->start("specific-style"); ?>
     <link rel="stylesheet" href="<?= assets('product_register/product_register.css', 'admin') ?>">
-    <link rel="stylesheet" href="<?= assets('components/InputQuantity/InputQuantity.css', 'shared') ?>">
 <?php $this->end(); ?>
 <?php $this->start("specific-script"); ?>
     <script type="module" src="<?= assets('product_register/product_register.js', 'admin') ?>" async></script>
@@ -72,9 +71,9 @@
                 <label for="product-size-type">Tipo de Tamanho:</label>
                 <select id="product-size-type">
                     <option disabled selected>Selecione o tipo</option>
-                    <option value="cloth">Roupa Ex.: PP, P, M, G, GG, X, XX, XXL</option>
-                    <option value="shoes">Sapato Ex.: 34, 35, 36...42, 43, 44</option>
-                    <option value="unique">Tamanho Único</option>
+                    <option value="1">Roupa Ex.: PP, P, M, G, GG, X, XX, XXL</option>
+                    <option value="2">Sapato Ex.: 34, 35, 36...42, 43, 44</option>
+                    <option value="3">Tamanho Único</option>
                 </select>
             </div>
         </div>
@@ -84,7 +83,8 @@
                 <select id="product-installments">
                     <option selected value="1">1x</option>
                     <option value="2">2x</option>
-                    <option value="3">4x</option>
+                    <option value="3">3x</option>
+                    <option value="4">4x</option>
                     <option value="5">5x</option>
                     <option value="6">6x</option>
                     <option value="7">7x</option>

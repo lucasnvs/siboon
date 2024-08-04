@@ -8,6 +8,6 @@ class ProductSizeType extends DataLayer
 {
     public function __construct()
     {
-        parent::__construct("product_size_type", ["id", "name"], timestamps: false);
+        parent::__construct("product_size_type", ["name"], timestamps: false);
     }
 }

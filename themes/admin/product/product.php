@@ -1,4 +1,7 @@
-<?php $this->layout("master", ["title" => $title, "products" => $products]); ?>
+<?php $this->layout("master", ["title" => $title]); ?>
+<?php $this->start("specific-script"); ?>
+<script type="module" src="<?= assets('product/product.js', "admin") ?>" async></script>
+<?php $this->end(); ?>
 <?php $this->start("specific-style"); ?>
     <link rel="stylesheet" href="<?= assets('product/product.css', 'admin') ?>">
     <link rel="stylesheet" href="<?= assets('components/table/table.css', 'shared') ?>">
@@ -17,30 +20,14 @@
         <p>Tabela de Produtos</p>
     </div>
     <div class="container-section-body">
-        <table class="default-table">
+        <table id="table-products" class="default-table">
             <thead>
             <?php foreach ($header as $th): ?>
                 <th> <?= $th ?> </th>
             <?php endforeach; ?>
             </thead>
             <tbody>
-            <?php foreach ($products as $tr): ?>
-                <tr>
-                    <td><?= $tr["id"] ?></td>
-                    <td><?= $tr["name"] ?></td>
-                    <td><?= $tr["formated_price_brl"] ?></td>
-                    <td>54</td>
-                    <td style="text-align: center">
-                        <a href="#">
-                            <button class="btn green" >Add. Estoque</button>
-                        </a>
-                        <a href="<?= url("admin/produtos/{$tr['id']}/editar") ?>">
-                            <button class="btn">Editar</button>
 
-                        </a>
-                    </td>
-                </tr>
-            <?php endforeach; ?>
             </tbody>
         </table>
     </div>

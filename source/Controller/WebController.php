@@ -5,6 +5,7 @@ namespace Source\Controller;
 use League\Plates\Engine;
 use Source\Controller\Api\ProductController;
 use Source\Core\Controller;
+use Source\Models\Product\Product;
 
 class WebController extends Controller
 {
@@ -30,19 +31,8 @@ class WebController extends Controller
 
     public function home ()
     {
-        $products = (new ProductController())->listProducts(isLocalReq: true);
-
-        if(!empty($products)) {
-            foreach ($products as $product) {
-                $product->url = $product->id;
-            }
-
-            $convertData = json_decode(json_encode($products), true);
-        }
-
         echo $this->view->render("home/home",[
             "title" => "Home",
-            "products" => !empty($convertData) ? $convertData : [],
         ]);
     }
 
@@ -76,7 +66,7 @@ class WebController extends Controller
 
     public function product (array $data)
     {
-        $product = (new ProductController())->getProduct(["id" => $data["name"]], true);
+        $product = (new Product())->findById($data["name"]);
 
         if(!$product) {
             $this->router->redirect("/ops/404");
@@ -84,7 +74,6 @@ class WebController extends Controller
 
         echo $this->view->render("product/product", [
             "title" => $product->name,
-            "product" => json_decode(json_encode($product), true)
         ]);
 
     }
