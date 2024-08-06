@@ -31,8 +31,8 @@ utilizando um padrão de projeto MVC.
 
 ## Documentações
 
-1. Acesso a documentação da [API]("api/README.md")
-2. Acesso a documentação do [Banco de Dados]("db/README.md")
+1. Acesso a documentação da [API](api/README.md)
+2. Acesso a documentação do [Banco de Dados](db/README.md)
 
 ## Rotas Amigáveis
 
