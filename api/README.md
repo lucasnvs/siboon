@@ -140,6 +140,12 @@ Exemplo de Requisição:
 
 > POST /usuarios/login
 
+```json
+{
+  "email": "johndoe@email.com",
+  "password": "blablabla"
+}
+```
 Exemplo de Resposta:
 > Status Code: 200
 
