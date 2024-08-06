@@ -16,6 +16,7 @@
     <h2>Editando Produto</h2>
 
     <div class="options">
+        <button id="delete-product" class="btn red">Deletar Produto</button>
         <button id="edit-product" class="btn green">Editar</button>
     </div>
 </header>

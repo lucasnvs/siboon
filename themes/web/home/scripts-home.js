@@ -1,16 +1,18 @@
 import {URL_BASE_SITE} from "../../shared/Constants.js";
-import {getProducts} from "../../shared/ApiRequest.js";
+import {ProductService} from "../../shared/services/ProductService.js";
+
 
 const products_grid_section = document.querySelector(".container-grid-section");
 
 async function renderProducts() {
-    let {data: products} = await getProducts();
+    let {data: products} = await ProductService.getData();
     products_grid_section.innerHTML = "";
 
+    if(!products) return;
     products.forEach(product => {
         products_grid_section.innerHTML += `
             <div class="product-container">
-                <a href="${URL_BASE_SITE+"/produto/"+product.url}">
+                <a href="${URL_BASE_SITE+"produto/"+product.url}">
                     <div class="image-container">
                         <img src="${URL_BASE_SITE+product.principal_img}">
                     </div>

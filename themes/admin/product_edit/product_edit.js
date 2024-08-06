@@ -1,10 +1,11 @@
-import {URL_BASE_API, URL_BASE_SITE} from "../../shared/Constants.js";
-import {getProductById} from "../../shared/ApiRequest.js";
+import {URL_BASE_SITE} from "../../shared/Constants.js";
+import {ProductService} from "../../shared/services/ProductService.js";
+import {ErrorDialog, SuccessDialog} from "../../shared/components/SimpleDialog/SimpleDialog.js";
 
 const PRODUCT_ID = document.getElementById("header").dataset.id;
 
 const ACTIONS = {
-    clearForm: document.getElementById("clear-form"),
+    deleteProduct: document.getElementById("delete-product"),
     editProduct: document.getElementById("edit-product")
 }
 
@@ -42,26 +43,39 @@ ACTIONS.editProduct.addEventListener("click", async (e) => {
     if(FORM_ELEMENTS.inputsImages[2].files[0]) formData.append("additional-image-2", FORM_ELEMENTS.inputsImages[2].files[0])
     if(FORM_ELEMENTS.inputsImages[3].files[0]) formData.append("additional-image-3", FORM_ELEMENTS.inputsImages[3].files[0])
 
-    let res = await updateProduct(PRODUCT_ID, formData);
-    console.log(res)
+    let res = await ProductService.update(PRODUCT_ID, formData);
 });
 
-async function updateProduct(id, body){
-    let res = await fetch(URL_BASE_API + "produtos/update/"+id, {
-        method: "POST",
-        body: body
-    });
+ACTIONS.deleteProduct.addEventListener("click", async e => {
+    let res = await ProductService.delete(PRODUCT_ID);
 
-    if (!res.ok) console.log(await res.text());
+    if(!res.ok) {
+        ErrorDialog(res.message);
+    } else {
+        SuccessDialog(res.message, () => {
+            window.location.href = URL_BASE_SITE+"admin/produtos"
+        });
+    }
+})
 
-    return await res.json();
-}
+FORM_ELEMENTS.inputsImages.forEach(input => {
+    input.addEventListener("change", e => {
+        if (!(e.target && e.target.files && e.target.files.length > 0)) {
+            return;
+        }
+        const r = new FileReader();
+        r.onload = function() {
+            document.querySelector(`label[for="${e.target.id}"] .image-view`).src = r.result;
+        }
+
+        r.readAsDataURL(e.target.files[0]);
+    })
+})
 
 
 async function setProductData() {
-    let {data: product} = await getProductById(PRODUCT_ID);
+    let {data: product} = await ProductService.getDataById(PRODUCT_ID);
 
-    console.log(product)
     FORM_ELEMENTS.inputName.value = product.name;
     FORM_ELEMENTS.inputDescription.value = product.description;
     FORM_ELEMENTS.inputPrice.value = product.price_brl;
@@ -74,7 +88,7 @@ async function setProductData() {
     document.querySelector(`label[for="${FORM_ELEMENTS.inputsImages[0].id}"] .image-view`).src = URL_BASE_SITE+product.principal_img;
     if(product.additional_imgs) {
         for (let i = 0; i < product.additional_imgs.length; i++){
-            document.querySelector(`label[for="${FORM_ELEMENTS.inputsImages[i + 1]}"] .image-view`).src = URL_BASE_SITE+ product.additional_imgs[i];
+            document.querySelector(`label[for="${FORM_ELEMENTS.inputsImages[i + 1].id}"] .image-view`).src = URL_BASE_SITE+product.additional_imgs[i];
         }
     }
 }

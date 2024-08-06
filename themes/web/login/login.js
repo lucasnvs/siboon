@@ -1,68 +1,59 @@
-import {URL_BASE_API} from "../../shared/Constants.js";
+import {UserService} from "../../shared/services/UserService.js";
+import {Validate, Validators} from "../../shared/Validate.js";
 
-const formSignup = document.getElementById("signup");
-const formLogin = document.getElementById("login");
+async function login() {
+    let res = await UserService.login(
+        loginEmail.value,
+        loginPassword.value
+    );
 
-formSignup.addEventListener("submit",async (e) => {
-    e.preventDefault();
-
-    let formDataSignup= new FormData(formSignup);
-    let confirmPassword = formDataSignup.get("confirm_password");
-    formDataSignup.delete("confirm_password");
-
-    if(formDataSignup.get("password") !== confirmPassword) {
-        console.error("Senhas não batem.");
-        return
+    if(!res.ok) {
+        return res;
     }
 
-    let types = {
-        error: true,
-        success: false,
+    window.location.href = "app/perfil";
+}
+
+const loginEmail = document.getElementById("email-login");
+const loginPassword = document.getElementById("password-login");
+const loginSubmit = document.getElementById("submit-login");
+
+loginSubmit.onclick = async () => {
+    let errorBody = await login();
+    if(errorBody) {
+        document.getElementById("login-error-message").innerHTML = errorBody.message;
+    } else {
+        document.getElementById("login-error-message").innerHTML = "";
     }
+}
 
-    let res = await signup(formDataSignup);
+const signupName = document.getElementById("name-signup");
+const signupLastName = document.getElementById("lastname-signup");
+const signupEmail = document.getElementById("email-signup");
+const signupPassword = document.getElementById("password-signup");
+const signupPasswordConfirm = document.getElementById("password-confirm-signup");
 
-    if(types[res.type]) {
+const signupSubmit = document.getElementById("submit-signup");
+
+signupSubmit.onclick = async () => {
+    if(
+        !Validate.validate(signupName, [Validators.required]) ||
+        !Validate.validate(signupLastName, [Validators.required]) ||
+        !Validate.validate(signupEmail, [Validators.email, Validators.required]) ||
+        !Validate.validateConfirmPassword(signupPassword, signupPasswordConfirm)
+    ) return;
+
+    let res = await UserService.sendData(
+        signupName.value,
+        signupLastName.value,
+        signupEmail.value,
+        signupPassword.value
+    );
+
+    if(!res.ok) {
         alert(res.message);
-        e.target.reset();
         return;
     }
 
-    alert("Logado!");
-})
-
-formLogin.addEventListener("submit", async (e) => {
-    e.preventDefault();
-
-    let formDataLogin = new FormData(formLogin);
-    let res = await login(formDataLogin);
-
-    let types = {
-        error: true,
-        success: false,
-    }
-    if(types[res.type]) {
-        document.getElementById("login-error-message").innerHTML = res.message;
-    } else {
-        document.getElementById("login-error-message").innerHTML = "";
-        window.location.href = "app/perfil";
-    }
-
-    e.target.reset();
-})
-
-async function login(body) {
-    let res = await fetch(URL_BASE_API+"usuarios/login", {
-        method: "POST",
-        body: body
-    });
-    return await res.json();
-}
-
-async function signup(body) {
-    let res = await fetch(URL_BASE_API+"usuarios", {
-        method: "POST",
-        body: body
-    });
-    return await res.json()
+    await login()
 }

@@ -68,10 +68,11 @@ CREATE TABLE products
 CREATE TABLE product_images
 (
     id         INT          NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    image      varchar(255) NOT NULL,
+    image      varchar(255) NOT NULL UNIQUE,
     product_id INT          NOT NULL,
     type       ENUM("PRINCIPAL", "ADDITIONAL") NOT NULL,
     FOREIGN KEY (product_id) REFERENCES products(id)
+		ON DELETE CASCADE
 );
 
 CREATE TABLE stock

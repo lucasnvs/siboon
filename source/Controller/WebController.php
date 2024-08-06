@@ -74,6 +74,7 @@ class WebController extends Controller
 
         echo $this->view->render("product/product", [
             "title" => $product->name,
+            "product_id" => $product->id
         ]);
 
     }

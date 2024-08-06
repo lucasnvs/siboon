@@ -1,7 +1,6 @@
 <?php $this->layout("master", ["title" => $title, "clients" => $clients]); ?>
 <?php $this->start("specific-style"); ?>
 <link rel="stylesheet" href="<?= assets('client/client.css', 'admin') ?>">
-<link rel="stylesheet" href="<?= assets('components/table/table.css', 'shared') ?>">
 <?php $this->end(); ?>
 
 <?php

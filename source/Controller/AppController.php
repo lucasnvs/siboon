@@ -31,10 +31,10 @@ class AppController extends Controller
 
     public function profile()
     {
-        $loggedUser = (new User())->findById($this->loggedUser->id);
+        $loggedUser = (new User())->findById($this->loggedUser->id)->data();
         echo $this->view->render("profile/profile", [
             "title" => "Perfil",
-            "user" => $loggedUser->data()
+            "user" => $loggedUser
         ]);
     }
 }

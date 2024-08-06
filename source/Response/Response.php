@@ -31,4 +31,11 @@ class Response
             "message" => $message,
         ], $code);
     }
+
+    public static function pattern(array $response, int $code = null): void
+    {
+        if(!isset($code)) $code = Code::$UNKNOWN_ERROR;
+
+        self::back($response, $code);
+    }
 }

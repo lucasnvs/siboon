@@ -1,0 +1,30 @@
+.dialog {
+    position: absolute;
+    align-self: center;
+    justify-self: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 30px;
+    max-width: 400px;
+    border: 0;
+    text-align: center;
+}
+
+.dialog i {
+    font-size: 100px;
+}
+
+.dialog.success i {
+    color: #1f7c10;
+}
+
+.dialog.error i {
+    color: #a30e0e;
+}
+
+.dialog .btn {
+    width: 100%;
+}

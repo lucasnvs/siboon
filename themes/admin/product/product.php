@@ -4,7 +4,6 @@
 <?php $this->end(); ?>
 <?php $this->start("specific-style"); ?>
     <link rel="stylesheet" href="<?= assets('product/product.css', 'admin') ?>">
-    <link rel="stylesheet" href="<?= assets('components/table/table.css', 'shared') ?>">
 <?php $this->end(); ?>
 
 <?php

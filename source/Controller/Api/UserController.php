@@ -78,16 +78,14 @@ class UserController extends ApiController
         }
 
         $response = [
-            "type" => "success",
-            "message" => $user->getMessage(),
             "user" => [
                 "id" => $insert,
-                "name" => $user->name,
+                "name" => $user->first_name . " " . $user->last_name,
                 "email" => $user->email
             ]
         ];
 
-        return Response::success($response, Code::$CREATED);
+        return Response::success($response, message: $user->getMessage(), code: Code::$CREATED);
     }
 
     public function updateUser(array $data)
@@ -111,7 +109,6 @@ class UserController extends ApiController
         }
 
         return Response::success(message: $user->getMessage(), code: Code::$OK);
-
     }
 
     public function deleteUser(array $data)
@@ -126,7 +123,7 @@ class UserController extends ApiController
             throw new PDOException($user->fail(), code: Code::$INTERNAL_SERVER_ERROR);
         }
 
-        return Response::success(message: "Usuário deletado com sucesso.", code: Code::$NO_CONTENT);
+        return Response::success(message: "Usuário deletado com sucesso.", code: Code::$OK);
     }
 
     public function changePassword(array $data)

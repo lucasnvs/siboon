@@ -1,11 +1,14 @@
-import {getProducts} from "../../shared/ApiRequest.js";
 import {URL_BASE_SITE} from "../../shared/Constants.js";
+import {ProductService} from "../../shared/services/ProductService.js";
 
 const tableProductsBody = document.querySelector("#table-products tbody");
 
 async function renderTableProducts() {
-    let {data: products} = await getProducts();
+    let {data: products} = await ProductService.getData();
     tableProductsBody.innerHTML = "";
+
+    if(!products) return;
+
     products.forEach(product => {
         tableProductsBody.innerHTML += `
                 <tr>

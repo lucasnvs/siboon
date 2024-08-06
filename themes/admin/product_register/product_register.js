@@ -1,4 +1,6 @@
-import {URL_BASE_API} from "../../shared/Constants.js";
+import {ProductService} from "../../shared/services/ProductService.js";
+import {ErrorDialog, SuccessDialog} from "../../shared/components/SimpleDialog/SimpleDialog.js";
+import {URL_BASE_SITE} from "../../shared/Constants.js";
 
 const ACTIONS = {
     clearForm: document.getElementById("clear-form"),
@@ -37,34 +39,34 @@ FORM_ELEMENTS.inputsImages.forEach(input => {
     })
 })
 
-async function createProduct(body) {
-    let res = await fetch(URL_BASE_API+"produtos", {
-        method: "POST",
-        body: body,
-    })
-    if(!res.ok) throw await res.text();
-
-    return await res.json();
-}
-
 ACTIONS.createProduct.addEventListener("click", async (e) => {
-    const formData = new FormData();
-    formData.append("name", FORM_ELEMENTS.inputName.value)
-    formData.append("description", FORM_ELEMENTS.inputDescription.value)
-    formData.append("price_brl", FORM_ELEMENTS.inputPrice.value)
-    formData.append("color", FORM_ELEMENTS.inputColor.value)
-    formData.append("size_type", FORM_ELEMENTS.selectSizeType.value)
-    formData.append("max_installments", FORM_ELEMENTS.selectMaxInstallment.value)
-    formData.append("discount_brl_percentage", FORM_ELEMENTS.inputDiscount.value)
 
-    formData.append("principal-image", FORM_ELEMENTS.inputsImages[0].files[0])
+    const principal_image = FORM_ELEMENTS.inputsImages[0].files[0];
+    var additional_images = [
+        FORM_ELEMENTS.inputsImages[1].files[0],
+        FORM_ELEMENTS.inputsImages[2].files[0],
+        FORM_ELEMENTS.inputsImages[3].files[0],
+    ].filter(image => !!image)
 
-    if(FORM_ELEMENTS.inputsImages[1].files[0]) formData.append("additional-image-1", FORM_ELEMENTS.inputsImages[1].files[0])
-    if(FORM_ELEMENTS.inputsImages[2].files[0]) formData.append("additional-image-2", FORM_ELEMENTS.inputsImages[2].files[0])
-    if(FORM_ELEMENTS.inputsImages[3].files[0]) formData.append("additional-image-3", FORM_ELEMENTS.inputsImages[3].files[0])
+    let res = await ProductService.sendData(
+        FORM_ELEMENTS.inputName.value,
+        FORM_ELEMENTS.inputDescription.value,
+        FORM_ELEMENTS.inputColor.value,
+        FORM_ELEMENTS.selectSizeType.value,
+        FORM_ELEMENTS.inputPrice.value,
+        FORM_ELEMENTS.selectMaxInstallment.value,
+        FORM_ELEMENTS.inputDiscount.value,
+        principal_image,
+        additional_images
+    );
 
-    let res = await createProduct(formData);
-    console.log(res)
+    if(!res.ok) {
+        ErrorDialog(res.message);
+    } else {
+        SuccessDialog(res.message, () => {
+            window.location.href = URL_BASE_SITE+"admin/produtos"
+        });
+    }
 });
 
 ACTIONS.clearForm.addEventListener("click", e => {

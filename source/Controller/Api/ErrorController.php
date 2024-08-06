@@ -17,6 +17,13 @@ class ErrorController
         ];
     }
 
+    public static function getMaintenance()
+    {
+        return Response::pattern([
+            "message" => "The server is undergoing maintenance.",
+        ]);
+    }
+
     public static function getErrorMessage(Exception $e)
     {
         $exceptions = self::getExceptions();

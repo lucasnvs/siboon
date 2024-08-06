@@ -1,5 +1,7 @@
 import {ItemCart} from "./Components/ItemCart.js";
 
+console.log("%cSiboon SkateShop - Ecommerce By @lucasnvs on GitHub", 'color: #8A11A8; font-size: 15px; font-family: "Verdana", sans-serif; font-weight: bold;')
+
 const TEST_PRODUCT = new CartProduct(23,
     "Tênis Tesla Shine Black Reflect",
     "Black Reflect",

@@ -41,7 +41,6 @@ export class InputQuantity extends Component {
 
         this.body = quantityElement;
 
-
         this.btnPlus.addEventListener("click", (e) => {
             this.quantity = Number(this.quantity) + 1
             this.inputQuantity.value = this.quantity;

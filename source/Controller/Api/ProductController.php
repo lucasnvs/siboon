@@ -23,7 +23,7 @@ class ProductController extends ApiController
 
     private function format_price($value): string
     {
-        return "R$ ".number_format($value,2,",",".");
+        return "R$ " . number_format($value, 2, ",", ".");
     }
 
     private function mapToViewLayer(DataLayer $product)
@@ -35,49 +35,65 @@ class ProductController extends ApiController
         $params = http_build_query(["product_id" => $product->id]);
         $images = (new ProductImage())->find("product_id = :product_id", $params)->fetch(true);
         $additional_imgs = [];
-        foreach ($images as $image) {
-            if($image->type === ProductImage::$PRINCIPAL) {
-                $product->principal_img = $image->image;
-            }
-            if($image->type === ProductImage::$ADDITIONAL) {
-                $additional_imgs[] = $image->image;
+        if (!empty($images)) {
+            foreach ($images as $image) {
+                if ($image->type === ProductImage::$PRINCIPAL) {
+                    $product->principal_img = $image->image;
+                }
+                if ($image->type === ProductImage::$ADDITIONAL) {
+                    $additional_imgs[] = $image->image;
+                }
             }
         }
-        if(count($additional_imgs) > 0) {
+
+        if (count($additional_imgs) > 0) {
             $product->additional_imgs = $additional_imgs;
         }
 
         return $product;
     }
 
-    private function saveImage($imageFile, $type, $product_id)
+    private function saveImage($imageFile, $name, $product_id, $type)
     {
-        chdir(".."); // Down to DIR ROOT
-        $image = new Image(CONF_UPLOAD_DIR, CONF_UPLOAD_IMAGE_DIR."/products/".$product_id, false);
-        $name = $type ."-". md5(uniqid(rand(), true));
-        $upload = $image->upload($imageFile, $name, 1000);
+        $image = new Image(CONF_UPLOAD_DIR, CONF_UPLOAD_IMAGE_DIR . "/products/" . $product_id, false);
+        $upload = $image->upload($imageFile, $name);
+
+
+        if(!file_exists($upload)) throw new PDOException("Erro ao salvar imagem $name");
 
         $productImages = new ProductImage();
         $productImages->product_id = $product_id;
         $productImages->image = $upload;
         $productImages->type = $type;
 
-        if($productImages->save()) return true;
-
-        return false;
+       $productImages->save();
     }
 
-    private function deleteImage($product_id, $type)
+    private function deleteImage($product_id, $name)
     {
-        $params = http_build_query(["product_id" => $product_id, "type" => $type]);
-        $image = (new ProductImage())->find("product_id = :product_id AND type = :type", $params);
-        echo $image->image;
-        if(file_exists($image->image)) {
+        $path = CONF_UPLOAD_DIR . "/" . CONF_UPLOAD_IMAGE_DIR . "/products/" . $product_id . "/" . $name;
+        $params = http_build_query(["product_id" => $product_id, "image" => $path]);
+        $image = (new ProductImage())->find("product_id = :product_id AND image LIKE ':image%' ", $params);
+        if (file_exists($image->image)) {
             unlink($image->image);
-            $image->destroy();
-            return true;
+            if (!$image->destroy()) throw new PDOException("Erro ao deletar imagem no banco de dados.");
         }
-        return false;
+    }
+
+    private function deleteImageDir($product_id)
+    {
+        function delTree($dir)
+        {
+            $files = array_diff(scandir($dir), array('.', '..'));
+            foreach ($files as $file) {
+                (is_dir("$dir/$file")) ? delTree("$dir/$file") : unlink("$dir/$file");
+            }
+            return rmdir($dir);
+        }
+
+        $path = CONF_UPLOAD_DIR . "/" . CONF_UPLOAD_IMAGE_DIR . "/products/" . $product_id . "/";
+
+        return delTree($path);
     }
 
     public function listProducts()
@@ -113,36 +129,29 @@ class ProductController extends ApiController
         parent::setAccessToEndpoint($this->ACCESS_ADMIN);
 
         $REQUIRED_FIELDS = ["name", "description", "color", "size_type", "price_brl", "max_installments", "discount_brl_percentage"];
-        $ALLOWED_IMAGES = ["principal-image", "additional-image-1", "additional-image-2", "additional-image-3"];
+        $ALLOWED_IMAGES = ["principal_image", "additional_image_1", "additional_image_2", "additional_image_3"];
 
         $request_body = $this->validateRequestData($data, $REQUIRED_FIELDS);
 
         if (!$_FILES[$ALLOWED_IMAGES[0]]) throw new InvalidArgumentException("Imagem principal não enviada! Campo: '$ALLOWED_IMAGES[0]'.", Code::$BAD_REQUEST);
 
         $type = (new ProductSizeType())->findById($request_body["size_type"])->data();
-        if(!$type) {
+        if (!$type) {
             throw new InvalidArgumentException("Id de tipo de tamanho inválido!", Code::$BAD_REQUEST);
         }
+        $request_body["size_type_id"] = $type->id;
 
         $product = new Product();
-        $product->name = $request_body["name"];
-        $product->description = $request_body["description"];
-        $product->color = $request_body["color"];
-        $product->size_type_id = $type->id;
-        $product->price_brl = $request_body["price_brl"];
-        $product->max_installments = $request_body["max_installments"];
-        $product->discount_brl_percentage = $request_body["discount_brl_percentage"];
+        $product->setData($request_body);
 
         $isCreated = $product->save();
-        if(!$isCreated) {
-            throw new PDOException($product->fail(), Code::$BAD_REQUEST);
-        }
+        if (!$isCreated) throw new PDOException($product->fail(), Code::$BAD_REQUEST);
 
-        if(!$this->saveImage($_FILES[$ALLOWED_IMAGES[0]], ProductImage::$PRINCIPAL, $product->id)) throw new PDOException("Erro ao salvar imagem principal!", Code::$INTERNAL_SERVER_ERROR);
-
-        for($i = 1; $i < count($ALLOWED_IMAGES); $i++) {
-            if(isset($_FILES[$ALLOWED_IMAGES[$i]])) {
-                if(!$this->saveImage($_FILES[$ALLOWED_IMAGES[$i]], ProductImage::$ADDITIONAL, $product->id)) throw new PDOException("Erro ao salvar imagem adicional!", Code::$INTERNAL_SERVER_ERROR);
+        chdir("..");
+        $this->saveImage($_FILES[$ALLOWED_IMAGES[0]], $ALLOWED_IMAGES[0], $product->id, ProductImage::$PRINCIPAL);
+        for ($i = 1; $i < count($ALLOWED_IMAGES); $i++) {
+            if (isset($_FILES[$ALLOWED_IMAGES[$i]])) {
+                $this->saveImage($_FILES[$ALLOWED_IMAGES[$i]], $ALLOWED_IMAGES[$i], $product->id, ProductImage::$ADDITIONAL);
             }
         }
 
@@ -185,22 +194,21 @@ class ProductController extends ApiController
             throw new PDOException($product->fail(), code: Code::$BAD_REQUEST);
         }
 
-        if(isset($_FILES[$ALLOWED_IMAGES[0]])) {
-            if(!$this->deleteImage($product->id, ProductImage::$PRINCIPAL))
-            if(!$this->saveImage($_FILES[$ALLOWED_IMAGES[0]], ProductImage::$PRINCIPAL, $product->id)) throw new PDOException("Erro ao salvar imagem principal!", Code::$INTERNAL_SERVER_ERROR);
+        chdir("..");
+        if (isset($_FILES[$ALLOWED_IMAGES[0]])) {
+            $this->deleteImage($product->id, $ALLOWED_IMAGES[0]);
+            $this->saveImage($_FILES[$ALLOWED_IMAGES[0]], $ALLOWED_IMAGES[0], $product->id, ProductImage::$PRINCIPAL);
         }
 
-        for($i = 1; $i < count($ALLOWED_IMAGES); $i++) {
-            if(isset($_FILES[$ALLOWED_IMAGES[$i]])) {
-                if(!$this->deleteImage($product->id, ProductImage::$ADDITIONAL)) throw new PDOException("Erro ao atualizar imagem secundária!", Code::$INTERNAL_SERVER_ERROR);
-
-                if(!$this->saveImage($_FILES[$ALLOWED_IMAGES[$i]], ProductImage::$ADDITIONAL, $product->id)) throw new PDOException("Erro ao salvar imagem adicional!", Code::$INTERNAL_SERVER_ERROR);
+        for ($i = 1; $i < count($ALLOWED_IMAGES); $i++) {
+            if (isset($_FILES[$ALLOWED_IMAGES[$i]])) {
+                $this->deleteImage($product->id, $ALLOWED_IMAGES[$i]);
+                $this->saveImage($_FILES[$ALLOWED_IMAGES[$i]], $ALLOWED_IMAGES[$i], $product->id, ProductImage::$ADDITIONAL);
             }
         }
 
         return Response::success(message: "Produto atualizado com sucesso.", code: Code::$OK);
     }
-
 
     public function deleteProduct(array $data)
     {
@@ -208,14 +216,17 @@ class ProductController extends ApiController
 
         $id = $data['id'];
 
-        $product = new Product();
+        $product = (new Product())->findById($id);
+        $isDestroyed = $product->destroy();
 
-        $isDestroyed = $product->findById($id)->destroy();
+        chdir("..");
+        if (!$this->deleteImageDir($product->id)) throw new PDOException("Erro ao apagar arquivos de imagem!");
 
-        if(!$isDestroyed) {
-            throw new PDOException($product->fail(), code: Code::$INTERNAL_SERVER_ERROR);
+        if (!$isDestroyed) {
+            throw new PDOException($product->fail()->getMessage(), code: Code::$INTERNAL_SERVER_ERROR);
         }
 
-        return Response::success(message: "Produto deletado com sucesso.", code: Code::$NO_CONTENT);
+
+        return Response::success(message: "Produto deletado com sucesso.", code: Code::$OK);
     }
 }

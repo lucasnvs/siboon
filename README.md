@@ -1,11 +1,17 @@
 # Siboon SkateShop
 
-- In Development!
+> Status do Projeto: Em desenvolvimento :warning:
 
 ## Descrição
 
 Projeto com o objetivo de implementar um sistema Web de um e-commerce de uma loja de skates, 
 utilizando um padrão de projeto MVC.
+
+## Sumário
+* ###  [Tecnologias utilizadas](#tecnologias)
+* ###  [Funcionalidades](#funcionalidades)
+* ###  [Documentações](#documentações)
+* ###  [Rotas Amigáveis](#rotas-amigáveis)
 
 ## Tecnologias
 
@@ -18,49 +24,26 @@ utilizando um padrão de projeto MVC.
 - Firebase JWT para autenticação;
 - MySQL Database;
 
-### Funcionalidades - All in development
+## Funcionalidades
 
-- Api; 
-- Integração com os correios via WS, nem que seja mockada;
-- Integração com Gerador de Pagamento, nem que seja mockada; 
-- Carrinho com localstorage;
-- Web App;
-- Admin App;
-- Banco de dados;
+- [ ] Banco de dados
+- [ ] API
+- [ ] Web Application
+- [ ] App Application
+- [ ] Admin Application
+- [ ] Carrinho com localstorage
+- [ ] Integração com os correios via WS, nem que seja mockada
+- [ ] Integração com Gerador de Pagamento, nem que seja mockada
 
-## API
+## Documentações
 
-- Recurso **USUÁRIO e LOGIN**
+1. Acesso a documentação da [API]("./api/README.md")
+2. Acesso a documentação do [Banco de Dados]("./db/README.md")
 
-| Método   | Rota                   | Descrição                           |
-|----------|------------------------|-------------------------------------|
-| `POST`   | **api/usuarios/login** | Realiza o Login do usuário.         |
-| `GET`    | **api/usuarios**       | Devolve todas as FAQS existentes.   |
-| `GET`    | **api/usuarios/{id}**  | Devolve uma FAQ existente por id.   |
-| `POST`   | **api/usuarios**       | Cria um usuário.                    |
-| `PUT`    | **api/usuarios/{id}**  | Atualiza um usuário por id.         |
-| `DELETE` | **api/usuarios/{id}**  | Deleta um usuário por id.           |
-
-- Recurso **FAQ**
-
-| Método | Rota             | Descrição                         |
-|--------|------------------|-----------------------------------|
-| `GET`  | **api/faq**      | Devolve todas as FAQS existentes. |
-| `GET`  | **api/faq/{id}** | Devolve uma FAQ existente por id. | 
-
-- Recurso **PRODUTO**
-
-| Método   | Rota                  | Descrição                             |
-|----------|-----------------------|---------------------------------------|
-| `GET`    | **api/produtos**      | Devolve todos os produtos existentes. |
-| `GET`    | **api/produtos/{id}** | Devolve um produto existente por id.  |    
-| `POST`   | **api/produtos**      | Cria um produto.                      |    
-| `PUT`    | **api/produtos/{id}** | Atualiza um produto por id.           |    
-| `DELETE` | **api/produtos/{id}** | Deleta um produto por id.             |    
-
-## Páginas
+## Rotas Amigáveis
 
 ### Grupos
+
 - Web - " / "
 - Admin - " /admin/ "
 
@@ -90,7 +73,3 @@ utilizando um padrão de projeto MVC.
 | **/**                   | Geral    | Dashboard principal.       |
 | **/produtos**           | Produto  | Gerenciamento de produtos. |
 | **/produtos/registrar** | Produto  | Registrar um produto.      |
-
-
-## Database
-### MySQL Table Scheme
