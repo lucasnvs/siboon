@@ -7,12 +7,6 @@
 Projeto com o objetivo de implementar um sistema Web de um e-commerce de uma loja de skates, 
 utilizando um padrão de projeto MVC.
 
-## Sumário
-* ###  [Tecnologias utilizadas](#tecnologias)
-* ###  [Funcionalidades](#funcionalidades)
-* ###  [Documentações](#documentações)
-* ###  [Rotas Amigáveis](#rotas-amigáveis)
-
 ## Tecnologias
 
 - HTML, CSS, JAVASCRIPT
@@ -37,8 +31,8 @@ utilizando um padrão de projeto MVC.
 
 ## Documentações
 
-1. Acesso a documentação da [API]("./api/README.md")
-2. Acesso a documentação do [Banco de Dados]("./db/README.md")
+1. Acesso a documentação da [API]("api/README.md")
+2. Acesso a documentação do [Banco de Dados]("db/README.md")
 
 ## Rotas Amigáveis
 
