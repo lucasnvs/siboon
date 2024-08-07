@@ -7,7 +7,7 @@ use InvalidArgumentException;
 use Source\Exceptions\AuthorizationException;
 use Source\Response\Code;
 
-class Controller
+abstract class Controller
 {
     protected $userAuth = [];
     protected int $endpointAccess;
@@ -19,8 +19,8 @@ class Controller
     {
         $headers = getallheaders();
 
-        if (isset($_COOKIE['AUTHORIZATION'])) {
-            $this->authorizationBearer = str_replace('Bearer ', '', $_COOKIE['AUTHORIZATION']);
+        if (isset($_COOKIE[CONF_AUTHORIZATION_COOKIE_NAME])) {
+            $this->authorizationBearer = str_replace('Bearer ', '', $_COOKIE[CONF_AUTHORIZATION_COOKIE_NAME]);
             $this->authorizationBearer = htmlspecialchars($this->authorizationBearer);
         }
 
@@ -63,7 +63,7 @@ class Controller
             throw new AuthorizationException("Sem permissão para esse endpoint. $decode->access", code: Code::$UNAUTHORIZED);
         }
 
-        if(isset($id)) {
+        if(isset($id) && $decode->access < $this->ACCESS_ADMIN) {
             if($decode->id != $id){
                 throw new AuthorizationException("Sem permissão para esse endpoint.", code: Code::$UNAUTHORIZED);
             }

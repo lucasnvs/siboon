@@ -17,10 +17,10 @@ class ErrorController
         ];
     }
 
-    public static function getMaintenance()
+    public static function getUnavailable()
     {
         return Response::pattern([
-            "message" => "The server is undergoing maintenance.",
+            "message" => "Service Unavailable: The server is temporarily unable to service your request due to maintenance downtime or capacity problems. Please try again later.",
         ]);
     }
 

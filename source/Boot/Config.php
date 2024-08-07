@@ -1,6 +1,12 @@
 <?php
 
-use Source\Helpers\Env;
+use Source\Support\Env;
+
+# IN DEVELOPMENT ENV VARIABLE
+define("CONF_IN_DEVELOPMENT", Env::get("IN_DEVELOPMENT"));
+
+# COOKIE AUTHORIZATION
+const CONF_AUTHORIZATION_COOKIE_NAME = "AUTHORIZATION";
 
 # STORAGE DIRECTORIES
 const CONF_UPLOAD_DIR = "storage";

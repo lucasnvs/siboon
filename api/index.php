@@ -46,4 +46,9 @@ try {
     ob_end_flush();
 } catch (Exception $e) {
     return ErrorController::getErrorMessage($e);
+} catch (Error $e) {
+    if(CONF_IN_DEVELOPMENT) {
+        throw $e;
+    }
+    return ErrorController::getUnavailable();
 }

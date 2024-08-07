@@ -2,7 +2,6 @@
 
 namespace Source\Controller\Api;
 
-use CoffeeCode\DataLayer\DataLayer;
 use CoffeeCode\Uploader\Image;
 use http\Exception\InvalidArgumentException;
 use PDOException;
@@ -12,46 +11,11 @@ use Source\Models\Product\ProductImage;
 use Source\Models\Product\ProductSizeType;
 use Source\Response\Code;
 use Source\Response\Response;
+use Source\Support\DTO;
+use Source\Support\Validator\FieldValidator;
 
 class ProductController extends ApiController
 {
-
-    private function calc_discount(float $value, $p_discount = 0): float
-    {
-        return $value - ($value * $p_discount / 100);
-    }
-
-    private function format_price($value): string
-    {
-        return "R$ " . number_format($value, 2, ",", ".");
-    }
-
-    private function mapToViewLayer(DataLayer $product)
-    {
-        $product->formated_price_brl = $this->format_price($product->price_brl);
-        $product->formated_price_brl_with_discount = $this->format_price($this->calc_discount($product->price_brl, $product->discount_brl_percentage));
-        $product->url = $product->id;
-
-        $params = http_build_query(["product_id" => $product->id]);
-        $images = (new ProductImage())->find("product_id = :product_id", $params)->fetch(true);
-        $additional_imgs = [];
-        if (!empty($images)) {
-            foreach ($images as $image) {
-                if ($image->type === ProductImage::$PRINCIPAL) {
-                    $product->principal_img = $image->image;
-                }
-                if ($image->type === ProductImage::$ADDITIONAL) {
-                    $additional_imgs[] = $image->image;
-                }
-            }
-        }
-
-        if (count($additional_imgs) > 0) {
-            $product->additional_imgs = $additional_imgs;
-        }
-
-        return $product;
-    }
 
     private function saveImage($imageFile, $name, $product_id, $type)
     {
@@ -106,7 +70,7 @@ class ProductController extends ApiController
 
         $response = [];
         foreach ($products as $product) {
-            $response[] = $this->mapToViewLayer($product)->data();
+            $response[] = DTO::ProductDTO($product);
         }
 
         return Response::success($response, code: Code::$OK);
@@ -121,17 +85,29 @@ class ProductController extends ApiController
             return Response::success(message: "Produto não existe.", code: Code::$NO_CONTENT);
         }
 
-        return Response::success($this->mapToViewLayer($product)->data(), code: Code::$OK);
+        return Response::success(
+            DTO::ProductDTO($product),
+            code: Code::$OK
+        );
     }
 
     public function insertProduct(array $data)
     {
         parent::setAccessToEndpoint($this->ACCESS_ADMIN);
 
-        $REQUIRED_FIELDS = ["name", "description", "color", "size_type", "price_brl", "max_installments", "discount_brl_percentage"];
-        $ALLOWED_IMAGES = ["principal_image", "additional_image_1", "additional_image_2", "additional_image_3"];
+        $FIELDS = [
+            "name" => [FieldValidator::required],
+            "description" => [FieldValidator::required],
+            "color" => [FieldValidator::required],
+            "size_type" => [FieldValidator::required],
+            "price_brl" => [FieldValidator::required],
+            "max_installments" => [FieldValidator::required],
+            "discount_brl_percentage" => [FieldValidator::required],
+        ];
 
-        $request_body = $this->validateRequestData($data, $REQUIRED_FIELDS);
+        $request_body = parent::validate($data, $FIELDS);
+
+        $ALLOWED_IMAGES = ["principal_image", "additional_image_1", "additional_image_2", "additional_image_3"];
 
         if (!$_FILES[$ALLOWED_IMAGES[0]]) throw new InvalidArgumentException("Imagem principal não enviada! Campo: '$ALLOWED_IMAGES[0]'.", Code::$BAD_REQUEST);
 
@@ -139,12 +115,22 @@ class ProductController extends ApiController
         if (!$type) {
             throw new InvalidArgumentException("Id de tipo de tamanho inválido!", Code::$BAD_REQUEST);
         }
-        $request_body["size_type_id"] = $type->id;
+
+        $ALLOW_TO_SET = [
+            "name" => "name",
+            "description" => "description",
+            "color" => "color",
+            "size_type" => "size_type_id",
+            "price_brl" => "price_brl",
+            "max_installments" => "max_installments",
+            "discount_brl_percentage" => "discount_brl_percentage",
+        ];
 
         $product = new Product();
-        $product->setData($request_body);
+        parent::setObjectAttributes($product, $ALLOW_TO_SET,$request_body);
 
         $isCreated = $product->save();
+
         if (!$isCreated) throw new PDOException($product->fail(), Code::$BAD_REQUEST);
 
         chdir("..");
@@ -163,37 +149,31 @@ class ProductController extends ApiController
         parent::setAccessToEndpoint($this->ACCESS_ADMIN);
 
         $id = $data['id'];
-        $request_body = $this->validateRequestData($data);
+        $request_body = $this->validate($data);
         $ALLOWED_IMAGES = ["principal-image", "additional-image-1", "additional-image-2", "additional-image-3"];
 
-        $product = (new Product())->findById($id);
 
-        if (isset($request_body["name"])) {
-            $product->name = $request_body["name"];
+        $product = (new Product())->findById($id);
+        if(!$product) {
+            throw new InvalidArgumentException("Produto com id $id não existe.", code: Code::$BAD_REQUEST);
         }
-        if (isset($request_body["description"])) {
-            $product->description = $request_body["description"];
-        }
-        if (isset($request_body["color"])) {
-            $product->color = $request_body["color"];
-        }
-        if (isset($request_body["size_type"])) {
-            $product->size_type_id = $request_body["size_type"];
-        }
-        if (isset($request_body["price_brl"])) {
-            $product->price_brl = $request_body["price_brl"];
-        }
-        if (isset($request_body["max_installments"])) {
-            $product->max_installments = $request_body["max_installments"];
-        }
-        if (isset($request_body["discount_brl_percentage"])) {
-            $product->discount_brl_percentage = $request_body["discount_brl_percentage"];
-        }
+
+        $ALLOW_TO_SET = [
+            "name" => "name",
+            "description" => "description",
+            "color" => "color",
+            "size_type" => "size_type",
+            "price_brl" => "price_brl",
+            "max_installments" => "max_installments",
+            "discount_brl_percentage" => "discount_brl_percentage"
+        ];
+        parent::setObjectAttributes($product, $ALLOW_TO_SET, $request_body);
 
         if (!$product->save()) {
             throw new PDOException($product->fail(), code: Code::$BAD_REQUEST);
         }
 
+        // Tenho que mudar isso aq, ta confuso e com bug;
         chdir("..");
         if (isset($_FILES[$ALLOWED_IMAGES[0]])) {
             $this->deleteImage($product->id, $ALLOWED_IMAGES[0]);
@@ -217,6 +197,11 @@ class ProductController extends ApiController
         $id = $data['id'];
 
         $product = (new Product())->findById($id);
+
+        if(!$product) {
+            throw new InvalidArgumentException("Produto com id $id não existe.", code: Code::$BAD_REQUEST);
+        }
+
         $isDestroyed = $product->destroy();
 
         chdir("..");

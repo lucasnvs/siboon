@@ -2,10 +2,9 @@
 namespace Source\Core;
 
 use DateTimeImmutable;
-use Firebase\JWT\JWT;
 use Exception;
+use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
-use Source\Helpers\Env;
 use stdClass;
 
 class TokenJWT

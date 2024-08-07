@@ -19,15 +19,4 @@ class Product extends DataLayer {
     {
         return $this->message;
     }
-
-    public function setData(array $data)
-    {
-        $this->name = $data["name"];
-        $this->description = $data["description"];
-        $this->color = $data["color"];
-        $this->size_type_id = $data["size_type_id"];
-        $this->price_brl = $data["price_brl"];
-        $this->max_installments = $data["max_installments"];
-        $this->discount_brl_percentage = $data["discount_brl_percentage"];
-    }
 }

@@ -2,10 +2,12 @@
 
 namespace Source\Core;
 
+use Dotenv\Validator;
 use InvalidArgumentException;
 use Source\Response\Code;
+use Source\Support\Validator\FieldValidator;
 
-class ApiController extends Controller
+abstract class ApiController extends Controller
 {
     protected array $ALLOWED_REQUEST_TYPES = ["application/json", "multipart/form-data"];
 
@@ -24,7 +26,7 @@ class ApiController extends Controller
         return $content_type;
     }
 
-    protected function validateRequestData ($data, ?array $REQUIRED_FIELDS = null) : array | null
+    protected function validate($data, ?array $FIELDS = null) : array
     {
         $content_type = $this->validateContentType();
 
@@ -35,18 +37,29 @@ class ApiController extends Controller
             case "multipart/form-data": $request_body = $data;
         }
 
-        if(sizeof($request_body) == 0) {
-            throw new InvalidArgumentException("Body sem campos.", Code::$BAD_REQUEST);
-        }
+        if (empty($request_body)) {throw new InvalidArgumentException("Conteúdo vazio.", Code::$BAD_REQUEST);}
 
-        if(isset($REQUIRED_FIELDS)) {
-            foreach ($REQUIRED_FIELDS as $field) {
-                if(!$request_body[$field] || $request_body[$field] == "") {
-                    throw new InvalidArgumentException("Todos os campos devem estar presentes e preenchidos! Campo não enviado: $field", Code::$BAD_REQUEST);
+        if (!isset($FIELDS)) return $request_body;
+
+        foreach ($FIELDS as $key => $validators) {
+            if(isset($request_body[$key])) {
+                (new FieldValidator())->validate($request_body[$key], $validators);
+            } else {
+                if(in_array(FieldValidator::required, $validators)) {
+                    throw new InvalidArgumentException("Todos os campos obrigatórios devem estar presentes e preenchidos!", Code::$BAD_REQUEST);
                 }
             }
         }
 
         return $request_body;
+    }
+
+    public function setObjectAttributes($object, $ALLOW_TO_SET, $body): void
+    {
+        foreach ($ALLOW_TO_SET as $field => $attribute) {
+            if(isset($body[$field])) {
+                $object->$attribute = $body[$field];
+            }
+        }
     }
 }

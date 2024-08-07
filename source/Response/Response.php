@@ -12,7 +12,7 @@ class Response
         echo json_encode($response, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
     }
 
-    public static function success($response = null, string $message = null, int $code = null): void
+    public static function success($response = null, string $message = null, int $code = 200): void
     {
         $back = ["type" => "success"];
         if(isset($message)) $back["message"] = $message;
@@ -21,10 +21,8 @@ class Response
         self::back($back, $code);
     }
 
-    public static function error(string $type_error, string $message = "Unknown", int $code = null): void
+    public static function error(string $type_error, string $message = "Unknown", int $code = 500): void
     {
-        if(!isset($code)) $code = Code::$UNKNOWN_ERROR;
-
         self::back([
             "type" => "error",
             "type_error" => $type_error,

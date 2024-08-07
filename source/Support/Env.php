@@ -1,5 +1,5 @@
 <?php
-namespace Source\Helpers;
+namespace Source\Support;
 use Dotenv\Dotenv;
 
 abstract class Env {

@@ -2,6 +2,7 @@
 
 namespace Source\Controller\Api;
 
+use Dotenv\Validator;
 use InvalidArgumentException;
 use PDOException;
 use Source\Core\ApiController;
@@ -9,6 +10,9 @@ use Source\Core\TokenJWT;
 use Source\Models\User;
 use Source\Response\Code;
 use Source\Response\Response;
+use Source\Support\DTO;
+use Source\Support\Validator\FieldValidator;
+use function Source\Support\UserDTO;
 
 class UserController extends ApiController
 {
@@ -25,12 +29,7 @@ class UserController extends ApiController
 
         $response = [];
         foreach ($users as $user) {
-            $response[] = [
-                "id" => $user->id,
-                "name" => $user->first_name." ".$user->last_name,
-                "email" => $user->email,
-                "role" => $user->role
-            ];
+            $response[] = DTO::UserDTO($user);
         }
 
         if ($isLocalReq) return $response;
@@ -38,38 +37,36 @@ class UserController extends ApiController
         return Response::success($response, code: Code::$OK);
     }
 
-    public function getUser(array $data, $isLocalReq = false)
+    public function getUser(array $data)
     {
-
         $user = (new User())->findById($data['id']);
 
         if (!$user) {
             return Response::success(message: "Usuário não existe.", code: Code::$NO_CONTENT);
         }
 
-        $response = [
-            "id" => $user->id,
-            "name" => $user->name,
-            "email" => $user->email,
-            "role" => $user->role,
-        ];
-
-        if ($isLocalReq) return $response;
-
-        return Response::success($response, Code::$OK);
+        return Response::success(DTO::UserDTO($user), code: Code::$OK);
     }
 
     public function insertUser(array $data)
     {
-        $REQUIRED_FIELDS = ["first_name", "last_name", "email", "password"];
-
-        $request_body = $this->validateRequestData($data, $REQUIRED_FIELDS);
+        $FIELDS = [
+            "first_name" => [FieldValidator::required],
+            "last_name" => [FieldValidator::required, FieldValidator::string],
+            "email" => [FieldValidator::required, FieldValidator::email],
+            "password" => [FieldValidator::required, FieldValidator::password],
+        ];
+        $request_body = parent::validate($data, $FIELDS);
 
         $user = new User();
-        $user->first_name = $request_body["first_name"];
-        $user->last_name = $request_body["last_name"];
-        $user->email = $request_body["email"];
-        $user->password = $request_body["password"];
+
+        $ALLOW_TO_SET = [
+            "first_name" => "first_name",
+            "last_name" => "last_name",
+            "email" => "email",
+            "password" => "password"
+        ];
+        parent::setObjectAttributes($user, $ALLOW_TO_SET, $request_body);
 
         $insert = $user->save();
 
@@ -77,32 +74,35 @@ class UserController extends ApiController
             throw new PDOException($user->getMessage(), code: Code::$BAD_REQUEST);
         }
 
-        $response = [
-            "user" => [
-                "id" => $insert,
-                "name" => $user->first_name . " " . $user->last_name,
-                "email" => $user->email
-            ]
-        ];
-
-        return Response::success($response, message: $user->getMessage(), code: Code::$CREATED);
+        return Response::success(DTO::UserDTO($user), message: $user->getMessage(), code: Code::$CREATED);
     }
 
     public function updateUser(array $data)
     {
         $id = $data['id'];
-        $request_body = $this->validateRequestData($data); // Campos Aceitos: "name", "email"
-
         parent::setAccessToEndpoint($this->ACCESS_LOGGED, $id);
+
+        $FIELDS = [
+            "first_name" => [FieldValidator::string],
+            "last_name" => [FieldValidator::string],
+            "email" => [FieldValidator::email],
+        ];
+
+        $ALLOW_TO_SET = [
+            "first_name" => "first_name",
+            "last_name" => "last_name",
+            "email" => "email",
+        ];
+
+        $request_body = parent::validate($data, $FIELDS);
 
         $user = (new User())->findById($id);
 
-        if (isset($request_body["name"])) {
-            $user->name = $request_body["name"];
+        if(!$user){
+            throw new PDOException("Usuário com id $id não existe.", code: Code::$BAD_REQUEST);
         }
-        if (isset($request_body["email"])) {
-            $user->email = $request_body["email"];
-        }
+
+        parent::setObjectAttributes($user, $ALLOW_TO_SET, $request_body);
 
         if (!$user->updateUser()) {
             throw new PDOException($user->getMessage(), code: Code::$BAD_REQUEST);
@@ -114,11 +114,16 @@ class UserController extends ApiController
     public function deleteUser(array $data)
     {
         $id = $data['id'];
-
         parent::setAccessToEndpoint($this->ACCESS_LOGGED, $id);
 
-        $user = new User();
-        $isDestroyed = $user->findById($id)->destroy();
+        $user = (new User())->findById($id);
+
+        if (!isset($user)) {
+            throw new InvalidArgumentException("Usuário com id $id não existe.", code: Code::$BAD_REQUEST);
+        }
+
+        $isDestroyed = $user->destroy();
+
         if (!$isDestroyed) {
             throw new PDOException($user->fail(), code: Code::$INTERNAL_SERVER_ERROR);
         }
@@ -128,16 +133,20 @@ class UserController extends ApiController
 
     public function changePassword(array $data)
     {
-        $REQUIRED_FIELDS = ["id", "password", "newPassword", "confirmNewPassword"];
-
-        $request_body = $this->validateRequestData($data, $REQUIRED_FIELDS);
+        $FIELDS = [
+            "id" => [FieldValidator::required],
+            "password" => [FieldValidator::required, FieldValidator::password],
+            "newPassword" => [FieldValidator::required, FieldValidator::password],
+            "confirmNewPassword" => [FieldValidator::required, FieldValidator::password],
+        ];
+        $request_body = parent::validate($data, $FIELDS);
 
         parent::setAccessToEndpoint($this->ACCESS_LOGGED, $request_body["id"]);
 
         $user = new User();
         $exist = $user->findById($request_body["id"]);
         if (!$exist) {
-            throw new PDOException("Usuário não existe.", code: Code::$BAD_REQUEST);
+            throw new InvalidArgumentException("Usuário não existe.", code: Code::$BAD_REQUEST);
         }
 
         $isChanged = $exist->updatePassword($request_body["password"], $request_body["newPassword"], $request_body["confirmNewPassword"]);
@@ -151,9 +160,12 @@ class UserController extends ApiController
 
     public function login(array $data)
     {
-        $REQUIRED_FIELDS = ["email", "password"];
+        $FIELDS = [
+            "email" => [FieldValidator::required],
+            "password" => [FieldValidator::required],
+        ];
 
-        $request_body = $this->validateRequestData($data, $REQUIRED_FIELDS);
+        $request_body = parent::validate($data, $FIELDS);
 
         $user = new User();
         $login = $user->login($request_body["email"], $request_body["password"]);
@@ -162,7 +174,6 @@ class UserController extends ApiController
             throw new InvalidArgumentException($user->getMessage(), Code::$BAD_REQUEST);
         }
 
-        $access = 0;
         match ($user->role) {
             "CLIENT" => $access = $this->ACCESS_LOGGED,
             "ADMIN" => $access = $this->ACCESS_ADMIN,
@@ -185,7 +196,8 @@ class UserController extends ApiController
             "token" => $signature
         ];
 
-        setcookie("AUTHORIZATION", "Bearer ".$signature, (time() + (24*60*60)), "/");
+        $EXPIRE_TIME = 24 * 60 * 60; // 24 Hours
+        setcookie(CONF_AUTHORIZATION_COOKIE_NAME, "Bearer " . $signature, (time() + $EXPIRE_TIME), "/");
 
         return Response::success($response, message: $user->getMessage(), code: Code::$OK);
     }
