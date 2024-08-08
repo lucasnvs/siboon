@@ -129,6 +129,12 @@ a {
     gap: 3px;
 }
 
+.input-container .input-error {
+    font-size: 14px;
+    color: #dc0e0e;
+    min-height: 10px;
+}
+
 .default-input,
 select,
 textarea {

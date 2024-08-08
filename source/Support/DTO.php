@@ -5,13 +5,15 @@ use Source\Models\Product\ProductImage;
 
 class DTO {
 
+    private static function calc_discount(float $value, $p_discount = 0): float { return $value - ($value * $p_discount / 100); }
+
+    private static function format_price($value): string { return "R$ " . number_format($value, 2, ",", "."); }
+
     public static function ProductDTO($product)
     {
-        function calc_discount(float $value, $p_discount = 0): float { return $value - ($value * $p_discount / 100); }
-        function format_price($value): string { return "R$ " . number_format($value, 2, ",", "."); }
 
-        $product->formated_price_brl = format_price($product->price_brl);
-        $product->formated_price_brl_with_discount = format_price(calc_discount($product->price_brl, $product->discount_brl_percentage));
+        $product->formated_price_brl = self::format_price($product->price_brl);
+        $product->formated_price_brl_with_discount = self::format_price(self::calc_discount($product->price_brl, $product->discount_brl_percentage));
         $product->url = $product->id;
 
         $params = http_build_query(["product_id" => $product->id]);

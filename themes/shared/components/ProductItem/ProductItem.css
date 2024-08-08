@@ -2,7 +2,6 @@
 .product-container {
     display: flex;
     flex-direction: column;
-    justify-content: center;
     align-items: center;
 }
 
@@ -15,6 +14,9 @@
 }
 
 .product-container a {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
     color: black;
 }
 

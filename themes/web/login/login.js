@@ -1,10 +1,9 @@
 import {UserService} from "../../shared/services/UserService.js";
 import {Validate, Validators} from "../../shared/Validate.js";
 
-async function login() {
+async function login(email, password) {
     let res = await UserService.login(
-        loginEmail.value,
-        loginPassword.value
+        email, password
     );
 
     if(!res.ok) {
@@ -19,7 +18,19 @@ const loginPassword = document.getElementById("password-login");
 const loginSubmit = document.getElementById("submit-login");
 
 loginSubmit.onclick = async () => {
-    let errorBody = await login();
+
+    console.log(Validate.validate(loginEmail, [Validators.required]))
+    if(
+        !Validate.validate(loginEmail, [Validators.required]) ||
+        !Validate.validate(loginPassword, [Validators.required])
+    ) return;
+
+
+    let errorBody = await login(
+        loginEmail.value,
+        loginPassword.value
+    );
+
     if(errorBody) {
         document.getElementById("login-error-message").innerHTML = errorBody.message;
     } else {
@@ -40,7 +51,7 @@ signupSubmit.onclick = async () => {
         !Validate.validate(signupName, [Validators.required]) ||
         !Validate.validate(signupLastName, [Validators.required]) ||
         !Validate.validate(signupEmail, [Validators.email, Validators.required]) ||
-        !Validate.validateConfirmPassword(signupPassword, signupPasswordConfirm)
+        !Validate.validateConfirmPassword(signupPassword, signupPasswordConfirm, [Validators.required, Validators.password])
     ) return;
 
     let res = await UserService.sendData(
@@ -55,5 +66,8 @@ signupSubmit.onclick = async () => {
         return;
     }
 
-    await login()
+    await login(
+        signupEmail.value,
+        signupPassword.value
+    )
 }

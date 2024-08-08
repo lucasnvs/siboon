@@ -39,7 +39,7 @@ class UserController extends ApiController
 
     public function getUser(array $data)
     {
-        $user = (new User())->findById($data['id']);
+        $user = (new User())->findById((int)$data['id']);
 
         if (!$user) {
             return Response::success(message: "Usuário não existe.", code: Code::$NO_CONTENT);

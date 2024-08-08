@@ -37,13 +37,26 @@ ACTIONS.editProduct.addEventListener("click", async (e) => {
     formData.append("max_installments", FORM_ELEMENTS.selectMaxInstallment.value)
     formData.append("discount_brl_percentage", FORM_ELEMENTS.inputDiscount.value)
 
-    formData.append("principal-image", FORM_ELEMENTS.inputsImages[0].files[0])
+    formData.append("principal_image", FORM_ELEMENTS.inputsImages[0].files[0])
 
-    if(FORM_ELEMENTS.inputsImages[1].files[0]) formData.append("additional-image-1", FORM_ELEMENTS.inputsImages[1].files[0])
-    if(FORM_ELEMENTS.inputsImages[2].files[0]) formData.append("additional-image-2", FORM_ELEMENTS.inputsImages[2].files[0])
-    if(FORM_ELEMENTS.inputsImages[3].files[0]) formData.append("additional-image-3", FORM_ELEMENTS.inputsImages[3].files[0])
+    if(FORM_ELEMENTS.inputsImages[1].files[0]) formData.append("additional_image_1", FORM_ELEMENTS.inputsImages[1].files[0])
+    if(FORM_ELEMENTS.inputsImages[2].files[0]) formData.append("additional_image_2", FORM_ELEMENTS.inputsImages[2].files[0])
+    if(FORM_ELEMENTS.inputsImages[3].files[0]) formData.append("additional_image_3", FORM_ELEMENTS.inputsImages[3].files[0])
+
+    // for (var pair of formData.entries()) {
+    //     console.log(pair[0]+ ', ' + pair[1]);
+    // }
 
     let res = await ProductService.update(PRODUCT_ID, formData);
+
+
+    if(!res.ok) {
+        ErrorDialog(res.message);
+    } else {
+        SuccessDialog(res.message, () => {
+            // window.location.href = URL_BASE_SITE+"admin/produtos"
+        });
+    }
 });
 
 ACTIONS.deleteProduct.addEventListener("click", async e => {
