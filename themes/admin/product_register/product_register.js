@@ -42,11 +42,11 @@ FORM_ELEMENTS.inputsImages.forEach(input => {
 ACTIONS.createProduct.addEventListener("click", async (e) => {
 
     const principal_image = FORM_ELEMENTS.inputsImages[0].files[0];
-    var additional_images = {
-        additional_image_1: FORM_ELEMENTS.inputsImages[1].files[0],
-        additional_image_2: FORM_ELEMENTS.inputsImages[2].files[0],
-        additional_image_3: FORM_ELEMENTS.inputsImages[3].files[0],
-    }.filter(image => !!image)
+    var additional_images = [
+        FORM_ELEMENTS.inputsImages[1].files[0],
+        FORM_ELEMENTS.inputsImages[2].files[0],
+        FORM_ELEMENTS.inputsImages[3].files[0],
+    ].filter(image => !!image)
 
     let res = await ProductService.sendData(
         FORM_ELEMENTS.inputName.value,

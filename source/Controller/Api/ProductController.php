@@ -3,6 +3,7 @@
 namespace Source\Controller\Api;
 
 use CoffeeCode\Uploader\Image;
+use Error;
 use http\Exception\InvalidArgumentException;
 use PDOException;
 use Source\Core\ApiController;
@@ -17,30 +18,99 @@ use Source\Support\Validator\FieldValidator;
 class ProductController extends ApiController
 {
 
-    private function saveImage($imageFile, $name, $product_id, $type)
+    private function storageUploadImage($imageFile, $product_id, $name)
     {
-        $image = new Image(CONF_UPLOAD_DIR, CONF_UPLOAD_IMAGE_DIR . "/products/" . $product_id, false);
-        $upload = $image->upload($imageFile, $name);
+        $imagePathUploader = new Image(CONF_UPLOAD_DIR, CONF_UPLOAD_IMAGE_DIR . "/products/" . $product_id, false);
 
-
+        $upload = $imagePathUploader->upload($imageFile, $name);
         if(!file_exists($upload)) throw new PDOException("Erro ao salvar imagem $name");
 
-        $productImages = new ProductImage();
-        $productImages->product_id = $product_id;
-        $productImages->image = $upload;
-        $productImages->type = $type;
+        return $upload;
 
-       $productImages->save();
     }
 
-    private function deleteImage($product_id, $name)
+    private function saveImage($imageFile, $product_id, $type)
     {
-        $path = CONF_UPLOAD_DIR . "/" . CONF_UPLOAD_IMAGE_DIR . "/products/" . $product_id . "/" . $name;
-        $params = http_build_query(["product_id" => $product_id, "image" => $path]);
-        $image = (new ProductImage())->find("product_id = :product_id AND image LIKE ':image%' ", $params);
-        if (file_exists($image->image)) {
-            unlink($image->image);
-            if (!$image->destroy()) throw new PDOException("Erro ao deletar imagem no banco de dados.");
+        $name = null;
+        $newItemValue = null;
+        if ($type === ProductImage::$PRINCIPAL) {
+            $name = "principal_image";
+        }
+        if ($type === ProductImage::$ADDITIONAL) {
+            $params = http_build_query(["product_id" => $product_id, "type" => $type]);
+            $imageFinded = (new ProductImage())->find("product_id = :product_id AND type = :type ORDER BY additional_order DESC;", $params);
+            if(!$imageFinded) {
+                $name = "additional_image-1";
+                $newItemValue = 1;
+            } else {
+                $newItemValue = $imageFinded->additional_order + 1;
+                $name = "additional_image-$newItemValue";
+            }
+        }
+
+        if(isset($name)) {
+            $upload = $this->storageUploadImage($imageFile, $product_id, $name);
+
+            $productImages = new ProductImage();
+            $productImages->product_id = $product_id;
+            $productImages->image = $upload;
+            $productImages->type = $type;
+            $productImages->additional_order = $newItemValue;
+
+            $productImages->save();
+        }
+    }
+
+    private function updateImage($imageFile, $product_id, $type, $order = null)
+    {
+        if($type === ProductImage::$ADDITIONAL && $order == null) {
+            throw new Error("Implementation Error: Se o type for $type você tem que passar um valor de order correto");
+        }
+
+        if($type === ProductImage::$PRINCIPAL) {
+            $params = http_build_query(["product_id" => $product_id, "type" => $type]);
+            $imageFinded = (new ProductImage())->find("product_id = :product_id AND type = `:type`", $params)->fetch();
+            echo $imageFinded;
+
+            if(!isset($imageFinded->id)) { // sempre da null / true
+                echo "Nao achou principal";
+                $this->saveImage($imageFile, $product_id, $type);
+                return;
+            }
+
+            $this->deleteImage($imageFinded->id, $imageFinded->image, true);
+
+            $upload = $this->storageUploadImage($imageFile, $product_id, "principal-image");
+
+            $imageFinded->image = $upload;
+            $imageFinded->save();
+        }
+
+        if($type === ProductImage::$ADDITIONAL) {
+            $params = http_build_query(["product_id" => $product_id, "type" => $type, "order" => $order]);
+            $imageFinded = (new ProductImage())->find("product_id = :product_id AND type = :type AND additional_order = :order", $params)->fetch();
+            if($imageFinded === null) {
+                $this->saveImage($imageFile, $product_id, $type);
+                return;
+            }
+            $this->deleteImage($imageFinded->id, $imageFinded->image);
+            $upload = $this->storageUploadImage($imageFile, $product_id, "additional-image-$order");
+            $imageFinded->image = $upload;
+
+            $imageFinded->save();
+        }
+    }
+
+    private function deleteImage($dbImageId, $path, $deleteOnDatabase = false)
+    {
+        $image = (new ProductImage())->findById($dbImageId);
+        if($image->image == $path) {
+            if (file_exists($path)) {
+                unlink($path);
+                if($deleteOnDatabase) {
+                    if (!$image->destroy()) throw new PDOException("Erro ao deletar imagem no banco de dados.");
+                }
+            }
         }
     }
 
@@ -134,10 +204,12 @@ class ProductController extends ApiController
         if (!$isCreated) throw new PDOException($product->fail(), Code::$BAD_REQUEST);
 
         chdir("..");
-        $this->saveImage($_FILES[$ALLOWED_IMAGES[0]], $ALLOWED_IMAGES[0], $product->id, ProductImage::$PRINCIPAL);
-        for ($i = 1; $i < count($ALLOWED_IMAGES); $i++) {
+        $this->saveImage($_FILES[$ALLOWED_IMAGES[0]], $product->id, ProductImage::$PRINCIPAL);
+
+        for ($i = 1; $i < $ALLOWED_IMAGES; $i++) {
             if (isset($_FILES[$ALLOWED_IMAGES[$i]])) {
-                $this->saveImage($_FILES[$ALLOWED_IMAGES[$i]], $ALLOWED_IMAGES[$i], $product->id, ProductImage::$ADDITIONAL);
+                echo json_encode($_FILES[$ALLOWED_IMAGES[$i]]);
+                $this->saveImage($_FILES[$ALLOWED_IMAGES[$i]], $product->id, ProductImage::$ADDITIONAL);
             }
         }
 
@@ -149,9 +221,8 @@ class ProductController extends ApiController
         parent::setAccessToEndpoint($this->ACCESS_ADMIN);
 
         $id = $data['id'];
-        $request_body = $this->validate($data);
-        $ALLOWED_IMAGES = ["principal-image", "additional-image-1", "additional-image-2", "additional-image-3"];
-
+        $request_body = parent::validate($data);
+        $ALLOWED_IMAGES = ["principal_image", "additional_image_1", "additional_image_2", "additional_image_3"];
 
         $product = (new Product())->findById($id);
         if(!$product) {
@@ -173,17 +244,15 @@ class ProductController extends ApiController
             throw new PDOException($product->fail(), code: Code::$BAD_REQUEST);
         }
 
-        // Tenho que mudar isso aq, ta confuso e com bug;
+
         chdir("..");
         if (isset($_FILES[$ALLOWED_IMAGES[0]])) {
-            $this->deleteImage($product->id, $ALLOWED_IMAGES[0]);
-            $this->saveImage($_FILES[$ALLOWED_IMAGES[0]], $ALLOWED_IMAGES[0], $product->id, ProductImage::$PRINCIPAL);
+            $this->updateImage($_FILES[$ALLOWED_IMAGES[0]], $product->id, ProductImage::$PRINCIPAL);
         }
 
         for ($i = 1; $i < count($ALLOWED_IMAGES); $i++) {
             if (isset($_FILES[$ALLOWED_IMAGES[$i]])) {
-                $this->deleteImage($product->id, $ALLOWED_IMAGES[$i]);
-                $this->saveImage($_FILES[$ALLOWED_IMAGES[$i]], $ALLOWED_IMAGES[$i], $product->id, ProductImage::$ADDITIONAL);
+                $this->updateImage($_FILES[$ALLOWED_IMAGES[$i]], $product->id, ProductImage::$ADDITIONAL, order: $i);
             }
         }
 
