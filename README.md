@@ -74,4 +74,4 @@ utilizando um padrão de projeto MVC.
 Para rodar o projeto você vai precisar:
 1. Rodar o composer.json install. 
 2. Preparar um arquivo ".env" (exemplo em [.env.example](.env.example));
-3. Rodar o arquivo de estrutura do Banco de Dados ([siboon_schemas.sql](db/siboon_schemas.sql"))
+3. Rodar o arquivo de estrutura do Banco de Dados ([siboon_schemas.sql](db/siboon_schemas.sql))
