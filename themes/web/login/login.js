@@ -31,10 +31,13 @@ loginSubmit.onclick = async () => {
         loginPassword.value
     );
 
+    const loginErrorMessage = document.getElementById("login-error-message");
     if(errorBody) {
-        document.getElementById("login-error-message").innerHTML = errorBody.message;
+        loginErrorMessage.hidden = false;
+        loginErrorMessage.innerHTML = errorBody.message;
     } else {
-        document.getElementById("login-error-message").innerHTML = "";
+        loginErrorMessage.hidden = true;
+        loginErrorMessage.innerHTML = "";
     }
 }
 

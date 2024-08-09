@@ -22,7 +22,7 @@
             </div>
             <a>Esqueci minha senha</a>
             <button id="submit-login" class="btn">Entrar</button>
-            <span id="login-error-message"></span>
+            <span hidden="true" id="login-error-message"></span>
         </div>
 
         <div id="signup" class="form">
