@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="<?= assets('assets/icons/siboon-logo-icon.svg') ?>">
-    <title> <?= $this->e($title) ?> >> ADMIN SB </title>
+    <title> ADMIN SB > <?= $this->e($title) ?></title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"/>
     <link rel="stylesheet" href="<?= assets('assets/css/global.css') ?>">
     <link rel="stylesheet" href="<?= assets('assets/css/layout_admin.css', 'admin') ?>">
@@ -70,14 +70,6 @@
                     <span title="Perguntas Frequentes">
                         <i class="material-symbols-outlined">quiz</i>
                         <span>FAQ</span>
-                    </span>
-                </button>
-            </a>
-            <a href="<?= url("admin/institucional") ?>">
-                <button>
-                    <span title="Institucional">
-                        <i class="material-symbols-outlined">domain</i>
-                        <span>Institucional</span>
                     </span>
                 </button>
             </a>

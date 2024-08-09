@@ -17,11 +17,11 @@ try {
      */
     $route->group(null);
     $route->get("/", "WebController:home");
-    $route->get("/contato", "WebController:contact");
     $route->get("/entrar", "WebController:login");
+    $route->get("/contato", "WebController:contact");
     $route->get("/sobre", "WebController:about");
     $route->get("/faq", "WebController:faq");
-    $route->get("/secao", "WebController:section"); // rota template
+    $route->get("/secao/{section_name}", "WebController:section");
     $route->get("/ops/{errcode}", "WebController:error");
 
     $route->group("produto");
@@ -37,15 +37,14 @@ try {
      * ADMIN
      */
     $route->group("admin");
-    $route->get("/login", function () {echo "Login de Admin";});
+//    $route->get("/login", function () {echo "Login de Admin";});
     $route->get("/", "AdminController:home");
-    $route->get("/vendas", function () {echo "Vendas";});
-    $route->get("/website", function () {echo "Website";});
-    $route->get("/faq", function () {echo "Faq";});
-    $route->get("/institucional", function () {echo "Institucional";});
-    $route->get("/configuracoes", function () {echo "Configurações";});
+    $route->get("/vendas", "AdminController:order");
+    $route->get("/website", "AdminController:website");
+    $route->get("/faq", "AdminController:faq");
+    $route->get("/configuracoes", "AdminController:config");
 
-    $route->get("/clientes", "AdminController:client");
+    $route->get("/clientes", "AdminController:customer");
 
     $route->group("admin/produtos");
     $route->get("/", "AdminController:product");

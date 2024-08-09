@@ -32,6 +32,13 @@ class AdminController extends Controller
         ]);
     }
 
+    public function order()
+    {
+        echo $this->view->render("order/order", [
+            "title" => "Vendas",
+        ]);
+    }
+
     public function product ()
     {
         echo $this->view->render("product/product", [
@@ -57,12 +64,33 @@ class AdminController extends Controller
         ]);
     }
 
-    public function client()
+    public function customer()
     {
         $clients = (new UserController())->listUsers(isLocalReq: true );
-        echo $this->view->render("client/client", [
+        echo $this->view->render("customer/customer", [
             "title" => "Clientes",
             "clients" => $clients,
+        ]);
+    }
+
+    public function website()
+    {
+        echo $this->view->render("website/website", [
+            "title" => "Site",
+        ]);
+    }
+
+    public function faq()
+    {
+        echo $this->view->render("faq/faq", [
+            "title" => "Perguntas Frequentes",
+        ]);
+    }
+
+    public function config()
+    {
+        echo $this->view->render("config/config", [
+            "title" => "Configurações",
         ]);
     }
 }

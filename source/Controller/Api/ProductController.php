@@ -2,6 +2,7 @@
 
 namespace Source\Controller\Api;
 
+use CoffeeCode\DataLayer\DataLayer;
 use CoffeeCode\Uploader\Image;
 use Error;
 use http\Exception\InvalidArgumentException;
@@ -69,16 +70,14 @@ class ProductController extends ApiController
 
         if($type === ProductImage::$PRINCIPAL) {
             $params = http_build_query(["product_id" => $product_id, "type" => $type]);
-            $imageFinded = (new ProductImage())->find("product_id = :product_id AND type = `:type`", $params)->fetch();
-            echo $imageFinded;
+            $imageFinded = (new ProductImage())->find("product_id = :product_id AND `type` = :type", $params)->fetch();
 
             if(!isset($imageFinded->id)) { // sempre da null / true
-                echo "Nao achou principal";
                 $this->saveImage($imageFile, $product_id, $type);
                 return;
             }
 
-            $this->deleteImage($imageFinded->id, $imageFinded->image, true);
+            $this->deleteImage($imageFinded->id, $imageFinded->image, false);
 
             $upload = $this->storageUploadImage($imageFile, $product_id, "principal-image");
 
@@ -229,21 +228,11 @@ class ProductController extends ApiController
             throw new InvalidArgumentException("Produto com id $id não existe.", code: Code::$BAD_REQUEST);
         }
 
-        $ALLOW_TO_SET = [
-            "name" => "name",
-            "description" => "description",
-            "color" => "color",
-            "size_type" => "size_type",
-            "price_brl" => "price_brl",
-            "max_installments" => "max_installments",
-            "discount_brl_percentage" => "discount_brl_percentage"
-        ];
-        parent::setObjectAttributes($product, $ALLOW_TO_SET, $request_body);
+        $product->setData($request_body);
 
         if (!$product->save()) {
-            throw new PDOException($product->fail(), code: Code::$BAD_REQUEST);
+            throw new PDOException($product->fail()->getMessage(), code: Code::$BAD_REQUEST);
         }
-
 
         chdir("..");
         if (isset($_FILES[$ALLOWED_IMAGES[0]])) {

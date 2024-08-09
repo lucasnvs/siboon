@@ -1,6 +1,7 @@
 import {ProductService} from "../../shared/services/ProductService.js";
 import {ErrorDialog, SuccessDialog} from "../../shared/components/SimpleDialog/SimpleDialog.js";
 import {URL_BASE_SITE} from "../../shared/Constants.js";
+import {handleProductFormSubmit, setImageChangeEvent} from "../assets/js/shared_products.js";
 
 const ACTIONS = {
     clearForm: document.getElementById("clear-form"),
@@ -25,41 +26,10 @@ const FORM_ELEMENTS = {
     inputDiscount: document.getElementById("product-discount"),
 }
 
-FORM_ELEMENTS.inputsImages.forEach(input => {
-    input.addEventListener("change", e => {
-        if (!(e.target && e.target.files && e.target.files.length > 0)) {
-            return;
-        }
-        const r = new FileReader();
-        r.onload = function() {
-            document.querySelector(`label[for="${e.target.id}"] .image-view`).src = r.result;
-        }
-
-        r.readAsDataURL(e.target.files[0]);
-    })
-})
+FORM_ELEMENTS.inputsImages.forEach(input => setImageChangeEvent(input))
 
 ACTIONS.createProduct.addEventListener("click", async (e) => {
-
-    const principal_image = FORM_ELEMENTS.inputsImages[0].files[0];
-    var additional_images = [
-        FORM_ELEMENTS.inputsImages[1].files[0],
-        FORM_ELEMENTS.inputsImages[2].files[0],
-        FORM_ELEMENTS.inputsImages[3].files[0],
-    ].filter(image => !!image)
-
-    let res = await ProductService.sendData(
-        FORM_ELEMENTS.inputName.value,
-        FORM_ELEMENTS.inputDescription.value,
-        FORM_ELEMENTS.inputColor.value,
-        FORM_ELEMENTS.selectSizeType.value,
-        FORM_ELEMENTS.inputPrice.value,
-        FORM_ELEMENTS.selectMaxInstallment.value,
-        FORM_ELEMENTS.inputDiscount.value,
-        principal_image,
-        additional_images
-    );
-
+    let res = await handleProductFormSubmit(e, FORM_ELEMENTS, ProductService.sendData, 0)
     if(!res.ok) {
         ErrorDialog(res.message);
     } else {

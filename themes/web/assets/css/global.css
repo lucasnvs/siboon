@@ -172,7 +172,6 @@ textarea {
     display: grid;
     padding: 0px 40px;
     justify-content: space-evenly;
-    grid-template-rows: 1fr 1fr min(400px);
     grid-template-columns: repeat(auto-fill,  min(400px));
     gap: 10px 30px;
 }

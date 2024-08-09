@@ -19,4 +19,29 @@ class Product extends DataLayer {
     {
         return $this->message;
     }
+
+    public function setData($data)
+    {
+        if (isset($data["name"])) {
+            $this->name = $data["name"];
+        }
+        if (isset($data["description"])) {
+            $this->description = $data["description"];
+        }
+        if (isset($data["color"])) {
+            $this->color = $data["color"];
+        }
+        if (isset($data["size_type"])) {
+            $this->size_type_id = $data["size_type"];
+        }
+        if (isset($data["price_brl"])) {
+            $this->price_brl = $data["price_brl"];
+        }
+        if (isset($data["max_installments"])) {
+            $this->max_installments = $data["max_installments"];
+        }
+        if (isset($data["discount_brl_percentage"])) {
+            $this->discount_brl_percentage = $data["discount_brl_percentage"];
+        }
+    }
 }

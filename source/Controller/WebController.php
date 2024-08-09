@@ -79,16 +79,14 @@ class WebController extends Controller
 
     }
 
-    public function profile () // remover daq e colocar em local de user logado
+    public function section (array $data)
     {
-        echo $this->view->render("profile/profile", [
-            "title" => "Perfil"
+        $sectionName = $data["section_name"];
+        echo $this->view->render("section/section", [
+            "title" => $sectionName,
         ]);
     }
-    public function section ()
-    {
-        echo $this->view->render("section/section", []);
-    }
+
     public function error(array $data)
     {
         echo $this->view->render("error/error", [

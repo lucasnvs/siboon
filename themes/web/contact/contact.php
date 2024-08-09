@@ -12,7 +12,7 @@
     <h2>Fale Conosco!</h2>
     <div class="input-container">
         <label for="subject">Assunto:</label>
-        <input id="subject">
+        <input class="default-input" id="subject">
     </div>
     <div class="input-container">
         <label for="message">Mensagem:</label>

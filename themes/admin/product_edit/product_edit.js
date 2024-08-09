@@ -1,6 +1,7 @@
 import {URL_BASE_SITE} from "../../shared/Constants.js";
 import {ProductService} from "../../shared/services/ProductService.js";
 import {ErrorDialog, SuccessDialog} from "../../shared/components/SimpleDialog/SimpleDialog.js";
+import {handleProductFormSubmit, setImageChangeEvent} from "../assets/js/shared_products.js";
 
 const PRODUCT_ID = document.getElementById("header").dataset.id;
 
@@ -28,33 +29,12 @@ const FORM_ELEMENTS = {
 }
 
 ACTIONS.editProduct.addEventListener("click", async (e) => {
-    const formData = new FormData();
-    formData.append("name", FORM_ELEMENTS.inputName.value)
-    formData.append("description", FORM_ELEMENTS.inputDescription.value)
-    formData.append("price_brl", FORM_ELEMENTS.inputPrice.value)
-    formData.append("color", FORM_ELEMENTS.inputColor.value)
-    formData.append("size_type", FORM_ELEMENTS.selectSizeType.value)
-    formData.append("max_installments", FORM_ELEMENTS.selectMaxInstallment.value)
-    formData.append("discount_brl_percentage", FORM_ELEMENTS.inputDiscount.value)
-
-    formData.append("principal_image", FORM_ELEMENTS.inputsImages[0].files[0])
-
-    if(FORM_ELEMENTS.inputsImages[1].files[0]) formData.append("additional_image_1", FORM_ELEMENTS.inputsImages[1].files[0])
-    if(FORM_ELEMENTS.inputsImages[2].files[0]) formData.append("additional_image_2", FORM_ELEMENTS.inputsImages[2].files[0])
-    if(FORM_ELEMENTS.inputsImages[3].files[0]) formData.append("additional_image_3", FORM_ELEMENTS.inputsImages[3].files[0])
-
-    // for (var pair of formData.entries()) {
-    //     console.log(pair[0]+ ', ' + pair[1]);
-    // }
-
-    let res = await ProductService.update(PRODUCT_ID, formData);
-
-
+    let res = await handleProductFormSubmit(e, FORM_ELEMENTS, ProductService.update, PRODUCT_ID)
     if(!res.ok) {
         ErrorDialog(res.message);
     } else {
         SuccessDialog(res.message, () => {
-            // window.location.href = URL_BASE_SITE+"admin/produtos"
+            window.location.href = URL_BASE_SITE+"admin/produtos"
         });
     }
 });
@@ -71,20 +51,7 @@ ACTIONS.deleteProduct.addEventListener("click", async e => {
     }
 })
 
-FORM_ELEMENTS.inputsImages.forEach(input => {
-    input.addEventListener("change", e => {
-        if (!(e.target && e.target.files && e.target.files.length > 0)) {
-            return;
-        }
-        const r = new FileReader();
-        r.onload = function() {
-            document.querySelector(`label[for="${e.target.id}"] .image-view`).src = r.result;
-        }
-
-        r.readAsDataURL(e.target.files[0]);
-    })
-})
-
+FORM_ELEMENTS.inputsImages.forEach(input => setImageChangeEvent(input))
 
 async function setProductData() {
     let {data: product} = await ProductService.getDataById(PRODUCT_ID);

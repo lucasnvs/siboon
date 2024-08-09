@@ -2,8 +2,10 @@
 
 namespace Source\Core;
 
+use CoffeeCode\DataLayer\DataLayer;
 use Dotenv\Validator;
 use InvalidArgumentException;
+use League\Plates\Template\Data;
 use Source\Response\Code;
 use Source\Support\Validator\FieldValidator;
 
@@ -54,12 +56,13 @@ abstract class ApiController extends Controller
         return $request_body;
     }
 
-    public function setObjectAttributes($object, $ALLOW_TO_SET, $body): void
+    public function setObjectAttributes($object, $ALLOW_TO_SET, $body) : DataLayer
     {
         foreach ($ALLOW_TO_SET as $field => $attribute) {
             if(isset($body[$field])) {
-                $object->$attribute = $body[$field];
+                $object->__set($attribute, $body[$field]);
             }
         }
+        return $object;
     }
 }

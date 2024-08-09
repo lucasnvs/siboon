@@ -70,13 +70,13 @@
 
         <div id="mid-menu">
             <ul>
-                <li><a href=" <?= url() ?>">tênis</a></li>
-                <li><a href="<?= url() ?>">skate</a></li>
-                <li><a href="<?= url() ?>">vestuário</a></li>
+                <li><a href=" <?= url("secao/tenis") ?>">TÊNIS</a></li>
+                <li><a href="<?= url("secao/skate") ?>">SKATE</a></li>
+                <li><a href="<?= url("secao/vestuario") ?>">VESTUÁRIO</a></li>
                 <li><a href="<?= url() ?>"><img src="<?= assets('assets/icons/siboon-logo.png') ?>" style="width: 180px;height: 90px"></a></li>
-                <li><a href="<?= url() ?>">sale</a></li>
-                <li><a href="<?= url() ?>">novidades</a></li>
-                <li><a href="<?= url() ?>">marcas</a></li>
+                <li><a href="<?= url("secao/sale") ?>">SALE</a></li>
+                <li><a href="<?= url("secao/novidades") ?>">NOVIDADES</a></li>
+                <li><a href="<?= url() ?>">MARCAS</a></li>
             </ul>
         </div>
 
