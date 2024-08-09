@@ -12,6 +12,16 @@
     --primary-color: #8A11A8;
 }
 
+.col {
+    display: flex;
+    flex-direction: column;
+}
+
+.row {
+    display: flex;
+    flex-direction: row;
+}
+
 a {
     text-decoration: none;
 }
