@@ -18,7 +18,7 @@ async function renderTableOrders() {
                     <td>${order.status}</td>
                     <td>${order.customer_email}</td>
                     <td>${order.sale_date}</td>
-                    <td style="text-align: center">
+                    <td>
                         <a href="#">
                             <button class="btn">Detalhar</button>
                         </a>

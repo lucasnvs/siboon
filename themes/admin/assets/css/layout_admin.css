@@ -147,12 +147,12 @@ body {
     border-collapse: collapse;
 }
 
-th, tr, td{
+tr {
     border: 1px solid #DDDDDD;
 }
 
 .default-table thead th {
-    text-align: center;
+    text-align: left;
     padding: 4px 8px;
     background-color: #EFEFEF;
     font-weight: 500;

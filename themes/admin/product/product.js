@@ -16,7 +16,7 @@ async function renderTableProducts() {
                     <td>${product.name}</td>
                     <td>${product.formated_price_brl}</td>
                     <td>54</td>
-                    <td style="text-align: center">
+                    <td>
                         <a href="#">
                             <button class="btn green" >Add. Estoque</button>
                         </a>
