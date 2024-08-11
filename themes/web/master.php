@@ -9,11 +9,9 @@
     <link rel="stylesheet" href="<?= assets('assets/css/global.css') ?>">
     <link rel="stylesheet" href="<?= assets('assets/css/layout_web.css') ?>">
     <link rel="stylesheet" href="<?= assets('assets/css/cart.css') ?>">
-    <link rel="stylesheet" href="<?= assets('components/InputQuantity/InputQuantity.css','shared') ?>">
     <?php if ($this->section("specific-style")): ?>
         <?= $this->section("specific-style") ?>
     <?php endif; ?>
-    <script src="<?= assets('assets/js/Models/CartProduct.js')?>"></script>
     <script src="<?= assets('assets/js/ModifiedLocalStorage.js') ?>"></script>
     <script type="module" src="<?= assets('assets/js/scripts-master.js') ?>" async></script>
     <?php if ($this->section("specific-script")): ?>
@@ -43,7 +41,7 @@
             <div id="cart-info">
                 <div class="info row">
                     <p>Subtotal</p>
-                    <h5>R$ 699,82</h5>
+                    <h5 id="info-subtotal">R$ 0,00</h5>
                 </div>
                 <div class="info col">
                     <p>Frete - Digite seu CEP</p>
@@ -53,7 +51,7 @@
                     </div>
                 </div>
 
-                <button class="btn">FAZER PEDIDO R$ 699,82</button>
+                <button id="info-create-checkout" class="btn">FAZER PEDIDO R$ 0,00</button>
             </div>
         </div>
     </div>

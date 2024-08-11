@@ -4,7 +4,6 @@
 <?php $this->end(); ?>
 <?php $this->start("specific-style"); ?>
 <link rel="stylesheet" href="<?= assets('home/home.css') ?>">
-<link rel="stylesheet" href="<?= assets('components/ProductItem/ProductItem.css', 'shared') ?>">
 <?php $this->end(); ?>
 
 <section class="main">

@@ -1,8 +1,6 @@
 Storage.prototype.pushToItem = function (key, value) {
     let newItem = this.get(key) || [];
-    if(value instanceof CartProduct) {
-        value = value.destructure();
-    }
+
     newItem.push(value);
     this.set(key, newItem);
 }
@@ -19,4 +17,13 @@ Storage.prototype.set = function (key, value){
     if (typeof value === 'undefined') return;
 
     this.setItem(key, value);
+}
+
+Storage.prototype.removeFromItemById = function (key, id) {
+    let data = this.get(key);
+    data = data.filter((value) => {
+        return value.id !== id;
+    });
+
+    this.set(key, data);
 }

@@ -1,22 +1,8 @@
-import {ItemCart} from "./Components/ItemCart.js";
+import {ItemCart} from "../../../shared/components/ItemCart/ItemCart.js";
 
 console.log("%cSiboon SkateShop - Ecommerce By @lucasnvs on GitHub", 'color: #8A11A8; font-size: 15px; font-family: "Verdana", sans-serif; font-weight: bold;')
 
-const TEST_PRODUCT = new CartProduct(23,
-    "Tênis Tesla Shine Black Reflect",
-    "Black Reflect",
-    38,
-    320.00,
-    "R$ 320,00",
-    1,
-    "./themes/web/assets/imgs/black-tshirt.jpg");
-
-// localStorage.pushToItem("cart", TEST_PRODUCT);
-
-// const EXAMPLE_DATA_LOCALSTORAGE = [
-//     {id: 23, resPath: "../imgs/tesla.jpg", name: "Tênis Tesla Shine Black Reflect", color: "Black Reflect", size: 38, price: 320.00, formated_price: "R$ 320,00", quantity: 1},
-//     {id: 543, resPath: "../imgs/camisadiamond.jpg", name: "Camisa Diamond Long Island", color: "Cinza", size: "P", price: 109.90, formated_price: "R$ 190,90", quantity: 2},
-// ]
+const CART_KEY = "cart";
 
 const HEADER_OPTIONS = {
     search: "",
@@ -29,28 +15,61 @@ const CART_ELEMENTS = {
     background_cart: document.getElementById("background-cart"),
     span_cart_quantity: document.getElementById("span-cart-quantity"),
     catalog: document.getElementById("cart-catalog"),
+    info: document.getElementById("cart-info")
 }
 
 CART_ELEMENTS.openCartButton.addEventListener("click", () => {
     CART_ELEMENTS.background_cart.style.display = "block";
+    updateCart()
 })
 CART_ELEMENTS.closeCartButton.addEventListener("click", () => {
     CART_ELEMENTS.background_cart.style.display = "none";
-    console.log("event")
 })
 
 function updateCart() {
-    const cart = localStorage.get("cart");
+    const cart = localStorage.get(CART_KEY);
+
+    updateCartHeaderCatalog(cart);
+    updateCartInfo(cart)
+}
+
+const updateCartHeaderCatalog = (cart) => {
+    if(!cart) return;
+
     CART_ELEMENTS.span_cart_quantity.innerHTML = `(${cart.length} itens)`;
     CART_ELEMENTS.catalog.innerHTML = "";
     if(cart.length > 0) {
         cart.forEach( product => {
-            console.log("Running...")
-            new ItemCart(CART_ELEMENTS.catalog.id, product.id, product.name, product.color, product.size, product.resPath, product.formated_price, product.quantity).inflate()
+            CART_ELEMENTS.catalog.appendChild(ItemCart(product, () => {
+                localStorage.removeFromItemById(CART_KEY, product.id);
+                updateCart()
+            }))
         })
         return;
     }
     CART_ELEMENTS.catalog.innerHTML = "<p>SEM ITENS NO CARRINHO</p>";
 }
 
-updateCart()
+const updateCartInfo = (cart) => {
+    var price_formated = "R$ 0,00";
+
+    if(!cart) return;
+
+    let total = 0;
+    cart.forEach( item => total += item.price_brl)
+    price_formated = "R$ " + total.toFixed(2).toString().replace(".", ",");
+
+    const btnCreateCheckout = CART_ELEMENTS.info.querySelector("#info-create-checkout");
+    btnCreateCheckout.textContent = `FAZER PEDIDO ${price_formated}`;
+    const spanSubtotal = CART_ELEMENTS.info.querySelector("#info-subtotal");
+    spanSubtotal.innerHTML = price_formated;
+
+    btnCreateCheckout.onclick = () => {
+        if(cart.length < 0) {
+            console.log("Não pode comprar, não tem nada ai no carrinho")
+            return;
+        }
+
+        console.log("Indo para o checkout");
+    }
+}

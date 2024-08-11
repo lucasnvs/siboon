@@ -1,10 +1,9 @@
 <?php $this->layout("master", ["title" => $title]); ?>
 <?php $this->start("specific-style"); ?>
     <link rel="stylesheet" href="<?= assets('section/section.css') ?>">
-    <link rel="stylesheet" href="<?= assets('components/ProductItem/ProductItem.css', 'shared') ?>">
 <?php $this->end(); ?>
 <?php $this->start("specific-script"); ?>
-<script src="<?= assets('section/section.js') ?>" type="module" async></script>
+<script type="module" src="<?= assets('section/section.js') ?>"  async></script>
 <?php $this->end(); ?>
 <!-- transformar para se buildar de acordo com o tipo de seção e produto, por enquanto exemplo: SALE -->
 

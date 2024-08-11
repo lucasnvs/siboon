@@ -28,7 +28,7 @@
 
 #cart-catalog {
     position: relative;
-    padding: 10px 5px;
+    padding: 10px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -65,7 +65,7 @@
     font-weight: 500;
 }
 
-.info h5 {
+.info #info-subtotal {
     font-weight: 400;
 }
 
@@ -108,24 +108,28 @@
 /* Carrinho Item*/
 
 .item-cart {
+    width: 100%;
     display: flex;
     flex-direction: row;
-    gap: 6px;
+    gap: 10px;
 }
 
 .item-cart img {
-    width: 150px;
+    width: fit-content;
+    max-width: 150px;
     border-radius: 6px;
 }
 
 .item-cart-desc {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
+    gap: 4px;
 }
 
 .item-cart-desc h2 {
-    font-size: 20px;
+    font-size: 16px;
+    text-transform: uppercase;
 }
 
 .item-cart-desc > p {

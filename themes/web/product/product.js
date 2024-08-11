@@ -1,4 +1,4 @@
-import {InputQuantity} from "../../shared/components/InputQuantity/InputQuantity.js";
+import {InputAmount} from "../../shared/components/InputAmount/InputAmount.js";
 import {URL_BASE_SITE} from "../../shared/Constants.js";
 import {ProductService} from "../../shared/services/ProductService.js";
 
@@ -44,8 +44,9 @@ async function renderProductDetail() {
     <button class="btn">COMPRAR</button>
 `
 
-    new InputQuantity("quantity-container", "quantity").inflate();
-
+    document.getElementById("quantity-container").append(
+        InputAmount("quantity")
+    )
 }
 
 (async ()=> {
