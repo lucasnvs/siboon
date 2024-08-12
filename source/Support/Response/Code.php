@@ -1,6 +1,6 @@
 <?php
 
-namespace Source\Response;
+namespace Source\Support\Response;
 
 class Code
 {

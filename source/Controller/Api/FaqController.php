@@ -5,8 +5,8 @@ namespace Source\Controller\Api;
 use Source\Core\ApiController;
 use Source\Models\Faq\Question;
 use Source\Models\Faq\Type;
-use Source\Response\Code;
-use Source\Response\Response;
+use Source\Support\Response\Code;
+use Source\Support\Response\Response;
 
 class FaqController extends ApiController
 {

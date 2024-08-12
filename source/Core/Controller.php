@@ -2,10 +2,8 @@
 
 namespace Source\Core;
 
-use Exception;
-use InvalidArgumentException;
 use Source\Exceptions\AuthorizationException;
-use Source\Response\Code;
+use Source\Support\Response\Code;
 
 abstract class Controller
 {

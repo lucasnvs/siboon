@@ -1,7 +1,8 @@
 import {InputAmount} from "../InputAmount/InputAmount.js";
 import {URL_BASE_SITE} from "../../Constants.js";
+import {CART_KEY, updateCart} from "../../../web/assets/js/scripts-master.js";
 
-export const ItemCart = (product, onZero) => {
+export const ItemCart = (product) => {
     const itemCart = document.createElement('div');
     itemCart.classList.add('item-cart');
 
@@ -24,10 +25,17 @@ export const ItemCart = (product, onZero) => {
     itemCartDesc.appendChild(titleElement);
     itemCartDesc.appendChild(description);
     itemCartDesc.appendChild(priceSpan);
-    // Append input and button elements here
 
     itemCartDesc.appendChild(
-        InputAmount({ onZero: onZero, initialValue: 1 })
+        InputAmount({
+            onIncrement: () => localStorage.pushToItem(CART_KEY, product),
+            onMinus: () => localStorage.minusFromItemById(CART_KEY, product.id),
+            onZero: () => {
+                localStorage.removeFromItemById(CART_KEY, product.id);
+                updateCart();
+            },
+            initialValue: product.amount ? product.amount : 1
+        })
     )
 
     itemCart.appendChild(image);

@@ -2,7 +2,7 @@
 namespace Source\Controller\Api;
 
 use Exception;
-use Source\Response\Response;
+use Source\Support\Response\Response;
 
 class ErrorController
 {

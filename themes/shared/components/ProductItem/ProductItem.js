@@ -1,4 +1,5 @@
 import {URL_BASE_SITE} from "../../Constants.js";
+import {openCart} from "../../../web/assets/js/scripts-master.js";
 
 
 const link = document.createElement("link");
@@ -59,6 +60,7 @@ export const ProductItem = (product) => {
 
     addButton.addEventListener("click", () => {
         localStorage.pushToItem("cart", product)
+        openCart()
     });
 
     productContainer.appendChild(productLink);

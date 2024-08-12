@@ -5,12 +5,12 @@ link.rel = "stylesheet";
 link.href = URL_BASE_SITE+"themes/shared/components/InputAmount/InputAmount.css";
 document.head.appendChild(link);
 
-export const InputAmount = ({id = "", onZero = () => {}, initialValue = 0}) => {
+export const InputAmount = ({id, onIncrement = (amount) => {}, onMinus = (amount) => {}, onZero = () => {}, initialValue = 1}) => {
 
     var AMOUNT = initialValue;
 
     const quantityElement = document.createElement('div');
-    quantityElement.id = id;
+    if(id) quantityElement.id = id;
     quantityElement.classList.add('quantity');
 
     const quantityBox = document.createElement('div');
@@ -38,11 +38,14 @@ export const InputAmount = ({id = "", onZero = () => {}, initialValue = 0}) => {
 
     quantityElement.appendChild(quantityBox);
 
+    inputQuantity.addEventListener("change", (e) => {
+        console.log(1);
+    })
 
     btnPlus.addEventListener("click", (e) => {
         AMOUNT = Number(AMOUNT) + 1
         inputQuantity.value = AMOUNT.toString();
-
+        onIncrement(AMOUNT)
     })
 
     btnMinus.addEventListener("click", () => {
@@ -52,6 +55,7 @@ export const InputAmount = ({id = "", onZero = () => {}, initialValue = 0}) => {
             AMOUNT = 0;
             onZero(quantityElement);
         }
+        onMinus(AMOUNT)
         inputQuantity.value = AMOUNT.toString();
     })
 

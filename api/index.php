@@ -4,7 +4,7 @@ require  __DIR__ . "/../vendor/autoload.php";
 use CoffeeCode\Router\Router;
 use Source\Controller\Api\ErrorController;
 use Source\Exceptions\RouterException;
-use Source\Response\Code;
+use Source\Support\Response\Code;
 
 try {
 

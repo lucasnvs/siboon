@@ -24,10 +24,10 @@ function assets(string $resource, string $theme = "web"): string
     return url("themes/$theme/$resource");
 }
 
-function buildStringFriendlyURL(string $string = ""): string
+function buildFriendlyURL(string $string = ""): string
 {
     $string = strtolower($string);
-    $string = preg_replace('/\s+/', '-', $string); // troca " " por "-"
-    $string = preg_replace('/[^a-zA-Z0-9-]/', '', $string); // remove caracteres não convencionais
-    return $string;
+    $string = iconv('utf-8', 'ascii//TRANSLIT', $string);
+    $string = preg_replace('/[^a-z0-9]+/', '-', $string);
+    return trim($string, '-');
 }

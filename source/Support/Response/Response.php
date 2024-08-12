@@ -1,6 +1,5 @@
 <?php
-namespace Source\Response;
-use Source\Response\Code;
+namespace Source\Support\Response;
 
 class Response
 {

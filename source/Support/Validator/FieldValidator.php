@@ -3,7 +3,7 @@
 namespace Source\Support\Validator;
 
 use InvalidArgumentException;
-use Source\Response\Code;
+use Source\Support\Response\Code;
 
 class FieldValidator
 {

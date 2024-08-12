@@ -2,6 +2,7 @@
 
 namespace Source\Support;
 use Source\Models\Product\ProductImage;
+use Source\Models\Product\ProductSizeType;
 
 class DTO {
 
@@ -11,10 +12,24 @@ class DTO {
 
     public static function ProductDTO($product)
     {
+        $responseDto = [
+            "id" => $product->id,
+            "name" => $product->name,
+            "description" => $product->description,
+            "color" => $product->color,
+            "price_brl" => $product->price_brl,
+            "formated_price_brl" => self::format_price($product->price_brl),
+            "discount_brl_percentage" => $product->discount_brl_percentage,
+            "formated_price_brl_with_discount" => self::format_price(self::calc_discount($product->price_brl, $product->discount_brl_percentage)),
+            "max_installments" => $product->max_installments,
+            "url" => buildFriendlyURL($product->name) . "-" . $product->id,
+            "size_type_id" => $product->size_type_id,
+        ];
 
-        $product->formated_price_brl = self::format_price($product->price_brl);
-        $product->formated_price_brl_with_discount = self::format_price(self::calc_discount($product->price_brl, $product->discount_brl_percentage));
-        $product->url = $product->id;
+        $size = (new ProductSizeType())->findById($product->size_type_id);
+        if(!empty($size)) {
+            $responseDto["size_type"] = $size->name;
+        }
 
         $params = http_build_query(["product_id" => $product->id]);
         $images = (new ProductImage())->find("product_id = :product_id", $params)->fetch(true);
@@ -22,7 +37,7 @@ class DTO {
         if (!empty($images)) {
             foreach ($images as $image) {
                 if ($image->type === ProductImage::$PRINCIPAL) {
-                    $product->principal_img = $image->image;
+                    $responseDto["principal_img"] = $image->image;
                 }
                 if ($image->type === ProductImage::$ADDITIONAL) {
                     $additional_imgs[] = $image->image;
@@ -31,10 +46,10 @@ class DTO {
         }
 
         if (count($additional_imgs) > 0) {
-            $product->additional_imgs = $additional_imgs;
+            $responseDto["additional_imgs"] = $additional_imgs;
         }
 
-        return $product->data();
+        return $responseDto;
     }
 
     public static function UserDTO($user): array

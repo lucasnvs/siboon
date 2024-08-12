@@ -66,10 +66,20 @@ class WebController extends Controller
 
     public function product (array $data)
     {
-        $product = (new Product())->findById($data["name"]);
+        $uri = $data["name"];
+        $parts = explode('-', $uri);
+        $id = end($parts);
+
+        $product = (new Product())->findById($id);
 
         if(!$product) {
             $this->router->redirect("/ops/404");
+        }
+
+        $expectedURI = buildFriendlyURL($product->name) . "-" . $product->id;
+
+        if($uri !== $expectedURI) {
+            $this->router->redirect("produto/" . $expectedURI);
         }
 
         echo $this->view->render("product/product", [

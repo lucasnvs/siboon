@@ -2,7 +2,7 @@ import {ItemCart} from "../../../shared/components/ItemCart/ItemCart.js";
 
 console.log("%cSiboon SkateShop - Ecommerce By @lucasnvs on GitHub", 'color: #8A11A8; font-size: 15px; font-family: "Verdana", sans-serif; font-weight: bold;')
 
-const CART_KEY = "cart";
+export const CART_KEY = "cart";
 
 const HEADER_OPTIONS = {
     search: "",
@@ -18,15 +18,18 @@ const CART_ELEMENTS = {
     info: document.getElementById("cart-info")
 }
 
-CART_ELEMENTS.openCartButton.addEventListener("click", () => {
+export const openCart = () => {
     CART_ELEMENTS.background_cart.style.display = "block";
     updateCart()
-})
+}
+
+CART_ELEMENTS.openCartButton.addEventListener("click", openCart)
+
 CART_ELEMENTS.closeCartButton.addEventListener("click", () => {
     CART_ELEMENTS.background_cart.style.display = "none";
 })
 
-function updateCart() {
+export function updateCart() {
     const cart = localStorage.get(CART_KEY);
 
     updateCartHeaderCatalog(cart);
@@ -40,10 +43,7 @@ const updateCartHeaderCatalog = (cart) => {
     CART_ELEMENTS.catalog.innerHTML = "";
     if(cart.length > 0) {
         cart.forEach( product => {
-            CART_ELEMENTS.catalog.appendChild(ItemCart(product, () => {
-                localStorage.removeFromItemById(CART_KEY, product.id);
-                updateCart()
-            }))
+            CART_ELEMENTS.catalog.appendChild(ItemCart(product))
         })
         return;
     }
@@ -65,7 +65,7 @@ const updateCartInfo = (cart) => {
     spanSubtotal.innerHTML = price_formated;
 
     btnCreateCheckout.onclick = () => {
-        if(cart.length < 0) {
+        if(cart.length < 1) {
             console.log("Não pode comprar, não tem nada ai no carrinho")
             return;
         }

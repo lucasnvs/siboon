@@ -2,7 +2,6 @@
 
 namespace Source\Controller\Api;
 
-use CoffeeCode\DataLayer\DataLayer;
 use CoffeeCode\Uploader\Image;
 use Error;
 use http\Exception\InvalidArgumentException;
@@ -11,9 +10,9 @@ use Source\Core\ApiController;
 use Source\Models\Product\Product;
 use Source\Models\Product\ProductImage;
 use Source\Models\Product\ProductSizeType;
-use Source\Response\Code;
-use Source\Response\Response;
 use Source\Support\DTO;
+use Source\Support\Response\Code;
+use Source\Support\Response\Response;
 use Source\Support\Validator\FieldValidator;
 
 class ProductController extends ApiController

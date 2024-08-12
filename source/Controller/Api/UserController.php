@@ -2,15 +2,14 @@
 
 namespace Source\Controller\Api;
 
-use Dotenv\Validator;
 use InvalidArgumentException;
 use PDOException;
 use Source\Core\ApiController;
 use Source\Core\TokenJWT;
 use Source\Models\User;
-use Source\Response\Code;
-use Source\Response\Response;
 use Source\Support\DTO;
+use Source\Support\Response\Code;
+use Source\Support\Response\Response;
 use Source\Support\Validator\FieldValidator;
 use function Source\Support\UserDTO;
 
