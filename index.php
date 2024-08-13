@@ -32,6 +32,7 @@ try {
      */
     $route->group("app");
     $route->get("/perfil", "AppController:profile");
+    $route->get("/checkout", "AppController:checkout");
 
     /*
      * ADMIN

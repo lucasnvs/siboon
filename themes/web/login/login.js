@@ -2,11 +2,11 @@ import {UserService} from "../../shared/services/UserService.js";
 import {Validate, Validators} from "../../shared/Validate.js";
 
 async function login(email, password) {
-    let res = await UserService.login(
+    let [isError, res] = await UserService.login(
         email, password
     );
 
-    if(!res.ok) {
+    if(isError) {
         return res;
     }
 
@@ -57,14 +57,14 @@ signupSubmit.onclick = async () => {
         !Validate.validateConfirmPassword(signupPassword, signupPasswordConfirm, [Validators.required, Validators.password])
     ) return;
 
-    let res = await UserService.sendData(
+    let [isError, res] = await UserService.sendData(
         signupName.value,
         signupLastName.value,
         signupEmail.value,
         signupPassword.value
     );
 
-    if(!res.ok) {
+    if(isError) {
         alert(res.message);
         return;
     }

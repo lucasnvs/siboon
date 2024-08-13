@@ -28,8 +28,14 @@ export const ItemCart = (product) => {
 
     itemCartDesc.appendChild(
         InputAmount({
-            onIncrement: () => localStorage.pushToItem(CART_KEY, product),
-            onMinus: () => localStorage.minusFromItemById(CART_KEY, product.id),
+            onIncrement: () => {
+                localStorage.pushToItem(CART_KEY, product);
+                updateCart();
+            },
+            onMinus: () => {
+                localStorage.minusFromItemById(CART_KEY, product.id);
+                updateCart();
+            },
             onZero: () => {
                 localStorage.removeFromItemById(CART_KEY, product.id);
                 updateCart();

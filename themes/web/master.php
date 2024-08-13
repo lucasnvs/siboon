@@ -56,39 +56,41 @@
         </div>
     </div>
 
-    <div id="span-top">
-        <p>Frete Grátis para compras acima de  R$499,90 via PAC para todo o Brasil.</p>
-        <div class="close-x""></div>
+    <div id="top-container">
+        <div id="span-top">
+            <p>Frete Grátis para compras acima de  R$499,90 via PAC para todo o Brasil.</p>
+            <div class="close-x"></div>
+        </div>
+        <header>
+            <div id="menu-button">
+                <img src="<?= assets('assets/icons/menu.svg') ?>">
+            </div>
+
+            <div id="mid-menu">
+                <ul>
+                    <li><a href=" <?= url("secao/tenis") ?>">TÊNIS</a></li>
+                    <li><a href="<?= url("secao/skate") ?>">SKATE</a></li>
+                    <li><a href="<?= url("secao/vestuario") ?>">VESTUÁRIO</a></li>
+                    <li><a href="<?= url() ?>"><img src="<?= assets('assets/icons/siboon-logo.png') ?>" style="width: 180px;height: 90px"></a></li>
+                    <li><a href="<?= url("secao/sale") ?>">SALE</a></li>
+                    <li><a href="<?= url("secao/novidades") ?>">NOVIDADES</a></li>
+                    <li><a href="<?= url() ?>">MARCAS</a></li>
+                </ul>
+            </div>
+
+            <div id="option-menu">
+                <i class="material-symbols-outlined">search</i>
+                <!--            <img src="--><?php //= assets('assets/icons/search.svg') ?><!--">-->
+                <?php if (isset($loggedUser)): ?>
+                    <a href="<?= url("/app/perfil") ?>"><i class="material-symbols-outlined">account_circle</i></a>
+                <?php else: ?>
+                    <a href="<?= url("entrar") ?>"><i class="material-symbols-outlined">account_circle</i></a>
+                <?php endif; ?>
+                <i id="cart-button" class="material-symbols-outlined">shopping_bag</i>
+            </div>
+        </header>
     </div>
 
-    <header>
-        <div id="menu-button">
-            <img src="<?= assets('assets/icons/menu.svg') ?>">
-        </div>
-
-        <div id="mid-menu">
-            <ul>
-                <li><a href=" <?= url("secao/tenis") ?>">TÊNIS</a></li>
-                <li><a href="<?= url("secao/skate") ?>">SKATE</a></li>
-                <li><a href="<?= url("secao/vestuario") ?>">VESTUÁRIO</a></li>
-                <li><a href="<?= url() ?>"><img src="<?= assets('assets/icons/siboon-logo.png') ?>" style="width: 180px;height: 90px"></a></li>
-                <li><a href="<?= url("secao/sale") ?>">SALE</a></li>
-                <li><a href="<?= url("secao/novidades") ?>">NOVIDADES</a></li>
-                <li><a href="<?= url() ?>">MARCAS</a></li>
-            </ul>
-        </div>
-
-        <div id="option-menu">
-            <i class="material-symbols-outlined">search</i>
-<!--            <img src="--><?php //= assets('assets/icons/search.svg') ?><!--">-->
-            <?php if (isset($loggedUser)): ?>
-                <a href="<?= url("/app/perfil") ?>"><i class="material-symbols-outlined">account_circle</i></a>
-                <?php else: ?>
-                <a href="<?= url("entrar") ?>"><i class="material-symbols-outlined">account_circle</i></a>
-            <?php endif; ?>
-            <i id="cart-button" class="material-symbols-outlined">shopping_bag</i>
-        </div>
-    </header>
 
     <section id="main">
         <?= $this->section("content") ?>

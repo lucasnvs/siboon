@@ -34,11 +34,7 @@ export const UserService = {
             }),
         })
 
-        let assign = {
-            ok: res.ok,
-        }
-
-        return Object.assign(await res.json(), assign);
+        return [res.ok, await res.json()];
     },
 
     async delete(id){
@@ -75,10 +71,6 @@ export const UserService = {
             })
         });
 
-        let assign = {
-            ok: res.ok,
-        }
-
-        return Object.assign(await res.json(), assign);
+        return [!res.ok, await res.json()];
     }
 }

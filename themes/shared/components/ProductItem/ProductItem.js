@@ -42,18 +42,28 @@ export const ProductItem = (product) => {
     productLink.appendChild(imageContainer);
     productLink.appendChild(productDescription);
 
+    const sizeSelector = document.createElement('span');
+    sizeSelector.textContent = 'SELECIONE O TAMANHO';
+
     const sizesContainer = document.createElement('div');
     sizesContainer.classList.add('sizes');
+
     const sizes = ['P', 'M', 'G', 'GG'];
     sizes.forEach(size => {
         const sizeButton = document.createElement('button');
         sizeButton.classList.add('size');
         sizeButton.textContent = size;
         sizesContainer.appendChild(sizeButton);
+
+        sizeButton.addEventListener("click", () => {
+            product.size = size;
+            sizeSelector.remove();
+            productContainer.appendChild(addButton);
+        })
     });
 
-    const sizeSelector = document.createElement('span');
-    sizeSelector.textContent = 'SELECIONE O TAMANHO';
+
+
     const addButton = document.createElement('button');
     addButton.classList.add('btn');
     addButton.textContent = 'ADICIONAR NA SACOLA';
@@ -65,9 +75,7 @@ export const ProductItem = (product) => {
 
     productContainer.appendChild(productLink);
     productContainer.appendChild(sizesContainer);
-    // Append size selector or add button based on size selection logic
-    // ...
-    productContainer.appendChild(addButton);
+    productContainer.appendChild(sizeSelector);
 
     return productContainer;
 }

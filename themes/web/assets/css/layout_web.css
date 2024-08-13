@@ -3,18 +3,44 @@ body {
     flex-direction: column;
 }
 
-body > header a,
+#top-container {
+    width: 100%;
+    position: static;
+    z-index: 1;
+}
+
+/*
+    WEBSITE TOP MESSAGE
+ */
+#span-top {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 35px;
+    font-size: 11px;
+    font-style: italic;
+    background-color: var(--primary-color);
+    color: #dedede;
+}
+
+#span-top .close-x {
+    position: absolute;
+    right: 10px;
+}
+
+body #top-container header a,
 body > footer a {
     color: #FFF;
     cursor: pointer;
 }
-body > header a:hover,
+body #top-container header a:hover,
 body > footer a:hover {
     transition: linear 150ms;
     color: var(--primary-color);
 }
 
-body > header {
+body #top-container header {
+    width: 100%;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -22,20 +48,20 @@ body > header {
     background-color: var(--primary-neutral-color);
 }
 
-body > header #menu-button {
+body #top-container header #menu-button {
     display: flex;
     justify-content: center;
     width: 15%;
 }
-body > header #menu-button img {
+body #top-container header #menu-button img {
     cursor: pointer;
 }
 
-body > header #mid-menu {
+body #top-container header #mid-menu {
     align-self: center;
     width: 70%;
 }
-body > header #mid-menu ul {
+body #top-container header #mid-menu ul {
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -44,7 +70,7 @@ body > header #mid-menu ul {
     text-transform: uppercase;
 }
 
-body > header #mid-menu ul li {
+body #top-container header #mid-menu ul li {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -54,7 +80,7 @@ body > header #mid-menu ul li {
     height: fit-content;
 }
 
-body > header #option-menu {
+body #top-container header #option-menu {
     width: 15%;
     display: flex;
     flex-direction: row;
@@ -62,13 +88,13 @@ body > header #option-menu {
     justify-content: center;
     gap: 25px;
 }
-body > header #option-menu i {
+body #top-container header #option-menu i {
     cursor: pointer;
     color: #FFF;
     font-size: 36px;
     transition: linear 150ms;
 }
-body > header #option-menu i:hover {
+body #top-container header #option-menu i:hover {
     color: var(--primary-color);
 }
 
