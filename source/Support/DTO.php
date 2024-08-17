@@ -1,6 +1,7 @@
 <?php
 
 namespace Source\Support;
+use Source\Models\Faq\Type;
 use Source\Models\Product\ProductImage;
 use Source\Models\Product\ProductSizeType;
 
@@ -62,5 +63,19 @@ class DTO {
         ];
 
         return $dtoUser;
+    }
+
+    public static function FaqDTO($question)
+    {
+        $typeModel = new Type();
+        $types = $typeModel->find()->fetch(true);
+
+        $filter = array_filter($types, function ($type) use ($question) {
+            return $type->data()->id == $question->data()->type_id;
+        })[1] ?? null;
+
+        $question->type = $filter->data()->description;
+
+        return $question->data();
     }
 }

@@ -184,18 +184,8 @@ class ProductController extends ApiController
             throw new InvalidArgumentException("Id de tipo de tamanho inválido!", Code::$BAD_REQUEST);
         }
 
-        $ALLOW_TO_SET = [
-            "name" => "name",
-            "description" => "description",
-            "color" => "color",
-            "size_type" => "size_type_id",
-            "price_brl" => "price_brl",
-            "max_installments" => "max_installments",
-            "discount_brl_percentage" => "discount_brl_percentage",
-        ];
-
         $product = new Product();
-        parent::setObjectAttributes($product, $ALLOW_TO_SET,$request_body);
+        $product->setData($request_body);
 
         $isCreated = $product->save();
 
@@ -267,7 +257,6 @@ class ProductController extends ApiController
         if (!$isDestroyed) {
             throw new PDOException($product->fail()->getMessage(), code: Code::$INTERNAL_SERVER_ERROR);
         }
-
 
         return Response::success(message: "Produto deletado com sucesso.", code: Code::$OK);
     }

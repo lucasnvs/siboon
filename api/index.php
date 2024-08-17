@@ -14,7 +14,11 @@ try {
 
     $route->namespace("Source\Controller\Api");
 
-    $route->group("usuarios"); // Working
+
+    /*
+     * Resource: Users
+     */
+    $route->group("usuarios");
     $route->get("/", "UserController:listUsers");
     $route->get("/{id}", "UserController:getUser");
     $route->post("/", "UserController:insertUser");
@@ -23,18 +27,28 @@ try {
     $route->post("/login", "UserController:login");
     $route->post("/change-password", "UserController:changePassword");
 
+    /*
+     * Resource: FAQ (Frequently Asked Questions)
+     */
     $route->group("faq");
     $route->get("/","FaqController:listFaqs");
+    $route->get("/{id}", "FaqController:getFaq");
+    $route->post("/", "FaqController:insertFaq");
+    $route->post("/update/{id}", "FaqController:updateFaq");
+    $route->delete("/{id}", "FaqController:deleteFaq");
 
-    $route->group("produtos"); // Working
+    /*
+     * Resource: Products
+     */
+    $route->group("produtos");
     $route->get("/", "ProductController:listProducts");
     $route->get("/{id}", "ProductController:getProduct");
     $route->post("/", "ProductController:insertProduct");
     $route->post("/update/{id}", "ProductController:updateProduct");
     $route->delete("/{id}", "ProductController:deleteProduct");
 
-    $route->group(null);
 
+    $route->group(null);
     $route->dispatch();
 
     /** ERROR REDIRECT */

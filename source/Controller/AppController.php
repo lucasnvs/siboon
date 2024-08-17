@@ -31,10 +31,8 @@ class AppController extends Controller
 
     public function profile()
     {
-        $loggedUser = (new User())->findById($this->loggedUser->id)->data();
         echo $this->view->render("profile/profile", [
             "title" => "Perfil",
-            "user" => $loggedUser
         ]);
     }
 
@@ -43,7 +41,6 @@ class AppController extends Controller
         $loggedUser = (new User())->findById($this->loggedUser->id)->data();
         echo $this->view->render("checkout/checkout", [
             "title" => "Checkout",
-            "user" => $loggedUser
         ]);
     }
 }

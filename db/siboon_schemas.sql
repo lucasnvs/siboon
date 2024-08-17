@@ -125,9 +125,9 @@ CREATE TABLE faq_types
 CREATE TABLE faq_questions
 (
     id       INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
-    type_id  INT,
-    question VARCHAR(255),
-    answer   TEXT,
+    type_id  INT NOT NULL,
+    question VARCHAR(255) NOT NULL,
+    answer   TEXT NOT NULL,
     FOREIGN KEY (type_id) REFERENCES faq_types (id)
         ON DELETE CASCADE
 );
