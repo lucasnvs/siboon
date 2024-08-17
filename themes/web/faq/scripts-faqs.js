@@ -1,36 +1,50 @@
-import {URL_BASE_API} from "../../shared/Constants.js";
+import {FaqService} from "../../shared/services/FaqService.js";
 
-async function getFaq() {
-    let res = await fetch(URL_BASE_API+"faq");
+function separateByType(data) {
+    const result = {};
 
-    if(!res.ok) throw res;
+    data.data.forEach(item => {
+        if (!result[item.type]) {
+            result[item.type] = [];
+        }
+        result[item.type].push(item);
+    });
 
-    return await res.json();
+    return result;
 }
 
-
 async function renderFaqList() {
-    let {data: list} = await getFaq();
-    for(let i = 0; i < list.length; i++) {
-        const faq = list[i];
-        let stringItems = "";
-        if(!faq.hasOwnProperty("data")) continue;
+    const mainElement = document.querySelector("#main");
 
-        faq.data.forEach(item => {
-            stringItems += `
-                <div class="faq-item">
-                    <h3>${item.question}</h3>
-                    <p>${item.answer}</p>
-                </div>
-            `
-        });
+    let [faqsResponse, isError] = await FaqService.getData();
 
-        document.querySelector("#main").innerHTML += `
-        <div class="faq-type">
-            <h2>${faq.type}</h2>
-            ${stringItems}
-        </div>
-        `
+    if(isError) {
+        mainElement.innerHTML = "Erro ao encontrar as perguntas, tente novamente."
+    }
+
+    var separatedFaqs = separateByType(faqsResponse);
+
+    for (let type in separatedFaqs) {
+        if (separatedFaqs.hasOwnProperty(type)) {
+            const faqItems = separatedFaqs[type];
+            let stringItems = "";
+
+            faqItems.forEach(item => {
+                stringItems += `
+                    <div class="faq-item">
+                        <h3>${item.question}</h3>
+                        <p>${item.answer}</p>
+                    </div>
+                `;
+            });
+
+            mainElement.innerHTML += `
+                    <div class="faq-type">
+                        <h2>${type}</h2>
+                        ${stringItems}
+                    </div>
+            `;
+        }
     }
 }
 
