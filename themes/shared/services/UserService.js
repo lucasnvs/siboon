@@ -34,7 +34,7 @@ export const UserService = {
             }),
         })
 
-        return [res.ok, await res.json()];
+        return [await res.json(), !res.ok];
     },
 
     async delete(id){
@@ -71,6 +71,6 @@ export const UserService = {
             })
         });
 
-        return [!res.ok, await res.json()];
+        return [await res.json(), !res.ok];
     }
 }
