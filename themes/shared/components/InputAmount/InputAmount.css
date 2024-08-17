@@ -1,11 +1,22 @@
 .quantity {
     align-items: center;
-    border-bottom: 1px solid #0d93a4;
     display: flex;
     flex-shrink: 0;
     height: 40px;
     justify-content: center;
     width: 90px;
+}
+
+.quantity.default {
+    border-bottom: 1px solid #0d93a4;
+}
+.quantity.outlined {
+    color: var(--light-gray);
+    border: 1px solid var(--light-gray);
+}
+.quantity.outlined .quantity-box input {
+    outline: 0;
+    font-weight: 400;
 }
 
 .quantity-box {

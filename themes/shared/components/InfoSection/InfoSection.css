@@ -1,0 +1,38 @@
+.info-section {
+    width: 100%;
+    height: fit-content;
+    border: 1px solid #9f9f9f;
+    border-radius: 2px;
+}
+
+.info-section header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    cursor: pointer;
+}
+.info-section header i {
+    font-size: 40px;
+}
+
+.info-section .content {
+    transition: 155ms ease-in-out;
+    transition-property: padding-bottom, padding-left, padding-right, padding-top, height;
+    height: 0;
+    padding-right: 20px;
+    padding-left: 20px;
+    visibility: hidden;
+    background-color: #e7e7e7;
+}
+
+.appear .content {
+    visibility: visible;
+    height: fit-content;
+    padding: 20px;
+}
+
+.appear header i {
+    transition: 155ms ease-in-out;
+    transform: rotate(-180deg);
+}

@@ -43,5 +43,27 @@ export const OrderService = {
         // let res = await fetch(endpointUrl+id);
         //
         // return await res.json();
+    },
+
+    async sendData(
+        customerId,
+        addressId,
+        orderProducts = [
+            {product_id: 1, amount: 1},
+            {product_id: 1, amount: 2},
+            {product_id: 53, amount: 1}
+        ]
+    ) {
+        let res = await fetch(endpointUrl, {
+            method: "POST",
+            headers: new Headers({'Content-Type': 'application/json'}),
+            body: JSON.stringify({
+                customer_id: customerId,
+                address_id: addressId,
+                order_products: orderProducts
+            })
+        })
+
+        return [true, {}];
     }
 }

@@ -1,12 +1,11 @@
 import {URL_BASE_SITE} from "../../Constants.js";
 
-const link = document.createElement("link");
-link.rel = "stylesheet";
-link.href = URL_BASE_SITE+"themes/shared/components/SimpleDialog/simple_dialog.css";
-document.head.appendChild(link);
 
 const SimpleDialog = (message, icon, style, onClick = () => {}) => {
-
+    const link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = URL_BASE_SITE+"themes/shared/components/SimpleDialog/simple_dialog.css";
+    document.head.appendChild(link);
 
     const dialog = document.createElement("dialog");
     dialog.classList = `dialog ${style}`;

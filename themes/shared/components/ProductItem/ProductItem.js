@@ -2,12 +2,11 @@ import {URL_BASE_SITE} from "../../Constants.js";
 import {openCart} from "../../../web/assets/js/scripts-master.js";
 
 
-const link = document.createElement("link");
-link.rel = "stylesheet";
-link.href = URL_BASE_SITE+"themes/shared/components/ProductItem/ProductItem.css";
-document.head.appendChild(link);
-
 export const ProductItem = (product) => {
+    const link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = URL_BASE_SITE+"themes/shared/components/ProductItem/ProductItem.css";
+    document.head.appendChild(link);
 
     const productContainer = document.createElement('div');
     productContainer.classList.add('product-container');

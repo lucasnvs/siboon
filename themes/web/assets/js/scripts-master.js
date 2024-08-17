@@ -5,11 +5,6 @@ console.log("%cSiboon SkateShop - Ecommerce By @lucasnvs on GitHub", 'color: #8A
 
 export const CART_KEY = "cart";
 
-const HEADER_OPTIONS = {
-    search: "",
-    user: "",
-}
-
 const CART_ELEMENTS = {
     openCartButton: document.getElementById("cart-button"),
     closeCartButton: document.getElementById("close-cart"),

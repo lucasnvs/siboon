@@ -10,6 +10,7 @@
 :root {
     --primary-neutral-color: #1E1E1E;
     --primary-color: #8A11A8;
+    --light-gray: #9f9f9f;
 }
 
 .col {
@@ -135,6 +136,13 @@ textarea {
     min-height: 35px;
     padding: 6px 12px;
     font-weight: 500;
+    border: 1px solid var(--light-gray);
+}
+
+.default-input:focus,
+select:focus,
+textarea:focus {
+    border-color: var(--primary-color);
 }
 
 textarea {

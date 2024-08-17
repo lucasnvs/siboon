@@ -87,11 +87,11 @@
     font-weight: 600;
     background-color: #FFF;
     cursor: pointer;
-    outline: #8A11A8;
+    outline: var(--primary-color);
     border: 1px solid #FFFF;
     text-transform: uppercase;
 }.info.col .input-container button:active {
-    border: 2px solid #8A11A8;
+    border: 2px solid var(--primary-color);
  }
 
 @keyframes open-cart {

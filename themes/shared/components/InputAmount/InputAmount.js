@@ -1,23 +1,30 @@
 import {URL_BASE_SITE} from "../../Constants.js";
 
-const link = document.createElement("link");
-link.rel = "stylesheet";
-link.href = URL_BASE_SITE+"themes/shared/components/InputAmount/InputAmount.css";
-document.head.appendChild(link);
+export const InputAmount = ({id = null, onChange = (amount) => {}, onIncrement = (amount) => {}, onMinus = (amount) => {}, onZero = () => {}, initialValue = 1, style = "default"}) => {
 
-export const InputAmount = ({id, onIncrement = (amount) => {}, onMinus = (amount) => {}, onZero = () => {}, initialValue = 1}) => {
+    const link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = URL_BASE_SITE+"themes/shared/components/InputAmount/InputAmount.css";
+    document.head.appendChild(link);
+
+
+    var STYLES = {
+        default: "default",
+        outlined: "outlined"
+    }
 
     var AMOUNT = initialValue;
 
     const quantityElement = document.createElement('div');
     if(id) quantityElement.id = id;
     quantityElement.classList.add('quantity');
+    quantityElement.classList.add(STYLES[style] ?? "default");
 
     const quantityBox = document.createElement('div');
     quantityBox.classList.add('quantity-box');
 
     const btnMinus = document.createElement('span');
-    btnMinus.id = id + "-minus"
+    btnMinus.id = id ?? "" + "-minus"
     btnMinus.classList.add('minus');
     btnMinus.textContent = '-';
 
@@ -28,7 +35,7 @@ export const InputAmount = ({id, onIncrement = (amount) => {}, onMinus = (amount
     inputQuantity.maxLength = 4;
 
     const btnPlus = document.createElement('span');
-    btnPlus.id = id + "-plus"
+    btnPlus.id = id ?? "" + "-plus"
     btnPlus.classList.add('plus');
     btnPlus.textContent = '+';
 
@@ -39,7 +46,7 @@ export const InputAmount = ({id, onIncrement = (amount) => {}, onMinus = (amount
     quantityElement.appendChild(quantityBox);
 
     inputQuantity.addEventListener("change", (e) => {
-        console.log(1);
+        AMOUNT = e.target.value;
     })
 
     btnPlus.addEventListener("click", (e) => {

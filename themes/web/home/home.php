@@ -1,6 +1,6 @@
 <?php $this->layout("master", ['title' => $title]); ?>
 <?php $this->start("specific-script"); ?>
-<script src="<?= assets('home/scripts-home.js') ?>" type="module" async></script>
+<script src="<?= assets('home/scripts-home.js') ?>" type="module"></script>
 <?php $this->end(); ?>
 <?php $this->start("specific-style"); ?>
 <link rel="stylesheet" href="<?= assets('home/home.css') ?>">

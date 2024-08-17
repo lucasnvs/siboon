@@ -13,7 +13,7 @@
         <?= $this->section("specific-style") ?>
     <?php endif; ?>
     <script src="<?= assets('assets/js/ModifiedLocalStorage.js') ?>"></script>
-    <script type="module" src="<?= assets('assets/js/scripts-master.js') ?>" async></script>
+    <script type="module" src="<?= assets('assets/js/scripts-master.js') ?>"></script>
     <?php if ($this->section("specific-script")): ?>
         <?= $this->section("specific-script"); ?>
     <?php endif; ?>
@@ -90,7 +90,6 @@
             </div>
         </header>
     </div>
-
 
     <section id="main">
         <?= $this->section("content") ?>

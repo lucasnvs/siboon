@@ -48,7 +48,7 @@
     a {
         color: #FFF;
         padding: 30px;
-        background-color: #8A11A8;
+        background-color: var(--primary-color);
         border-radius: 10px;
     }
 

@@ -13,31 +13,22 @@
 </head>
 <body>
     <div id="content">
-        <div class="card">
-            <section>
-                Email
-            </section>
-            <section>
-                Dados Pessoais
-                Nome CPF
-            </section>
-            <section>
-                Entrega
-
-                CEP com Escolha de tipo de entrega
-            </section>
-            <section>
-                Pagamento
-            </section>
-
-            <button class="btn">Finalizar Compra</button>
-        </div>
+        <div id="card-info" class="card"></div>
         <div class="card">
             <h2>Siboon Skate Shop</h2>
 
             <p>Resumo do Pedido</p>
             <ul>
-                <li>2x Camisa R$180,00</li>
+                    <div class="product-list-item">
+                        <img src="<?= assets("assets/imgs/camisa-independent.jpeg")?>">
+                        <div>
+                            <p>Camisa XXX</p>
+                            <div>
+                                Cor: Marrom | Tamanho: M
+                            </div>
+                        </div>
+                        <p>R$499,00</p>
+                    </div>
             </ul>
 
             <p>TOTAL  R$180,00</p>
