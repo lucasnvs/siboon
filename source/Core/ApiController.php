@@ -7,6 +7,9 @@ use InvalidArgumentException;
 use Source\Support\Response\Code;
 use Source\Support\Validator\FieldValidator;
 
+/**
+ * Base from any API controller with request validation.
+ */
 abstract class ApiController extends Controller
 {
     protected array $ALLOWED_REQUEST_TYPES = ["application/json", "multipart/form-data"];
@@ -43,7 +46,7 @@ abstract class ApiController extends Controller
 
         foreach ($FIELDS as $key => $validators) {
             if(isset($request_body[$key])) {
-                (new FieldValidator())->validate($request_body[$key], $validators);
+                FieldValidator::validate($request_body[$key], $validators);
             } else {
                 if(in_array(FieldValidator::required, $validators)) {
                     throw new InvalidArgumentException("Todos os campos obrigatórios devem estar presentes e preenchidos!", Code::$BAD_REQUEST);

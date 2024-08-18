@@ -2,7 +2,10 @@
 
 namespace Source\Support\Response;
 
-class Code
+/**
+ * HTTP STATUS CODE
+ */
+abstract class Code
 {
     // 200 Family
     public static int $OK = 200;

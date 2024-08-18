@@ -5,6 +5,9 @@ namespace Source\Core;
 use Source\Exceptions\AuthorizationException;
 use Source\Support\Response\Code;
 
+/**
+ * Base from any controller with authentication included.
+ */
 abstract class Controller
 {
     protected $userAuth = [];
@@ -28,6 +31,14 @@ abstract class Controller
         }
     }
 
+    /**
+     * Set an access permission to this endpoint.
+     *
+     * @param int $access
+     * @param $id
+     * @return void
+     * @throws AuthorizationException
+     */
     public function setAccessToEndpoint(int $access, $id = null): void
     {
         $this->endpointAccess = $access;
@@ -40,6 +51,10 @@ abstract class Controller
         $this->checkPermissionBearer($id);
     }
 
+    /**
+     * @return void
+     * @throws AuthorizationException
+     */
     private function checkBearerIsValid()
     {
         $JWT = new TokenJWT();
@@ -52,6 +67,11 @@ abstract class Controller
         $this->userAuth = $JWT->token->data;
     }
 
+    /**
+     * @param $id
+     * @return void
+     * @throws AuthorizationException
+     */
     private function checkPermissionBearer($id)
     {
         $JWT = new TokenJWT();

@@ -13,6 +13,9 @@ class User extends DataLayer {
         parent::__construct("users", ["first_name", "last_name", "email", "password"], timestamps: false);
     }
 
+    /**
+     * @return bool
+     */
     #[\Override]
     public function save(): bool
     {
@@ -47,6 +50,9 @@ class User extends DataLayer {
         }
     }
 
+    /**
+     * @return bool
+     */
     public function updateUser () : bool
     {
 
@@ -78,6 +84,11 @@ class User extends DataLayer {
 
     }
 
+    /**
+     * @param string $email
+     * @param string $password
+     * @return bool|User
+     */
     public function login(string $email, string $password): bool|User
     {
         $params = http_build_query(["email" => $email]);
@@ -103,6 +114,12 @@ class User extends DataLayer {
         return true;
     }
 
+    /**
+     * @param string $password
+     * @param string $newPassword
+     * @param string $confirmNewPassword
+     * @return bool
+     */
     public function updatePassword (string $password, string $newPassword, string $confirmNewPassword) : bool
     {
         $params = http_build_query(["id" => $this->id]);

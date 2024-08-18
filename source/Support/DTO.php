@@ -5,7 +5,10 @@ use Source\Models\Faq\Type;
 use Source\Models\Product\ProductImage;
 use Source\Models\Product\ProductSizeType;
 
-class DTO {
+/**
+ *  Class with Data Transfer Object functions to return formated data to client.
+ */
+abstract class DTO {
 
     private static function calc_discount(float $value, $p_discount = 0): float { return $value - ($value * $p_discount / 100); }
 

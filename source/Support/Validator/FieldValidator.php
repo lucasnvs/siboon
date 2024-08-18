@@ -5,7 +5,10 @@ namespace Source\Support\Validator;
 use InvalidArgumentException;
 use Source\Support\Response\Code;
 
-class FieldValidator
+/**
+ * Validate requests fields.
+ */
+abstract class FieldValidator
 {
 
     const email = "email";
@@ -14,16 +17,29 @@ class FieldValidator
     const string = "string";
     const required = "required";
 
-    public function validate($element, array $validator)
+    /**
+     * Validate all.
+     *
+     * @param $element
+     * @param array $validator
+     * @return void
+     */
+    public static function validate($element, array $validator)
     {
         if(!$validator) return;
         foreach ($validator as $method) {
-            if (method_exists($this, $method)) {
-                $this->$method($element);
+            if (method_exists(self::class, $method)) {
+                self::$method($element);
             }
         }
     }
 
+    /**
+     * Validate if needed.
+     *
+     * @param $field
+     * @return void
+     */
     private function required($field)
     {
         if($field == "") {
@@ -31,6 +47,12 @@ class FieldValidator
         }
     }
 
+    /**
+     * Validate if is a valid email.
+     *
+     * @param $email
+     * @return void
+     */
     private function email($email)
     {
         if(!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -38,6 +60,12 @@ class FieldValidator
         }
     }
 
+    /**
+     * Validate if is a valid password.
+     *
+     * @param $password
+     * @return void
+     */
     private function password($password)
     {
         $regex = "/^(?=.*[0-9])(?=.*[!@#$%^&*()_+])[A-Za-z0-9!@#$%^&*()_+]{8,}$/";
@@ -46,11 +74,23 @@ class FieldValidator
         }
     }
 
+    /**
+     * Validate if is a valid number.
+     *
+     * @param $field
+     * @return void
+     */
     private function number($field)
     {
 
     }
 
+    /**
+     * Validate if is a valid string.
+     *
+     * @param $field
+     * @return void
+     */
     private function string($field)
     {
 
