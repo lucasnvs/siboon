@@ -8,7 +8,7 @@ use Source\Support\Response\Code;
 /**
  * Validate requests fields.
  */
-abstract class FieldValidator
+class FieldValidator
 {
 
     const email = "email";
@@ -24,7 +24,7 @@ abstract class FieldValidator
      * @param array $validator
      * @return void
      */
-    public static function validate($element, array $validator)
+    public function validate($element, array $validator)
     {
         if(!$validator) return;
         foreach ($validator as $method) {

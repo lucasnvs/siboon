@@ -12,8 +12,6 @@ class AppController extends Controller
     private $view;
     private $router;
 
-    private $loggedUser = null;
-
     public function __construct($router)
     {
         parent::__construct();
@@ -24,9 +22,7 @@ class AppController extends Controller
 
         $this->router = $router;
 
-        $this->loggedUser = $this->userAuth;
-
-        $this->view->addData(["loggedUser" => $this->loggedUser]);
+        $this->view->addData(["loggedUser" => $this->userAuth]);
     }
 
     public function profile()
@@ -38,7 +34,7 @@ class AppController extends Controller
 
     public function checkout()
     {
-        $loggedUser = (new User())->findById($this->loggedUser->id)->data();
+        $loggedUser = (new User())->findById($this->userAuth->id)->data();
         echo $this->view->render("checkout/checkout", [
             "title" => "Checkout",
         ]);

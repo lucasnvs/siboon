@@ -3,23 +3,23 @@
 /**
  * Class PaymentService
  *
- * Simula um serviço de processamento de pagamentos. Oferece métodos para processar, cancelar e verificar o status de pagamentos.
+ * Simulates a payment processing service. Provides methods to process, cancel, and check the status of payments.
  */
 class PaymentService
 {
     /**
-     * Processa um pagamento simulado.
+     * Processes a simulated payment.
      *
-     * @param string $orderId ID do pedido a ser pago.
-     * @param float $amount Valor do pagamento em reais.
+     * @param string $orderId The order ID to be paid.
+     * @param float $amount The payment amount in Brazilian reais.
      *
-     * @return array Resultado do processamento do pagamento, incluindo status e mensagem.
+     * @return array The result of the payment processing, including status and message.
      *
-     * @throws InvalidArgumentException Se o ID do pedido estiver vazio ou o valor do pagamento for menor ou igual a zero.
+     * @throws InvalidArgumentException If the order ID is empty or the payment amount is less than or equal to zero.
      */
     public static function processPayment($orderId, $amount)
     {
-        // Valida os dados de entrada
+        // Validates input data
         if (empty($orderId) || $amount <= 0) {
             return [
                 'status' => 'error',
@@ -27,9 +27,9 @@ class PaymentService
             ];
         }
 
-        // Simula um processamento de pagamento
+        // Simulates payment processing
         $paymentId = uniqid('pay_', true);
-        $success = rand(0, 1) == 1; // 50% chance de sucesso
+        $success = rand(0, 1) == 1; // 50% chance of success
 
         if ($success) {
             return [
@@ -49,17 +49,17 @@ class PaymentService
     }
 
     /**
-     * Cancela um pagamento simulado.
+     * Cancels a simulated payment.
      *
-     * @param string $paymentId ID do pagamento a ser cancelado.
+     * @param string $paymentId The payment ID to be canceled.
      *
-     * @return array Resultado do cancelamento do pagamento, incluindo status e mensagem.
+     * @return array The result of the payment cancellation, including status and message.
      *
-     * @throws InvalidArgumentException Se o ID do pagamento estiver vazio.
+     * @throws InvalidArgumentException If the payment ID is empty.
      */
     public static function cancelPayment($paymentId)
     {
-        // Valida o ID do pagamento
+        // Validates the payment ID
         if (empty($paymentId)) {
             return [
                 'status' => 'error',
@@ -67,8 +67,8 @@ class PaymentService
             ];
         }
 
-        // Simula um cancelamento de pagamento
-        $success = rand(0, 1) == 1; // 50% chance de sucesso
+        // Simulates payment cancellation
+        $success = rand(0, 1) == 1; // 50% chance of success
 
         if ($success) {
             return [
@@ -86,17 +86,17 @@ class PaymentService
     }
 
     /**
-     * Verifica o status de um pagamento simulado.
+     * Checks the status of a simulated payment.
      *
-     * @param string $paymentId ID do pagamento a ser verificado.
+     * @param string $paymentId The payment ID to be checked.
      *
-     * @return array Resultado da verificação do status do pagamento, incluindo status e mensagem.
+     * @return array The result of the payment status check, including status and message.
      *
-     * @throws InvalidArgumentException Se o ID do pagamento estiver vazio.
+     * @throws InvalidArgumentException If the payment ID is empty.
      */
     public static function checkPaymentStatus($paymentId)
     {
-        // Valida o ID do pagamento
+        // Validates the payment ID
         if (empty($paymentId)) {
             return [
                 'status' => 'error',
@@ -104,7 +104,7 @@ class PaymentService
             ];
         }
 
-        // Simula uma verificação de status de pagamento
+        // Simulates payment status check
         $status = rand(0, 1) == 1 ? 'completed' : 'pending';
 
         return [

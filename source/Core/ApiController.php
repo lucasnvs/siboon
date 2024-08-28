@@ -46,7 +46,7 @@ abstract class ApiController extends Controller
 
         foreach ($FIELDS as $key => $validators) {
             if(isset($request_body[$key])) {
-                FieldValidator::validate($request_body[$key], $validators);
+                (new FieldValidator())->validate($request_body[$key], $validators);
             } else {
                 if(in_array(FieldValidator::required, $validators)) {
                     throw new InvalidArgumentException("Todos os campos obrigatórios devem estar presentes e preenchidos!", Code::$BAD_REQUEST);

@@ -59,8 +59,8 @@ CREATE TABLE products
     price_brl DOUBLE NOT NULL DEFAULT 0.0,
     max_installments        TINYINT NOT NULL DEFAULT 1,
     discount_brl_percentage TINYINT DEFAULT 0,
-    created_at DATE,
-    updated_at DATE,
+    created_at DATE NOT NULL,
+    updated_at DATE NOT NULL,
     FOREIGN KEY (size_type_id) REFERENCES product_size_type (id)
 );
 
@@ -89,15 +89,17 @@ CREATE TABLE stock
 -- ORDERS & SALES --
 -- ------ - ----- --
 
--- important infos about order like, total price, send method, address, sale date,
+-- important infos about order like total price, send method, address, sale date,
 CREATE TABLE orders
 (
     id         INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
     user_id    INT  NOT NULL,
     address_id INT  NOT NULL,
-    sale_date  DATE NOT NULL,
     total_price DOUBLE NOT NULL,
-    `status`   ENUM("PENDENT", "SENDED", "FINISHED") NOT NULL,
+    payment_status ENUM("PENDING", "PAID") NOT NULL DEFAULT "PENDING",
+    shipment_status ENUM("PENDING", "SENDED") NOT NULL DEFAULT "PENDING",
+    created_at DATE NOT NULL,
+    updated_at DATE NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users (id),
     FOREIGN KEY (address_id) REFERENCES user_address (id)
 );

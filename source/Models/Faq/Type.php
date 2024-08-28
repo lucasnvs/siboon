@@ -18,4 +18,11 @@ class Type extends DataLayer {
     {
         return $this->message;
     }
+
+    public function setData($data)
+    {
+        if (isset($data["description"])) {
+            $this->description = $data["description"];
+        }
+    }
 }

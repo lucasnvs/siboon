@@ -13,8 +13,6 @@ class WebController extends Controller
     private $view;
     private $router;
 
-    private $loggedUser = null;
-
     public function __construct($router)
     {
         $this->view = new Engine(__DIR__ . "/../../themes/web","php");
@@ -23,10 +21,9 @@ class WebController extends Controller
         $this->router = $router;
 
         if(isset($this->userAuth)) {
-            $this->loggedUser = $this->userAuth;
-        }
+            $this->view->addData(["loggedUser" => $this->userAuth]);
 
-        $this->view->addData(["loggedUser" => $this->loggedUser]);
+        }
     }
 
     public function home ()

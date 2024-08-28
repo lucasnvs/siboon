@@ -340,7 +340,7 @@ Exemplo de Resposta:
 ```
 </details>
 
-3. ### FAQ
+3. ### FAQ - Questões
 <details>
     <summary>CREATE - ADMIN</summary>
 
@@ -471,6 +471,117 @@ Exemplo de Resposta:
 {
   "type": "success",
   "message": "Questão deletada com sucesso."
+}
+```
+</details>
+
+4. ### FAQ - Tópicos
+<details>
+    <summary>CREATE - ADMIN</summary>
+
+Exemplo de Requisição:
+
+> POST /faq/topicos
+
+Só precisa de um parâmetro: description.
+```json
+{
+  "description": "Tópico X"
+}
+```
+
+Exemplo de Resposta:
+> Status Code: 201
+
+```json
+{
+  "type": "success",
+  "message": "Tópico criado com sucesso."
+}
+```
+</details>
+
+<details>
+    <summary>READ</summary>
+
+1. Exemplo de Requisição:
+> GET /faq/topicos/1
+
+Exemplo de Resposta:
+> Status Code: 200
+
+```json
+{
+  "type": "success",
+  "data": {
+    "id": 1,
+    "description": "Vendas"
+  }
+}
+```
+2. Exemplo de Requisição:
+> GET /faq/topicos
+
+Exemplo de Resposta:
+> Status Code: 200
+
+```json
+{
+  "type": "success",
+  "data": [
+    {
+      "id": 1,
+      "description": "Vendas"
+    },
+    {
+      "id": 2,
+      "description": "Trocas e Devoluções"
+    }
+  ]
+}
+```
+</details>
+
+<details>
+    <summary>UPDATE - ADMIN</summary>
+
+Exemplo de Requisição:
+
+> POST /faq/topicos/update/1
+
+Recebe apenas a chave "description", que pode ser alterada.
+
+```json
+{
+  "description": "Este é o Tópico Atualizado"
+}
+```
+
+Exemplo de Resposta:
+> Status Code: 200
+
+```json
+{
+  "type": "success",
+  "message": "Tópico atualizado com sucesso."
+}
+```
+</details>
+
+<details>
+    <summary>DELETE - ADMIN</summary>
+
+Exemplo de Requisição:
+
+> DELETE /faq/topicos/1
+
+Exemplo de Resposta:
+> Status Code: 200
+
+```json
+{
+  "type": "success",
+  "message": "Tópico deletado com sucesso."
 }
 ```
 </details>

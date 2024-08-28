@@ -14,7 +14,7 @@ abstract class DTO {
 
     private static function format_price($value): string { return "R$ " . number_format($value, 2, ",", "."); }
 
-    public static function ProductDTO($product)
+    public static function ProductDTO($product): array
     {
         $responseDto = [
             "id" => $product->id,
@@ -58,14 +58,12 @@ abstract class DTO {
 
     public static function UserDTO($user): array
     {
-        $dtoUser = [
+        return [
             "id" => $user->id,
             "name" => $user->first_name." ".$user->last_name,
             "email" => $user->email,
             "role" => $user->role,
         ];
-
-        return $dtoUser;
     }
 
     public static function FaqDTO($question)
@@ -80,5 +78,17 @@ abstract class DTO {
         $question->type = $filter->data()->description;
 
         return $question->data();
+    }
+
+    public static function OrderDTO($order): array
+    {
+        return [
+            "id" => $order->id,
+            "user_id" => $order->user->id,
+            "address_id" => $order->address_id,
+            "total_price" => $order->total_price,
+            "payment_status" => $order->payment_status,
+            "shipment_status" => $order->shipment_status,
+        ];
     }
 }

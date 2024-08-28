@@ -7,13 +7,9 @@ use Source\Exceptions\RouterException;
 use Source\Support\Response\Code;
 
 try {
-
     ob_start();
-
     $route = new Router(url("api"),":");
-
     $route->namespace("Source\Controller\Api");
-
 
     /*
      * Resource: Users
@@ -37,6 +33,13 @@ try {
     $route->post("/update/{id}", "FaqController:updateFaq");
     $route->delete("/{id}", "FaqController:deleteFaq");
 
+    $route->group("faq/topicos");
+    $route->get("/","FaqController:listTopics");
+    $route->get("/{id}", "FaqController:getTopic");
+    $route->post("/", "FaqController:insertTopic");
+    $route->post("/update/{id}", "FaqController:updateTopic");
+    $route->delete("/{id}", "FaqController:deleteTopic");
+
     /*
      * Resource: Products
      */
@@ -47,6 +50,15 @@ try {
     $route->post("/update/{id}", "ProductController:updateProduct");
     $route->delete("/{id}", "ProductController:deleteProduct");
 
+    /*
+     * Resource: Orders
+     */
+    $route->group("pedidos");
+    $route->get("/", "OrderController:listOrders");
+    $route->get("/{id}", "OrderController:getOrder");
+    $route->post("/", "OrderController:createOrder");
+    $route->post("/update/{id}", "OrderController:updateOrder");
+    $route->delete("/{id}", "OrderController:deleteOrder");
 
     $route->group(null);
     $route->dispatch();
@@ -61,8 +73,6 @@ try {
 } catch (Exception $e) {
     return ErrorController::getErrorMessage($e);
 } catch (Error $e) {
-    if(CONF_IN_DEVELOPMENT) {
-        throw $e;
-    }
+    if(CONF_IN_DEVELOPMENT) { throw $e; }
     return ErrorController::getUnavailable();
 }
