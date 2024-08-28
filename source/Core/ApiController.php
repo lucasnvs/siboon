@@ -66,4 +66,11 @@ abstract class ApiController extends Controller
         }
         return $object;
     }
+
+    protected function doInsideRoot(callable $callable)
+    {
+        chdir("..");
+        call_user_func($callable);
+        chdir("api");
+    }
 }

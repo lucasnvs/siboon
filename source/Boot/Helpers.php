@@ -57,3 +57,18 @@ function buildFriendlyURL(string $string = ""): string
     $string = preg_replace('/[^a-z0-9]+/', '-', $string);
     return trim($string, '-');
 }
+
+/**
+ * Delete a file tree.
+ *
+ * @param $dir
+ * @return bool
+ */
+function delTree($dir): bool
+{
+    $files = array_diff(scandir($dir), array('.', '..'));
+    foreach ($files as $file) {
+        (is_dir("$dir/$file")) ? delTree("$dir/$file") : unlink("$dir/$file");
+    }
+    return rmdir($dir);
+}
