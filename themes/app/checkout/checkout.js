@@ -16,7 +16,7 @@ import {USER_CACHE_KEY} from "../../shared/Constants.js";
     let [response, isError] = await UserService.getDataById(localStorage.get(USER_CACHE_KEY).id);
     var userData = response.data ?? [];
 
-    const [userData.name, userData.last_name] = userData.name.slice(" ");
+    const [name, last_name] = userData.name.slice(" ");
 
     const cardInfo = document.getElementById("card-info");
 
@@ -37,12 +37,12 @@ import {USER_CACHE_KEY} from "../../shared/Constants.js";
             child: [
                 ContainerInput({
                     label: "Nome",
-                    value: userData.name ?? "John",
+                    value: name ?? "John",
                     isDisabled: true,
                 }),
                 ContainerInput({
                     label: "Sobrenome",
-                    value: userData.last_name ?? "Doe",
+                    value: last_name ?? "Doe",
                     isDisabled: true
                 }),
                 ContainerInput({
