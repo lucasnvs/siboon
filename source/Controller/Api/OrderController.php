@@ -7,14 +7,17 @@ use InvalidArgumentException;
 use PaymentService;
 use PDOException;
 use ShipmentService;
+use Source\Core\ApiController;
 use Source\Core\Controller;
+use Source\Exceptions\PaymentException;
 use Source\Models\Order\Order;
+use Source\Models\Product\Product;
 use Source\Support\DTO;
 use Source\Support\Response\Code;
 use Source\Support\Response\Response;
 use Source\Support\Validator\FieldValidator;
 
-class OrderController extends Controller
+class OrderController extends ApiController
 {
     public function listOrders(array $data)
     {
@@ -62,9 +65,12 @@ class OrderController extends Controller
         ];
         $request_body = parent::validate($data, $FIELDS);
 
-        // Pega os items do pedido
-        // faz a soma do total
-        // add total_price na order;
+        $totalPrice = 0;
+        foreach ($request_body["order_items"] as $order_item) {
+            $product = (new Product())->findById($order_item["id"]);
+            $totalPrice += $product->price_brl;
+        }
+        $request_body["total_price"] = $totalPrice;
 
         $order = new Order();
         $order->setData($request_body);
@@ -72,7 +78,7 @@ class OrderController extends Controller
         $isCreated = $order->save();
         if (!$isCreated) throw new PDOException($order->fail()->getMessage(), Code::$BAD_REQUEST);
 
-        return Response::success(message: "Pedido efetuado com sucesso.", code: Code::$CREATED);
+        return Response::success(["order_id" => $order->id],message: "Pedido efetuado com sucesso.", code: Code::$CREATED);
     }
 
     public function updateOrder(array $data)
@@ -116,7 +122,8 @@ class OrderController extends Controller
 
         $paymentStatus = PaymentService::checkPaymentStatus($paymentId);
         $status = $paymentStatus["status"];
-        if($status != "completed") return;
+
+        if($status != "completed") throw new PaymentException("Pagamento não foi finalizado.");
 
         $order->payment_status = Order::PAYMENT_STATUS_PAID;
 
@@ -127,12 +134,12 @@ class OrderController extends Controller
                 // Salva ou não informacoes de envio;
                 $order->shipment_status = Order::SHIPMENT_STATUS_SENDED;
             }
-
         } catch(\Exception $e) {} // try catch cala boca :(
 
         if(!$order->save()) {
             throw new PDOException($order->fail()->getMessage(), Code::$INTERNAL_SERVER_ERROR);
         }
+
         return Response::success("Pedido finalizado com sucesso.", code: Code::$OK);
     }
 }

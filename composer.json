@@ -31,6 +31,7 @@
     "league/plates": "3.5.*",
     "firebase/php-jwt": "v6.10.0",
     "coffeecode/uploader": "^2.0",
-    "ext-iconv": "*"
+    "ext-iconv": "*",
+    "ext-http": "*"
   }
 }

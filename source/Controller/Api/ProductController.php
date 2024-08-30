@@ -2,7 +2,7 @@
 
 namespace Source\Controller\Api;
 
-use http\Exception\InvalidArgumentException;
+use InvalidArgumentException;
 use PDOException;
 use Source\Core\ApiController;
 use Source\Models\Product\Product;

@@ -13,7 +13,8 @@ class ErrorController
             'PDOException' => "database",
             'InvalidArgumentException' => "invalid_argument",
             'Source\Exceptions\RouterException' => "router",
-            'Source\Exceptions\AuthorizationException' => "authorization"
+            'Source\Exceptions\AuthorizationException' => "authorization",
+            'Source\Exceptions\PaymentException' => "payment"
         ];
     }
 

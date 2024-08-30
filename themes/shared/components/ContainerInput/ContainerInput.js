@@ -1,4 +1,4 @@
-export const ContainerInput = ({id, name, label, type = "text"}) => {
+export const ContainerInput = ({id, name, label, type = "text", value, isDisabled}) => {
     const container = document.createElement('div');
     const labelFor = document.createElement('label');
     const input = document.createElement('input');
@@ -11,6 +11,8 @@ export const ContainerInput = ({id, name, label, type = "text"}) => {
 
     input.className = 'default-input';
     input.type = type;
+    input.value = value ?? "";
+    input.disabled = isDisabled;
     if(name) input.name = 'email';
     if(id) input.id = id;
 

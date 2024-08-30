@@ -4,7 +4,7 @@ namespace Source\Controller;
 
 use League\Plates\Engine;
 use Source\Core\Controller;
-use Source\Models\User;
+use Source\Models\User\User;
 
 class AppController extends Controller
 {

@@ -33,6 +33,7 @@ CREATE TABLE user_address
     cep           VARCHAR(10)  NOT NULL,
     street_avenue VARCHAR(255) NOT NULL,
     `number`      INT          NOT NULL,
+    complement    VARCHAR(255) NOT NULL,
     district      VARCHAR(255) NOT NULL,
     city          VARCHAR(255) NOT NULL,
     state         VARCHAR(255) NOT NULL,

@@ -2,6 +2,8 @@
 
 use Source\Support\Env;
 
+define("__PROJECT_DIR__", $_SERVER['DOCUMENT_ROOT'] . "/siboon/");
+
 # IN DEVELOPMENT ENV VARIABLE
 define("CONF_IN_DEVELOPMENT", Env::get("IN_DEVELOPMENT"));
 

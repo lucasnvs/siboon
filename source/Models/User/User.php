@@ -1,6 +1,6 @@
 <?php
 
-namespace Source\Models;
+namespace Source\Models\User;
 
 use CoffeeCode\DataLayer\DataLayer;
 use PDOException;

@@ -6,7 +6,8 @@ use InvalidArgumentException;
 use PDOException;
 use Source\Core\ApiController;
 use Source\Core\TokenJWT;
-use Source\Models\User;
+use Source\Models\User\Address;
+use Source\Models\User\User;
 use Source\Support\DTO;
 use Source\Support\Response\Code;
 use Source\Support\Response\Response;
@@ -199,5 +200,76 @@ class UserController extends ApiController
         setcookie(CONF_AUTHORIZATION_COOKIE_NAME, "Bearer " . $signature, (time() + $EXPIRE_TIME), "/");
 
         return Response::success($response, message: $user->getMessage(), code: Code::$OK);
+    }
+
+    public function listUserAddresses(array $data)
+    {
+        $user_id = $data['user_id'];
+
+        $params = http_build_query(["user_id" => $user_id]);
+        $addresses = (new Address())->find("user_id = :user_id", $params)->fetch(true);
+
+        if(!$addresses){
+            return Response::success("Nenhum endereço cadastrado para este usuário", code: Code::$NO_CONTENT);
+        }
+
+        $response = [];
+        foreach ($addresses as $address) {
+            $response[] = $address->data();
+        }
+
+        return Response::success($response, message: "Endereços encontrados!", code: Code::$OK);
+    }
+
+    public function insertUserAddress(array $data)
+    {
+        parent::setAccessToEndpoint($this->ACCESS_LOGGED, $data['user_id']);
+
+        $FIELDS = [
+            "cep" => [FieldValidator::required],
+            "street_avenue" => [FieldValidator::required],
+            "number" => [FieldValidator::required],
+            "complement" => [FieldValidator::required],
+            "district" => [FieldValidator::required],
+            "city" => [FieldValidator::required],
+            "state" => [FieldValidator::required],
+        ];
+
+        $request_body = parent::validate($data, $FIELDS);
+        $address = new Address();
+        $address->user_id = $data['user_id'];
+        $address->setData($request_body);
+
+        if(!$address->save()){
+            throw new PDOException($address->fail()->getMessage(), code: Code::$INTERNAL_SERVER_ERROR);
+        }
+
+        return Response::success(message: "Endereço cadastrado para o usuário.", code: Code::$OK);
+    }
+
+    public function updateUserAddress(array $data)
+    {
+
+    }
+
+    public function deleteUserAddress(array $data)
+    {
+        $user_id = $data['user_id'];
+        $address_id = $data['id'];
+        parent::setAccessToEndpoint($this->ACCESS_LOGGED, $user_id);
+
+        $address = (new Address())->findById($address_id);
+
+        if (!isset($address)) {
+            throw new InvalidArgumentException("Endereço não existe.", code: Code::$BAD_REQUEST);
+        }
+
+        $isDestroyed = $address->destroy();
+
+        if (!$isDestroyed) {
+            throw new PDOException($address->fail()->getMessage(), code: Code::$INTERNAL_SERVER_ERROR);
+        }
+
+        return Response::success(message: "Endereço deletado com sucesso.", code: Code::$OK);
     }
 }

@@ -13,8 +13,9 @@ export const UserService = {
     async getDataById(id) {
         let res = await fetch(endpointUrl+id);
 
-        if(res.status === 204) return [];
-        return await res.json();
+        if(res.status === 204) return [[], !res.ok];
+
+        return [await res.json(), !res.ok];
     },
 
     async sendData(

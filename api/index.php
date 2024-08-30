@@ -23,6 +23,11 @@ try {
     $route->post("/login", "UserController:login");
     $route->post("/change-password", "UserController:changePassword");
 
+    $route->get("/{user_id}/enderecos/", "UserController:listUserAddresses");
+    $route->post("/{user_id}/enderecos/", "UserController:insertUserAddress");
+    $route->post("/{user_id}/enderecos/update/{id}", "UserController:updateUserAddress");
+    $route->delete("/{user_id}/enderecos/{id}", "UserController:deleteUserAddress");
+
     /*
      * Resource: FAQ (Frequently Asked Questions)
      */
@@ -59,6 +64,8 @@ try {
     $route->post("/", "OrderController:createOrder");
     $route->post("/update/{id}", "OrderController:updateOrder");
     $route->delete("/{id}", "OrderController:deleteOrder");
+    $route->post("/finalizar", "OrderController:finishOrder");
+
 
     $route->group(null);
     $route->dispatch();

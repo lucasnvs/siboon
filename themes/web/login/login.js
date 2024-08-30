@@ -1,5 +1,6 @@
 import {UserService} from "../../shared/services/UserService.js";
 import {Validate, Validators} from "../../shared/Validate.js";
+import {USER_CACHE_KEY} from "../../shared/Constants.js";
 
 async function login(email, password) {
     let [res, isError] = await UserService.login(
@@ -9,6 +10,8 @@ async function login(email, password) {
     if(isError) {
         return res;
     }
+
+    localStorage.set(USER_CACHE_KEY, res.data);
 
     window.location.href = "app/perfil";
 }

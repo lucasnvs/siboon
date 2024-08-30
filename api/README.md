@@ -162,6 +162,114 @@ Exemplo de Resposta:
 ```
 </details>
 
+1. ### Usuário - Endereços
+
+<details>
+    <summary>CREATE</summary>
+
+Exemplo de Requisição:
+
+> POST /usuarios/1/enderecos/
+
+```json
+{
+  "cep": "343434323",
+  "street_avenue": "Rua 1",
+  "number": 3406,
+  "complement": "Casa",
+  "district": "Centro",
+  "city": "Porto Alegre",
+  "state": "RS"
+}
+```
+
+Exemplo de Resposta:
+> Status Code: 204
+
+```json
+{
+  "type": "success",
+  "message": "Endereço cadastrado para o usuário."
+}
+```
+</details>
+
+<details>
+    <summary>READ</summary>
+
+1. Exemplo de Requisição:
+> GET /usuarios/1/enderecos/
+
+Exemplo de Resposta:
+> Status Code: 200
+
+```json
+{
+  "type": "success",
+  "message": "Endereços encontrados!",
+  "data": [
+    {
+      "id": 1,
+      "user_id": 1,
+      "cep": "343434323",
+      "street_avenue": "Rua 1",
+      "number": 3406,
+      "complement": "Casa",
+      "district": "Centro",
+      "city": "Porto Alegre",
+      "state": "RS"
+    }
+  ]
+}
+```
+</details>
+
+<details>
+    <summary>UPDATE</summary>
+
+Exemplo de Requisição:
+
+> POST /usuarios/1/enderecos/update/1
+
+O valor do que deseja modificar;
+
+```json
+{
+  "street_avenue": "Rua Oscar Freire",
+  "number": 404
+}
+```
+
+Exemplo de Resposta:
+> Status Code: 200
+
+```json
+{
+  "type": "success",
+  "message": "Endereço atualizado com sucesso."
+}
+```
+</details>
+
+<details>
+    <summary>DELETE</summary>
+
+
+Exemplo de Requisição:
+
+> DELETE /usuarios/1/enderecos/1
+
+Exemplo de Resposta:
+> Status Code: 200
+
+```json
+{
+  "type": "success",
+  "message": "Endereço deletado com sucesso."
+}
+```
+</details>
+
 2. ### Produto
 <details>
     <summary>CREATE - ADMIN</summary>
@@ -340,7 +448,147 @@ Exemplo de Resposta:
 ```
 </details>
 
-3. ### FAQ - Questões
+3. ### Pedido
+<details>
+    <summary>CREATE</summary>
+
+Exemplo de Requisição:
+
+> POST /pedidos
+
+```json
+{
+  "user_id": 76,
+  "address_id": 975,
+  "order_items": [
+    {
+      "id": 22,
+      "amount": 1
+    },
+    {
+      "id": 433,
+      "amount": 1
+    },
+    {
+      "id": 544,
+      "amount": 2
+    }
+  ]
+}
+```
+
+Exemplo de Resposta:
+> Status Code: 201
+
+```json
+{
+  "type": "success",
+  "message": "Pedido efetuado com sucesso.",
+  "data": {
+    "order_id": 54
+  }
+}
+```
+</details>
+
+<details>
+    <summary>READ - ADMIN</summary>
+
+1. Exemplo de Requisição:
+> GET /pedidos/2
+
+Exemplo de Resposta:
+> Status Code: 200
+
+```json
+{
+  "type": "success",
+  "data": {
+    "id": 456,
+    "user_id": 9,
+    "address_id": 1,
+    "total_price": 420.00,
+    "payment_status": "PAID",
+    "shipment_status": "PENDENT"
+  }
+}
+```
+2. Exemplo de Requisição:
+> GET /pedidos
+
+Exemplo de Resposta:
+> Status Code: 200
+
+```json
+{
+  "type": "success",
+  "data": [
+    {
+      "id": 456,
+      "user_id": 9,
+      "address_id": 1,
+      "total_price": 420.00,
+      "payment_status": "PAID",
+      "shipment_status": "PENDENT"
+    },
+    {
+      "id": 343,
+      "user_id": 4,
+      "address_id": 3,
+      "total_price": 210.00,
+      "payment_status": "PENDENT",
+      "shipment_status": "PENDENT"
+    }
+  ]
+}
+```
+</details>
+
+<details>
+    <summary>UPDATE - ADMIN</summary>
+
+Exemplo de Requisição:
+
+> POST /pedidos/update/1
+
+O valor ou valores do que deseja modificar;
+
+```json
+{
+  "payment_status": "PAID"
+}
+```
+
+Exemplo de Resposta:
+> Status Code: 200
+
+```json
+{
+  "type": "success",
+  "message": "Pedido atualizado com sucesso."
+}
+```
+</details>
+
+<details>
+    <summary>DELETE - ADMIN</summary>
+
+Exemplo de Requisição:
+
+> DELETE /pedidos/2
+
+Exemplo de Resposta:
+> Status Code: 200
+
+```json
+{
+  "type": "success",
+  "message": "Pedido deletado com sucesso."
+}
+```
+</details>
+
+4. ### FAQ - Questões
 <details>
     <summary>CREATE - ADMIN</summary>
 

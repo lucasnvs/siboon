@@ -3,11 +3,9 @@
 namespace Source\Controller;
 
 use League\Plates\Engine;
-use Source\Controller\Api\ProductController;
 use Source\Controller\Api\UserController;
 use Source\Core\Controller;
 use Source\Models\Product\Product;
-use Source\Models\User;
 
 class AdminController extends Controller
 {

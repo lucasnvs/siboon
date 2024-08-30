@@ -66,9 +66,12 @@ function buildFriendlyURL(string $string = ""): string
  */
 function delTree($dir): bool
 {
-    $files = array_diff(scandir($dir), array('.', '..'));
+    $files = array_diff(scandir(__PROJECT_DIR__ . $dir), array('.', '..'));
+
     foreach ($files as $file) {
-        (is_dir("$dir/$file")) ? delTree("$dir/$file") : unlink("$dir/$file");
+        $path = __PROJECT_DIR__ . "$dir/$file";
+
+        (is_dir($path)) ? delTree($path) : unlink($path);
     }
-    return rmdir($dir);
+    return rmdir(__PROJECT_DIR__ . $dir);
 }

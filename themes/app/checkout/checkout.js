@@ -9,78 +9,95 @@
 
 import {InfoSection} from "../../shared/components/InfoSection/InfoSection.js";
 import {ContainerInput} from "../../shared/components/ContainerInput/ContainerInput.js";
+import {UserService} from "../../shared/services/UserService.js";
+import {USER_CACHE_KEY} from "../../shared/Constants.js";
 
-const cardInfo = document.getElementById("card-info");
+(async () => {
+    let [response, isError] = await UserService.getDataById(localStorage.get(USER_CACHE_KEY).id);
+    var userData = response.data ?? [];
 
-cardInfo.append(
-    InfoSection({
-        title: "Email",
-        child: ContainerInput({
-            label:"Seu email"
-        })
-    })
-)
+    const [userData.name, userData.last_name] = userData.name.slice(" ");
 
-cardInfo.append(
-    InfoSection({
-        title: "Dados Pessoais",
-        child: [
-            ContainerInput({
-                label: "Nome"
-            }),
-            ContainerInput({
-                label: "Sobrenome"
-            }),
-            ContainerInput({
-                label: "CPF"
+    const cardInfo = document.getElementById("card-info");
+
+    cardInfo.append(
+        InfoSection({
+            title: "Email",
+            child: ContainerInput({
+                label:"Seu email",
+                value: userData.email ?? "",
+                isDisabled: true
             })
-        ]
-    })
-)
+        })
+    )
 
-cardInfo.append(
-    InfoSection({
-        title: "Entrega",
-        child: [
-            ContainerInput({
-                label: "CEP"
-            }),
-            ContainerInput({
-                label: "Rua/Avenida"
-            }),
-            ContainerInput({
-                label: "Número"
-            }),
-            ContainerInput({
-                label: "Bairro"
-            }),
-            ContainerInput({
-                label: "Complemento"
-            }),
-            ContainerInput({
-                label: "Cidade"
-            }),
-            ContainerInput({
-                label: "Estado"
-            }),
-            `<p>Tipo de Entrega:</p><br>
+    cardInfo.append(
+        InfoSection({
+            title: "Dados Pessoais",
+            child: [
+                ContainerInput({
+                    label: "Nome",
+                    value: userData.name ?? "John",
+                    isDisabled: true,
+                }),
+                ContainerInput({
+                    label: "Sobrenome",
+                    value: userData.last_name ?? "Doe",
+                    isDisabled: true
+                }),
+                ContainerInput({
+                    label: "CPF",
+                    value: userData.cpf ?? "23435454533",
+                    isDisabled: true
+                })
+            ]
+        })
+    )
+
+    cardInfo.append(
+        InfoSection({
+            title: "Entrega",
+            child: [
+                ContainerInput({
+                    label: "CEP"
+                }),
+                ContainerInput({
+                    label: "Rua/Avenida"
+                }),
+                ContainerInput({
+                    label: "Número"
+                }),
+                ContainerInput({
+                    label: "Bairro"
+                }),
+                ContainerInput({
+                    label: "Complemento"
+                }),
+                ContainerInput({
+                    label: "Cidade"
+                }),
+                ContainerInput({
+                    label: "Estado"
+                }),
+                `<p>Tipo de Entrega:</p><br>
                 <button class="btn">PAC</button>
                 <button class="btn">SEDEX</button>`
-        ]
-    })
-)
+            ]
+        })
+    )
 
-cardInfo.append(
-    InfoSection({
-        title: "Pagamento",
-        child: `
+    cardInfo.append(
+        InfoSection({
+            title: "Pagamento",
+            child: `
             <button class="btn">PIX</button>
             <button class="btn">Boleto</button>
             <button class="btn">Cartão</button>
         `
-    })
-)
+        })
+    )
 
-cardInfo.insertAdjacentHTML("beforeend", `
+    cardInfo.insertAdjacentHTML("beforeend", `
             <button class="btn">Finalizar Compra</button>
 `)
+})()
