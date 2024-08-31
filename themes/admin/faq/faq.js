@@ -25,6 +25,22 @@ async function renderTable() {
     })
 }
 
+async function renderFaqTypeSelect() {
+    let [data, isError] = await FaqService.getAllTopics();
+    if(isError) {
+        console.log(data.message);
+    }
+    const {data: topics} = data;
+    if(!topics) return;
+
+    let selectType = document.getElementById("faq-type");
+
+    topics.forEach(topic => {
+        selectType.innerHTML += `<option value="${topic.id}">${topic.description}</option>`
+    })
+}
+
 (async () => {
     await renderTable();
+    await renderFaqTypeSelect();
 })();

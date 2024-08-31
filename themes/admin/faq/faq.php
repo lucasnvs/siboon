@@ -17,14 +17,22 @@ $header = ["Cód. FAQ", "Tipo", "Questão", "Resposta", "Ações"];
         <p>Adicionar FAQ</p>
     </div>
     <div class="container-section-body">
-        <div class="col" style="gap: 20px">
-            <div class="input-container">
-                <label for="faq-question">Pergunta:</label>
-                <input class="default-input" type="text" id="faq-question">
+        <div class="row" style="gap: 20px;">
+            <div class="col" style="gap: 20px; width: 100%">
+                <div class="input-container">
+                    <label for="faq-question">Pergunta:</label>
+                    <input class="default-input" type="text" id="faq-question">
+                </div>
+                <div class="input-container">
+                    <label for="faq-answer">Resposta:</label>
+                    <textarea class="default-input" id="faq-answer" rows="8"></textarea>
+                </div>
             </div>
             <div class="input-container">
-                <label for="faq-answer">Resposta:</label>
-                <input class="default-input" type="text" id="faq-answer">
+                <label for="faq-type">Tipo de Pergunta:</label>
+                <select class="default-input" id="faq-type">
+                    <option selected disabled>Selecione um valor</option>
+                </select>
             </div>
         </div>
         <br>

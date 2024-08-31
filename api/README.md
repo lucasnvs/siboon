@@ -162,6 +162,32 @@ Exemplo de Resposta:
 ```
 </details>
 
+<details>
+    <summary>CHANGE PASSWORD</summary>
+
+Exemplo de Requisição:
+
+> POST /usuarios/change-password
+
+```json
+{
+  "id": 1,
+  "password": "34tdagger",
+  "newPassword": "dagger@@@4",
+  "confirmNewPassword": "dagger@@@4"
+}
+```
+Exemplo de Resposta:
+> Status Code: 200
+
+```json
+{
+  "type": "success",
+  "message": "Senha alterada com sucesso."
+}
+```
+</details>
+
 1. ### Usuário - Endereços
 
 <details>

@@ -13,10 +13,10 @@ import {UserService} from "../../shared/services/UserService.js";
 import {USER_CACHE_KEY} from "../../shared/Constants.js";
 
 (async () => {
-    let [response, isError] = await UserService.getDataById(localStorage.get(USER_CACHE_KEY).id);
-    var userData = response.data ?? [];
+    let [{data: userData}, isError] = await UserService.getDataById(localStorage.get(USER_CACHE_KEY).id);
 
-    const [name, last_name] = userData.name.slice(" ");
+    const [name, last_name] = userData.name.split(" ");
+    console.log(userData)
 
     const cardInfo = document.getElementById("card-info");
 

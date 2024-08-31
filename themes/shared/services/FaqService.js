@@ -1,28 +1,22 @@
 import {URL_BASE_API} from "../Constants.js";
+import {Service} from "./Service.js";
 
-const endpointUrl = URL_BASE_API+"faq/";
+export class FaqService extends Service {
 
-export const FaqService = {
-    async getData() {
-        let data;
-        let res = await fetch(endpointUrl);
-
-        if(res.status === 204) data = [];
-        data = await res.json();
-
-        return [data, !res.ok];
-    },
-
-    async getDataById(id) {
-        let res = await fetch(endpointUrl+id);
-        return [await res.json(), !res.ok];
-    },
+    static endpoint = URL_BASE_API+"faq/"
 
     sendData() {
         console.log("Not implemented")
-    },
+    }
 
     update() {
         console.log("Not implemented")
+    }
+
+    static async getAllTopics() {
+        let res = await fetch(this.endpoint+"topicos")
+        if(res.status === 204) return [[], !res.ok];
+
+        return [await res.json(), !res.ok];
     }
 }

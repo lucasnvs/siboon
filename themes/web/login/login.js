@@ -22,12 +22,8 @@ const loginSubmit = document.getElementById("submit-login");
 
 loginSubmit.onclick = async () => {
 
-    console.log(Validate.validate(loginEmail, [Validators.required]))
-    if(
-        !Validate.validate(loginEmail, [Validators.required]) ||
-        !Validate.validate(loginPassword, [Validators.required])
-    ) return;
-
+    const isValidLogin = Validate.validate(loginEmail, [Validators.required]) && Validate.validate(loginPassword, [Validators.required])
+    if(!isValidLogin) return;
 
     let errorBody = await login(
         loginEmail.value,
@@ -53,12 +49,14 @@ const signupPasswordConfirm = document.getElementById("password-confirm-signup")
 const signupSubmit = document.getElementById("submit-signup");
 
 signupSubmit.onclick = async () => {
-    if(
-        !Validate.validate(signupName, [Validators.required]) ||
-        !Validate.validate(signupLastName, [Validators.required]) ||
-        !Validate.validate(signupEmail, [Validators.email, Validators.required]) ||
-        !Validate.validateConfirmPassword(signupPassword, signupPasswordConfirm, [Validators.required, Validators.password])
-    ) return;
+
+    const isValidValues =
+        Validate.validate(signupName, [Validators.required]) &&
+        Validate.validate(signupLastName, [Validators.required]) &&
+        Validate.validate(signupEmail, [Validators.email, Validators.required]) &&
+        Validate.validateConfirmPassword(signupPassword, signupPasswordConfirm, [Validators.required, Validators.password])
+
+    if(!isValidValues) return;
 
     let [res, isError] = await UserService.sendData(
         signupName.value,

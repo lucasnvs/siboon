@@ -1,30 +1,16 @@
 import {URL_BASE_API} from "../Constants.js";
+import {Service} from "./Service.js";
 
-const endpointUrl = URL_BASE_API+"usuarios/";
+export class UserService extends Service {
+    static endpoint = URL_BASE_API+"usuarios/";
 
-export const UserService = {
-    async getData() {
-        let res = await fetch(endpointUrl);
-
-        if(res.status === 204) return [];
-        return await res.json();
-    },
-
-    async getDataById(id) {
-        let res = await fetch(endpointUrl+id);
-
-        if(res.status === 204) return [[], !res.ok];
-
-        return [await res.json(), !res.ok];
-    },
-
-    async sendData(
+    static async sendData(
         firstName,
         lastName,
         email,
         password,
     ) {
-        let res = await fetch(endpointUrl, {
+        let res = await fetch(this.endpoint, {
             method: "POST",
             headers: new Headers({'Content-Type': 'application/json'}),
             body: JSON.stringify({
@@ -36,20 +22,10 @@ export const UserService = {
         })
 
         return [await res.json(), !res.ok];
-    },
+    }
 
-    async delete(id){
-        let res = await fetch(endpointUrl+id, {
-            method: "DELETE"
-        });
-
-        if (!res.ok) console.log(await res.text());
-
-        return await res.json();
-    },
-
-    async update(id, body){
-        let res = await fetch(endpointUrl+"update/"+id, {
+    static async update(id, body){
+        let res = await fetch(this.endpoint+"update/"+id, {
             method: "POST",
             body: body
         });
@@ -57,13 +33,13 @@ export const UserService = {
         if (!res.ok) console.log(await res.text());
 
         return await res.json();
-    },
+    }
 
-    async login(
+    static async login(
         email,
         password
     ) {
-        let res = await fetch(endpointUrl+"login", {
+        let res = await fetch(this.endpoint+"login", {
             method: "POST",
             headers: new Headers({'Content-Type': 'application/json'}),
             body: JSON.stringify({

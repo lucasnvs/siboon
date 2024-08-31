@@ -139,6 +139,7 @@ class UserController extends ApiController
             "newPassword" => [FieldValidator::required, FieldValidator::password],
             "confirmNewPassword" => [FieldValidator::required, FieldValidator::password],
         ];
+
         $request_body = parent::validate($data, $FIELDS);
 
         parent::setAccessToEndpoint($this->ACCESS_LOGGED, $request_body["id"]);
@@ -249,7 +250,23 @@ class UserController extends ApiController
 
     public function updateUserAddress(array $data)
     {
+        $address_id = $data['id'];
+        $user_id = $data['user_id'];
+        parent::setAccessToEndpoint($this->ACCESS_LOGGED, $user_id);
 
+        $request_body = parent::validate($data);
+        $address = (new Address())->findById($address_id);
+
+        if(!$address){
+            throw new PDOException("Endereço com id $address_id não existe.", code: Code::$BAD_REQUEST);
+        }
+        $address->setData($request_body);
+
+        if(!$address->save()) {
+            throw new PDOException($address->fail()->getMessage(), code: Code::$INTERNAL_SERVER_ERROR);
+        }
+
+        return Response::success(message: "Endereço atualizado com sucesso.", code: Code::$OK);
     }
 
     public function deleteUserAddress(array $data)
