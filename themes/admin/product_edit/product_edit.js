@@ -29,8 +29,8 @@ const FORM_ELEMENTS = {
 }
 
 ACTIONS.editProduct.addEventListener("click", async (e) => {
-    let res = await handleProductFormSubmit(e, FORM_ELEMENTS, ProductService.update, PRODUCT_ID)
-    if(!res.ok) {
+    let [res, isError] = await handleProductFormSubmit(e, FORM_ELEMENTS, ProductService.update, PRODUCT_ID)
+    if(isError) {
         ErrorDialog(res.message);
     } else {
         SuccessDialog(res.message, () => {
@@ -40,9 +40,9 @@ ACTIONS.editProduct.addEventListener("click", async (e) => {
 });
 
 ACTIONS.deleteProduct.addEventListener("click", async e => {
-    let res = await ProductService.delete(PRODUCT_ID);
+    let [res, isError] = await ProductService.delete(PRODUCT_ID);
 
-    if(!res.ok) {
+    if(isError) {
         ErrorDialog(res.message);
     } else {
         SuccessDialog(res.message, () => {
@@ -54,7 +54,7 @@ ACTIONS.deleteProduct.addEventListener("click", async e => {
 FORM_ELEMENTS.inputsImages.forEach(input => setImageChangeEvent(input))
 
 async function setProductData() {
-    let {data: product} = await ProductService.getDataById(PRODUCT_ID);
+    let [{data: product}, isError] = await ProductService.getDataById(PRODUCT_ID);
 
     FORM_ELEMENTS.inputName.value = product.name;
     FORM_ELEMENTS.inputDescription.value = product.description;

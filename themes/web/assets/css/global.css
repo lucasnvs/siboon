@@ -127,6 +127,9 @@ a {
     color: #dc0e0e;
     min-height: 10px;
 }
+.input-container label {
+    text-align: left;
+}
 
 .default-input,
 select,

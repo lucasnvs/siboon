@@ -1,0 +1,37 @@
+.dialog {
+    position: absolute;
+    align-self: center;
+    justify-self: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    padding: 30px;
+    max-width: 400px;
+    border: 0;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.title {
+
+}
+
+.close-x {
+    border: 0;
+    background-color: transparent;
+}  .close-x:hover {
+    background-color: transparent;
+}  .close-x::after {
+    background-color: black;
+}  .close-x::before {
+    background-color: black;
+}

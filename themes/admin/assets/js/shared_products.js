@@ -1,6 +1,3 @@
-import {ErrorDialog, SuccessDialog} from "../../../shared/components/SimpleDialog/SimpleDialog.js";
-import {URL_BASE_SITE} from "../../../shared/Constants.js";
-
 export async function handleProductFormSubmit(e, FORM_ELEMENTS, ServiceFunction, id) {
     const principal_image = FORM_ELEMENTS.inputsImages[0].files[0];
     var additional_images = [
@@ -9,7 +6,7 @@ export async function handleProductFormSubmit(e, FORM_ELEMENTS, ServiceFunction,
         FORM_ELEMENTS.inputsImages[3].files[0],
     ].filter(image => !!image)
 
-    let res = await ServiceFunction(
+    return ServiceFunction(
         id,
         FORM_ELEMENTS.inputName.value,
         FORM_ELEMENTS.inputDescription.value,
@@ -21,8 +18,6 @@ export async function handleProductFormSubmit(e, FORM_ELEMENTS, ServiceFunction,
         principal_image,
         additional_images
     );
-
-    return res;
 }
 
 export function setImageChangeEvent(input) {

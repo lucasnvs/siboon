@@ -29,8 +29,8 @@ const FORM_ELEMENTS = {
 FORM_ELEMENTS.inputsImages.forEach(input => setImageChangeEvent(input))
 
 ACTIONS.createProduct.addEventListener("click", async (e) => {
-    let res = await handleProductFormSubmit(e, FORM_ELEMENTS, ProductService.sendData, 0)
-    if(!res.ok) {
+    let [res, isError] = await handleProductFormSubmit(e, FORM_ELEMENTS, ProductService.sendData, 0)
+    if(isError) {
         ErrorDialog(res.message);
     } else {
         SuccessDialog(res.message, () => {

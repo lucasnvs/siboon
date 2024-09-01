@@ -6,7 +6,7 @@ export const ContainerInput = ({id, name, label, type = "text", value, isDisable
 
     container.className = 'input-container';
 
-    labelFor.setAttribute('for', id);
+    if(id) labelFor.setAttribute('for', id);
     labelFor.textContent = label ? label + ":" : "Insira o valor:";
 
     input.className = 'default-input';

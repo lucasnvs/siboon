@@ -1,6 +1,6 @@
 <?php $this->layout("master", ["title" => $title]); ?>
 <?php $this->start("specific-script"); ?>
-<script type="module" src="<?= assets('product/product.js', "admin") ?>" async></script>
+<script type="module" src="<?= assets('product/product.js', "admin") ?>"></script>
 <?php $this->end(); ?>
 <?php $this->start("specific-style"); ?>
     <link rel="stylesheet" href="<?= assets('product/product.css', 'admin') ?>">

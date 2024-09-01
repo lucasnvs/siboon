@@ -4,7 +4,6 @@ import {Service} from "./Service.js";
 
 export class ProductService extends Service {
     static endpoint = URL_BASE_API+"produtos/";
-
     static #assignDataOnFormData(
         id,
         name, description, color, size_type, price_brl, max_installments, discount_brl_percentage, principal_image_file,
@@ -27,15 +26,15 @@ export class ProductService extends Service {
         return formData;
     }
 
-    async sendData(
+    static async sendData(
         id,
         name, description, color, size_type, price_brl, max_installments, discount_brl_percentage, principal_image_file,
         additional_images = []
     ) {
 
-        const formData = this.#assignDataOnFormData(id, name, description, color, size_type, price_brl, max_installments, discount_brl_percentage, principal_image_file, additional_images)
+        const formData = ProductService.#assignDataOnFormData(id, name, description, color, size_type, price_brl, max_installments, discount_brl_percentage, principal_image_file, additional_images)
 
-        let res = await fetch(this.endpoint, {
+        let res = await fetch(ProductService.endpoint, {
             method: "POST",
             body: formData,
         })
@@ -43,7 +42,7 @@ export class ProductService extends Service {
         return [await res.json(), !res.ok];
     }
 
-    async update(
+    static async update(
         id,
         name, description, color, size_type, price_brl, max_installments, discount_brl_percentage, principal_image_file,
         additional_images = []

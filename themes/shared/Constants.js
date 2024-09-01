@@ -8,3 +8,12 @@ export function sumCartTotalFormat(cart) {
     cart.forEach( item => total += item.amount * item.price_brl)
     return "R$ " + total.toFixed(2).toString().replace(".", ",");
 }
+
+export function appendLinkOnHead({href}) {
+    if(!href) return;
+
+    const link = document.createElement("link");
+    link.rel = "stylesheet";
+    link.href = href;
+    document.head.appendChild(link);
+}

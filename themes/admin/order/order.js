@@ -4,7 +4,6 @@ const tableOrders = document.querySelector("#table-orders tbody");
 
 async function renderTableOrders() {
     let {data: orders} = OrderService.getData();
-    console.log(orders)
     if(!orders) return;
 
     tableOrders.innerHTML = "";
