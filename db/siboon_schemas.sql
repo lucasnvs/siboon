@@ -80,8 +80,8 @@ CREATE TABLE stock
 (
     id         INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
     product_id INT NOT NULL,
-    quantity   INT,
-    size       VARCHAR(20),
+    amount   INT DEFAULT 0,
+    size       VARCHAR(20) NOT NULL,
     FOREIGN KEY (product_id) REFERENCES products (id)
         ON DELETE CASCADE
 );
