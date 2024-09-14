@@ -5,11 +5,20 @@ require __DIR__ . "/vendor/autoload.php";
 use CoffeeCode\Router\Router;
 use Source\Controller\Api\ErrorController;
 
-$route = new Router(url(), ":");
-
 try {
     ob_start();
 
+    header("Access-Control-Allow-Origin: *");
+    header("Access-Control-Allow-Headers: *");
+    header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
+    header('Access-Control-Allow-Credentials: true');
+
+    if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+        http_response_code(200);
+        exit();
+    }
+
+    $route = new Router(url(), ":");
     $route->namespace("Source\Controller");
 
     /*
@@ -25,7 +34,7 @@ try {
     $route->get("/ops/{errcode}", "WebController:error");
 
     $route->group("produto");
-    $route->get("/{name}", "WebController:product"); // rota template
+    $route->get("/{name}", "WebController:product");
 
     /*
      * APP - LOGGED
@@ -38,7 +47,6 @@ try {
      * ADMIN
      */
     $route->group("admin");
-//    $route->get("/login", function () {echo "Login de Admin";});
     $route->get("/", "AdminController:home");
     $route->get("/vendas", "AdminController:order");
     $route->get("/website", "AdminController:website");
