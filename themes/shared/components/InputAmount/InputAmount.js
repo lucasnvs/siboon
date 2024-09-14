@@ -1,18 +1,12 @@
-import {URL_BASE_SITE} from "../../Constants.js";
+import {appendLinkOnHead, getBaseURL} from "../../Constants.js";
 
 export const InputAmount = ({id = null, onChange = (amount) => {}, onIncrement = (amount) => {}, onMinus = (amount) => {}, onZero = () => {}, initialValue = 1, style = "default"}) => {
-
-    const link = document.createElement("link");
-    link.rel = "stylesheet";
-    link.href = URL_BASE_SITE+"themes/shared/components/InputAmount/InputAmount.css";
-    document.head.appendChild(link);
-
+    appendLinkOnHead(getBaseURL("themes/shared/components/InputAmount/InputAmount.css"))
 
     var STYLES = {
         default: "default",
         outlined: "outlined"
     }
-
     var AMOUNT = initialValue;
 
     const quantityElement = document.createElement('div');

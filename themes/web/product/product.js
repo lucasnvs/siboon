@@ -1,5 +1,5 @@
 import {InputAmount} from "../../shared/components/InputAmount/InputAmount.js";
-import {URL_BASE_SITE} from "../../shared/Constants.js";
+import {getBaseURL} from "../../shared/Constants.js";
 import {ProductService} from "../../shared/services/ProductService.js";
 
 const productImageContainer = document.getElementById("product-image-container");
@@ -13,14 +13,14 @@ async function renderProductDetail() {
     if(product.additional_imgs) {
 
         product.additional_imgs.forEach( img => {
-            midStringImage += `<img src="${URL_BASE_SITE+img}" class="side-image">`;
+            midStringImage += `<img src="${getBaseURL(img)}" class="side-image">`;
         });
     }
     productImageContainer.innerHTML = `
     <div class="side-images-container">
         ${midStringImage}
     </div>
-    <img src="${URL_BASE_SITE+product.principal_img}"  id="principal-image">
+    <img src="${getBaseURL(product.principal_img)}"  id="principal-image">
 `
 
     productDescriptionContainer.innerHTML = `

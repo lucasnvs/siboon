@@ -1,6 +1,6 @@
-import {URL_BASE_API} from "../Constants.js";
+import {getApiURL} from "../Constants.js";
 
-const endpointUrl = URL_BASE_API+"pedidos/";
+const endpointUrl = getApiURL("pedidos/");
 
 export const OrderService = {
     getData() {

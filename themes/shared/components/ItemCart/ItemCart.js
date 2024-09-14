@@ -1,5 +1,5 @@
 import {InputAmount} from "../InputAmount/InputAmount.js";
-import {URL_BASE_SITE} from "../../Constants.js";
+import {getBaseURL} from "../../Constants.js";
 import {CART_KEY, updateCart} from "../../../web/assets/js/scripts-master.js";
 
 export const ItemCart = (product) => {
@@ -7,7 +7,7 @@ export const ItemCart = (product) => {
     itemCart.classList.add('item-cart');
 
     const image = document.createElement('img');
-    image.src = URL_BASE_SITE+product.principal_img;
+    image.src = getBaseURL(product.principal_img);
     image.alt = `Imagem de ${product.name}`;
 
     const itemCartDesc = document.createElement('div');

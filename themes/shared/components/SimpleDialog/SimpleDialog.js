@@ -1,11 +1,8 @@
-import {URL_BASE_SITE} from "../../Constants.js";
+import {appendLinkOnHead, getBaseURL} from "../../Constants.js";
 
 
 const SimpleDialog = (message, icon, style, onClick = () => {}) => {
-    const link = document.createElement("link");
-    link.rel = "stylesheet";
-    link.href = URL_BASE_SITE+"themes/shared/components/SimpleDialog/simple_dialog.css";
-    document.head.appendChild(link);
+    appendLinkOnHead(getBaseURL("themes/shared/components/SimpleDialog/simple_dialog.css"))
 
     const dialog = document.createElement("dialog");
     dialog.classList = `dialog ${style}`;

@@ -1,4 +1,4 @@
-import {URL_BASE_SITE} from "../../shared/Constants.js";
+import {getBaseURL} from "../../shared/Constants.js";
 import {ProductService} from "../../shared/services/ProductService.js";
 import {ErrorDialog, SuccessDialog} from "../../shared/components/SimpleDialog/SimpleDialog.js";
 import {handleProductFormSubmit, setImageChangeEvent} from "../assets/js/shared_products.js";
@@ -34,7 +34,7 @@ ACTIONS.editProduct.addEventListener("click", async (e) => {
         ErrorDialog(res.message);
     } else {
         SuccessDialog(res.message, () => {
-            window.location.href = URL_BASE_SITE+"admin/produtos"
+            window.location.href = getBaseURL("admin/produtos")
         });
     }
 });
@@ -46,7 +46,7 @@ ACTIONS.deleteProduct.addEventListener("click", async e => {
         ErrorDialog(res.message);
     } else {
         SuccessDialog(res.message, () => {
-            window.location.href = URL_BASE_SITE+"admin/produtos"
+            window.location.href = getBaseURL("admin/produtos")
         });
     }
 })
@@ -65,10 +65,10 @@ async function setProductData() {
     FORM_ELEMENTS.inputDiscount.value = product.discount_brl_percentage;
 
 
-    document.querySelector(`label[for="${FORM_ELEMENTS.inputsImages[0].id}"] .image-view`).src = URL_BASE_SITE+product.principal_img;
+    document.querySelector(`label[for="${FORM_ELEMENTS.inputsImages[0].id}"] .image-view`).src = getBaseURL(product.principal_img);
     if(product.additional_imgs) {
         for (let i = 0; i < product.additional_imgs.length; i++){
-            document.querySelector(`label[for="${FORM_ELEMENTS.inputsImages[i + 1].id}"] .image-view`).src = URL_BASE_SITE+product.additional_imgs[i];
+            document.querySelector(`label[for="${FORM_ELEMENTS.inputsImages[i + 1].id}"] .image-view`).src = getBaseURL(product.additional_imgs[i]);
         }
     }
 }

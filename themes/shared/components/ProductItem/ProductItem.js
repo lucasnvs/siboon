@@ -1,24 +1,24 @@
-import {URL_BASE_SITE} from "../../Constants.js";
+import {getBaseURL} from "../../Constants.js";
 import {openCart} from "../../../web/assets/js/scripts-master.js";
 
 
 export const ProductItem = (product) => {
     const link = document.createElement("link");
     link.rel = "stylesheet";
-    link.href = URL_BASE_SITE+"themes/shared/components/ProductItem/ProductItem.css";
+    link.href = getBaseURL("themes/shared/components/ProductItem/ProductItem.css");
     document.head.appendChild(link);
 
     const productContainer = document.createElement('div');
     productContainer.classList.add('product-container');
 
     const productLink = document.createElement('a');
-    productLink.href = `${URL_BASE_SITE}produto/${product.url}`;
+    productLink.href = getBaseURL(`produto/${product.url}`);
 
     const imageContainer = document.createElement('div');
     imageContainer.classList.add('image-container');
     const image = document.createElement('img');
 
-    image.src = URL_BASE_SITE+product.principal_img;
+    image.src = getBaseURL(product.principal_img);
 
     imageContainer.appendChild(image);
 

@@ -1,17 +1,10 @@
-import {URL_BASE_SITE} from "../../Constants.js";
+import {appendLinkOnHead, getBaseURL} from "../../Constants.js";
 
-const link = document.createElement("link");
-link.rel = "stylesheet";
-link.href = URL_BASE_SITE+"themes/shared/components/InfoSection/InfoSection.css";
-document.head.appendChild(link);
-
-export function InfoSection(
-    {
+appendLinkOnHead(getBaseURL("themes/shared/components/InfoSection/InfoSection.css"))
+export function InfoSection({
         title = "No Title",
         child
-    })
-{
-
+    }) {
 
     const infoSection = document.createElement('div');
     infoSection.className = 'info-section';

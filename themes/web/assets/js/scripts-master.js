@@ -1,5 +1,5 @@
 import {ItemCart} from "../../../shared/components/ItemCart/ItemCart.js";
-import {sumCartTotalFormat, URL_BASE_SITE} from "../../../shared/Constants.js";
+import {getBaseURL, sumCartTotalFormat} from "../../../shared/Constants.js";
 
 console.log("%cSiboon SkateShop - Ecommerce By @lucasnvs on GitHub", 'color: #8A11A8; font-size: 15px; font-family: "Verdana", sans-serif; font-weight: bold;')
 
@@ -64,6 +64,6 @@ const updateCartInfo = (cart) => {
             return;
         }
 
-        window.location.href = URL_BASE_SITE+"app/checkout";
+        window.location.href = getBaseURL("app/checkout");
     }
 }
