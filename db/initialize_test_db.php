@@ -1,14 +1,14 @@
 <?php
 require dirname(__FILE__, 2) . "/vendor/autoload.php";
 
-use CoffeeCode\DataLayer\Connect;
-use Source\Exceptions\AuthorizationException;
+// Place the files in execution order.
+$SQL_FILES = ["siboon_schemas.sql", "values.sql"];
+
 
 function message($message)
 {
     return "<p style='padding: 6px; border: 1px solid dodgerblue; border-radius: 10px; background-color: deepskyblue;'>$message</p>";
 }
-
 function dbExist($pdo) : bool {
     try {
         $pdo->exec("USE siboon_db;");
@@ -22,7 +22,6 @@ function dbExist($pdo) : bool {
         return false;
     }
 }
-
 function initializeTestDB(array $sqlFiles): void
 {
     $pdo = new PDO("mysql:host=". CONF_DB_HOST, CONF_DB_USER, CONF_DB_PASS);
@@ -58,8 +57,7 @@ function initializeTestDB(array $sqlFiles): void
 echo "<div style='display: flex; width: 100%; height: 100%; align-items: center; justify-content: center; flex-direction: column;'>";
 
 if(CONF_IN_DEVELOPMENT == "true") {
-    // Place the files in execution order.
-    initializeTestDB(["siboon_schemas.sql", "values.sql"]);
+    initializeTestDB($SQL_FILES);
 } else {
     http_response_code(401);
     echo json_encode(["message" => "Sem autorização."], JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
