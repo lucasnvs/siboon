@@ -1,4 +1,4 @@
-import {getBaseURL} from "../../shared/Constants.js";
+import {getBaseURL, showDataForm} from "../../shared/Constants.js";
 import {ProductService} from "../../shared/services/ProductService.js";
 import {ErrorDialog, SuccessDialog} from "../../shared/components/SimpleDialog/SimpleDialog.js";
 import {handleProductFormSubmit, setImageChangeEvent} from "../assets/js/shared_products.js";
@@ -21,11 +21,11 @@ const FORM_ELEMENTS = {
     inputsImages,
     inputName: document.getElementById("product-name"),
     inputDescription: document.getElementById("product-description"),
-    inputPrice: document.getElementById("product-price"),
+    inputPrice: document.getElementById("product-price-brl"),
     inputColor: document.getElementById("product-color"),
-    selectSizeType: document.getElementById("product-size-type"),
-    selectMaxInstallment: document.getElementById("product-installments"),
-    inputDiscount: document.getElementById("product-discount"),
+    selectSizeType: document.getElementById("product-size-type-id"),
+    selectMaxInstallment: document.getElementById("product-max-installments"),
+    inputDiscount: document.getElementById("product-discount-brl-percentage"),
 }
 
 ACTIONS.editProduct.addEventListener("click", async (e) => {
@@ -56,14 +56,11 @@ FORM_ELEMENTS.inputsImages.forEach(input => setImageChangeEvent(input))
 async function setProductData() {
     let [{data: product}, isError] = await ProductService.getDataById(PRODUCT_ID);
 
-    FORM_ELEMENTS.inputName.value = product.name;
-    FORM_ELEMENTS.inputDescription.value = product.description;
-    FORM_ELEMENTS.inputPrice.value = product.price_brl;
-    FORM_ELEMENTS.inputColor.value = product.color;
-    FORM_ELEMENTS.selectSizeType.value = product.size_type_id;
-    FORM_ELEMENTS.selectMaxInstallment.value = product.max_installments;
-    FORM_ELEMENTS.inputDiscount.value = product.discount_brl_percentage;
-
+    showDataForm({
+        object: product,
+        previousTitle: "product",
+        changeUnderscores: true
+    });
 
     document.querySelector(`label[for="${FORM_ELEMENTS.inputsImages[0].id}"] .image-view`).src = getBaseURL(product.principal_img);
     if(product.additional_imgs) {

@@ -63,16 +63,16 @@
     </div>
     <div class="col">
         <div class="input-container">
-            <label for="product-price">Preço BRL:</label>
-            <input class="default-input" type="text" id="product-price">
+            <label for="product-price-brl">Preço BRL:</label>
+            <input class="default-input" type="text" id="product-price-brl">
         </div>
         <div class="input-container">
             <label for="product-color">Cor:</label>
             <input class="default-input" type="text" id="product-color">
         </div>
         <div class="input-container">
-            <label for="product-size-type">Tipo de Tamanho:</label>
-            <select id="product-size-type">
+            <label for="product-size-type-id">Tipo de Tamanho:</label>
+            <select id="product-size-type-id">
                 <option disabled selected>Selecione o tipo</option>
                 <option value="1">Roupa Ex.: PP, P, M, G, GG, X, XX, XXL</option>
                 <option value="2">Sapato Ex.: 34, 35, 36...42, 43, 44</option>
@@ -82,8 +82,8 @@
     </div>
     <div class="col">
         <div class="input-container">
-            <label for="product-installments">Limite de parcelas:</label>
-            <select id="product-installments">
+            <label for="product-max-installments">Limite de parcelas:</label>
+            <select id="product-max-installments">
                 <option selected value="1">1x</option>
                 <option value="2">2x</option>
                 <option value="3">3x</option>
@@ -99,8 +99,8 @@
             </select>
         </div>
         <div class="input-container">
-            <label for="product-discount">Desconto % no PIX:</label>
-            <input class="default-input" type="text" id="product-discount">
+            <label for="product-discount-brl-percentage">Desconto % no PIX:</label>
+            <input class="default-input" type="text" id="product-discount-brl-percentage">
         </div>
     </div>
 </section>

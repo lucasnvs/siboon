@@ -1,10 +1,5 @@
-export const getBaseURL = (path) => {
-    return `${location.protocol}//${location.hostname}/siboon/${path ?? ""}`;
-}
-
-export const getApiURL = (path) => {
-    return `${location.protocol}//${location.hostname}/siboon/api/${path ?? ""}`;
-}
+export const getBaseURL = (path) => `${location.protocol}//${location.hostname}/siboon/${path ?? ""}`;
+export const getApiURL = (path) => `${location.protocol}//${location.hostname}/siboon/api/${path ?? ""}`;
 
 const cache = (key) => JSON.parse(localStorage.getItem(key)) || [];
 const setCache = (key, value) => {
@@ -80,6 +75,7 @@ export function sumCartTotalFormat(cart) {
     }
     return "R$ " + total.toFixed(2).toString().replace(".", ",");
 }
+
 export function appendLinkOnHead(href) {
     if(!href) return;
 
@@ -87,4 +83,28 @@ export function appendLinkOnHead(href) {
     link.rel = "stylesheet";
     link.href = href;
     document.head.appendChild(link);
+}
+
+// Função para preencher os campos do formulário com os dados do objeto
+export function showDataForm ({object, previousTitle, changeUnderscores = false})  {
+    for(const field in object){
+        var identifier = field;
+        if(previousTitle) {
+            if(changeUnderscores) {
+                var changedField = field.replaceAll("_", "-")
+                identifier = previousTitle+"-"+changedField;
+            } else {
+                identifier = previousTitle+"-"+field;
+            }
+        }
+        console.group(field)
+        console.log(identifier)
+        console.log(document.querySelector("#"+identifier))
+        console.log(object[field])
+        console.groupEnd()
+
+        if (document.querySelector("#"+identifier)){
+            document.querySelector("#"+identifier).value = object[field];
+        }
+    }
 }
