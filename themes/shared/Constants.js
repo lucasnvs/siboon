@@ -6,10 +6,11 @@ export const getApiURL = (path) => {
     return `${location.protocol}//${location.hostname}/siboon/api/${path ?? ""}`;
 }
 
+const USER_CACHE_KEY = "user";
 export let USER_CACHE = {
-    key: "user",
-    get: localStorage.get(this.key),
-    set: (data) => localStorage.set(this.key, data)
+    key: USER_CACHE_KEY,
+    get: JSON.parse(localStorage.getItem(USER_CACHE_KEY)),
+    set: (data) => localStorage.setItem(USER_CACHE_KEY, JSON.stringify(data))
 }
 
 export function sumCartTotalFormat(cart) {

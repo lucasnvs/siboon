@@ -20,14 +20,14 @@ utilizando um padrão de projeto MVC.
 
 ## Funcionalidades
 
-- [ ] Banco de dados
-- [ ] API
+- [x] Banco de dados
+- [x] API
 - [ ] Web Application
 - [ ] App Application
 - [ ] Admin Application
-- [ ] Carrinho com localstorage
-- [ ] Integração com os correios via WS (Mock)
-- [ ] Integração com Gerador de Pagamento (Mock)
+- [x] Carrinho com localstorage
+- [x] Integração com os correios via WS (Mock)
+- [x] Integração com Gerador de Pagamento (Mock)
 
 ## Documentações
 
@@ -39,4 +39,16 @@ utilizando um padrão de projeto MVC.
 Para rodar o projeto você vai precisar:
 1. Rodar o composer.json install. 
 2. Preparar um arquivo ".env" (exemplo em [.env.example](.env.example));
-3. Rodar o arquivo de estrutura do Banco de Dados ([siboon_schemas.sql](db/siboon_schemas.sql))
+3. Rodar o arquivo de estrutura do Banco de Dados ([siboon_schemas.sql](db/siboon_schemas.sql)) ou acessar **"{root}/siboon/db/initialize_test_db.php"** em modo de desenvolvimento.
+
+## Usuário Padrão;
+### **Admin:**
+
+```
+Email >> johndoe@email.com
+```
+
+```
+Senha >> l@123456
+```
+
