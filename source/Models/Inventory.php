@@ -23,6 +23,4 @@ class Inventory extends DataLayer
     public function decreaseItemAmount($inventory_id, $amount){ // can be $product_id, $size
 
     }
-
-
 }

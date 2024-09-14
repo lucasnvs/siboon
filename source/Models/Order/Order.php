@@ -3,8 +3,9 @@
 namespace Source\Models\Order;
 
 use CoffeeCode\DataLayer\DataLayer;
+use Source\Models\Model;
 
-class Order extends DataLayer {
+class Order extends DataLayer implements Model {
     const SHIPMENT_STATUS_SENDED = "SENDED";
     const PAYMENT_STATUS_PAID = "PAID";
     const STATUS_PENDING = "PENDING";

@@ -7,6 +7,7 @@ use CoffeeCode\Uploader\Image;
 use Error;
 use Exception;
 use PDOException;
+use Source\Models\Model;
 use function delTree;
 
 /**
@@ -19,7 +20,7 @@ use function delTree;
  * @property int|null $max_installments
  * @property int|null $discount_brl_percentage
  */
-class Product extends DataLayer {
+class Product extends DataLayer implements Model {
     private $message;
 
     public function __construct()

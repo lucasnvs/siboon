@@ -3,6 +3,7 @@
 namespace Source\Models\User;
 
 use CoffeeCode\DataLayer\DataLayer;
+use Source\Models\Model;
 
 
 /**
@@ -14,7 +15,7 @@ use CoffeeCode\DataLayer\DataLayer;
  * @property $city
  * @property $state
  */
-class Address extends DataLayer
+class Address extends DataLayer implements Model
 {
     public function __construct()
     {

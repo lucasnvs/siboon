@@ -3,8 +3,9 @@
 namespace Source\Models\Faq;
 
 use CoffeeCode\DataLayer\DataLayer;
+use Source\Models\Model;
 
-class Question extends DataLayer {
+class Question extends DataLayer implements Model {
     private $message;
 
     public function __construct()
