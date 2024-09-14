@@ -13,7 +13,7 @@ import {UserService} from "../../shared/services/UserService.js";
 import {USER_CACHE} from "../../shared/Constants.js";
 
 (async () => {
-    let [{data: userData}, isError] = await UserService.getDataById(USER_CACHE.id);
+    let [{data: userData}, isError] = await UserService.getDataById(USER_CACHE.get().id);
 
     const [name, last_name] = userData.name.split(" ");
     console.log(userData)

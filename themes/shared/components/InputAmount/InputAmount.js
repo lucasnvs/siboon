@@ -1,7 +1,7 @@
 import {appendLinkOnHead, getBaseURL} from "../../Constants.js";
+appendLinkOnHead(getBaseURL("themes/shared/components/InputAmount/InputAmount.css"))
 
 export const InputAmount = ({id = null, onChange = (amount) => {}, onIncrement = (amount) => {}, onMinus = (amount) => {}, onZero = () => {}, initialValue = 1, style = "default"}) => {
-    appendLinkOnHead(getBaseURL("themes/shared/components/InputAmount/InputAmount.css"))
 
     var STYLES = {
         default: "default",

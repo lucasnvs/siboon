@@ -1,9 +1,7 @@
 import {ItemCart} from "../../../shared/components/ItemCart/ItemCart.js";
-import {getBaseURL, sumCartTotalFormat} from "../../../shared/Constants.js";
+import {CART_CACHE, getBaseURL, sumCartTotalFormat} from "../../../shared/Constants.js";
 
 console.log("%cSiboon SkateShop - Ecommerce By @lucasnvs on GitHub", 'color: #8A11A8; font-size: 15px; font-family: "Verdana", sans-serif; font-weight: bold;')
-
-export const CART_KEY = "cart";
 
 const CART_ELEMENTS = {
     openCartButton: document.getElementById("cart-button"),
@@ -14,19 +12,19 @@ const CART_ELEMENTS = {
     info: document.getElementById("cart-info")
 }
 
-export const openCart = () => {
-    CART_ELEMENTS.background_cart.style.display = "block";
-    updateCart()
-}
-
 CART_ELEMENTS.openCartButton.addEventListener("click", openCart)
 
 CART_ELEMENTS.closeCartButton.addEventListener("click", () => {
     CART_ELEMENTS.background_cart.style.display = "none";
 })
 
+export function openCart(){
+    CART_ELEMENTS.background_cart.style.display = "block";
+    updateCart()
+}
+
 export function updateCart() {
-    const cart = localStorage.get(CART_KEY);
+    const cart = CART_CACHE.get();
 
     updateCartHeaderCatalog(cart);
     updateCartInfo(cart)

@@ -1,12 +1,9 @@
-import {getBaseURL} from "../../Constants.js";
+import {appendLinkOnHead, CART_CACHE, getBaseURL} from "../../Constants.js";
 import {openCart} from "../../../web/assets/js/scripts-master.js";
 
+appendLinkOnHead(getBaseURL("themes/shared/components/ProductItem/ProductItem.css"))
 
 export const ProductItem = (product) => {
-    const link = document.createElement("link");
-    link.rel = "stylesheet";
-    link.href = getBaseURL("themes/shared/components/ProductItem/ProductItem.css");
-    document.head.appendChild(link);
 
     const productContainer = document.createElement('div');
     productContainer.classList.add('product-container');
@@ -68,7 +65,7 @@ export const ProductItem = (product) => {
     addButton.textContent = 'ADICIONAR NA SACOLA';
 
     addButton.addEventListener("click", () => {
-        localStorage.pushToItem("cart", product)
+        CART_CACHE.push(product)
         openCart()
     });
 

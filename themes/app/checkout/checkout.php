@@ -8,7 +8,6 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@48,400,0,0"/>
     <link rel="stylesheet" href="<?= assets('assets/css/global.css') ?>">
     <link rel="stylesheet" href="<?= assets('checkout/checkout.css', 'app') ?>">
-    <script src="<?= assets('assets/js/ModifiedLocalStorage.js') ?>"></script>
     <script src="<?= assets('checkout/checkout.js', 'app') ?>" type="module" async></script>
 </head>
 <body>

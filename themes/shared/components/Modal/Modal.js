@@ -1,7 +1,7 @@
 import {appendLinkOnHead, getBaseURL} from "../../Constants.js";
+appendLinkOnHead(getBaseURL("themes/shared/components/Modal/Modal.css"))
 
 export const Modal = ({title = "Sem título", children} = {}) => {
-    appendLinkOnHead(getBaseURL("themes/shared/components/Modal/Modal.css"))
 
     const dialog = document.createElement("dialog");
     dialog.classList = `dialog`;

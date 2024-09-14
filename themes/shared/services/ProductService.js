@@ -49,7 +49,7 @@ export class ProductService extends Service {
         additional_images = []
     ){
 
-        const formData = this.#assignDataOnFormData(id, name, description, color, size_type, price_brl, max_installments, discount_brl_percentage, principal_image_file, additional_images)
+        const formData = ProductService.#assignDataOnFormData(id, name, description, color, size_type, price_brl, max_installments, discount_brl_percentage, principal_image_file, additional_images)
 
         let res = await fetch(ProductService.endpoint("update/"+id), {
             method: "POST",

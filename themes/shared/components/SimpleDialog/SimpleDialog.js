@@ -1,9 +1,8 @@
 import {appendLinkOnHead, getBaseURL} from "../../Constants.js";
 
+appendLinkOnHead(getBaseURL("themes/shared/components/SimpleDialog/simple_dialog.css"))
 
 const SimpleDialog = (message, icon, style, onClick = () => {}) => {
-    appendLinkOnHead(getBaseURL("themes/shared/components/SimpleDialog/simple_dialog.css"))
-
     const dialog = document.createElement("dialog");
     dialog.classList = `dialog ${style}`;
 
