@@ -10,10 +10,10 @@
 import {InfoSection} from "../../shared/components/InfoSection/InfoSection.js";
 import {ContainerInput} from "../../shared/components/ContainerInput/ContainerInput.js";
 import {UserService} from "../../shared/services/UserService.js";
-import {USER_CACHE_KEY} from "../../shared/Constants.js";
+import {USER_CACHE} from "../../shared/Constants.js";
 
 (async () => {
-    let [{data: userData}, isError] = await UserService.getDataById(localStorage.get(USER_CACHE_KEY).id);
+    let [{data: userData}, isError] = await UserService.getDataById(USER_CACHE.id);
 
     const [name, last_name] = userData.name.split(" ");
     console.log(userData)
@@ -99,5 +99,5 @@ import {USER_CACHE_KEY} from "../../shared/Constants.js";
 
     cardInfo.insertAdjacentHTML("beforeend", `
             <button class="btn">Finalizar Compra</button>
-`)
+    `)
 })()

@@ -1,8 +1,8 @@
-import {URL_BASE_API} from "../Constants.js";
+import {getApiURL} from "../Constants.js";
 import {Service} from "./Service.js";
 
 export class UserService extends Service {
-    static endpoint = URL_BASE_API+"usuarios/";
+    static endpoint = (path) => getApiURL(`usuarios/${path ?? ""}`)
 
     static async sendData(
         firstName,
@@ -10,7 +10,7 @@ export class UserService extends Service {
         email,
         password,
     ) {
-        let res = await fetch(this.endpoint, {
+        let res = await fetch(this.endpoint(), {
             method: "POST",
             headers: new Headers({'Content-Type': 'application/json'}),
             body: JSON.stringify({
@@ -25,7 +25,7 @@ export class UserService extends Service {
     }
 
     static async update(id, body){
-        let res = await fetch(this.endpoint+"update/"+id, {
+        let res = await fetch(this.endpoint("update/"+id), {
             method: "POST",
             body: body
         });
@@ -39,7 +39,7 @@ export class UserService extends Service {
         email,
         password
     ) {
-        let res = await fetch(this.endpoint+"login", {
+        let res = await fetch(this.endpoint("login"), {
             method: "POST",
             headers: new Headers({'Content-Type': 'application/json'}),
             body: JSON.stringify({

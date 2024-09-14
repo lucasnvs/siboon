@@ -9,8 +9,17 @@ siboon_db;
 -- System --
 -- ------ --
 
+
+
 -- CREATE TABLE institutional();
 -- usada para armazenar dados institucionais por chave e valor,
+
+
+CREATE TABLE institutional
+(
+    key     VARCHAR(100) PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    value   VARCHAR(255) NOT NULL,
+)
 
 -- ---- --
 -- User --

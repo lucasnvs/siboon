@@ -5,10 +5,10 @@ export class Service {
         }
     }
 
-    static endpoint = '';
+    static endpoint = () => "";
 
     static async getData() {
-        let res = await fetch(this.endpoint);
+        let res = await fetch(this.endpoint());
 
         if(res.status === 204) return [[], !res.ok];
 
@@ -16,7 +16,7 @@ export class Service {
     }
 
     static async getDataById(id) {
-        let res = await fetch(this.endpoint+id);
+        let res = await fetch(this.endpoint(id));
 
         if(res.status === 204) return [[], !res.ok];
 
@@ -32,7 +32,7 @@ export class Service {
     }
 
     static async delete(id) {
-        let res = await fetch(this.endpoint+id, {
+        let res = await fetch(this.endpoint(id), {
             method: "DELETE"
         });
 

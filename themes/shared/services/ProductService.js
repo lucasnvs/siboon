@@ -1,9 +1,10 @@
-import {URL_BASE_API} from "../Constants.js";
+import {getApiURL} from "../Constants.js";
 import {Service} from "./Service.js";
 
 
 export class ProductService extends Service {
-    static endpoint = URL_BASE_API+"produtos/";
+    static endpoint = (path) => getApiURL(`produtos/${path ?? ""}`)
+
     static #assignDataOnFormData(
         id,
         name, description, color, size_type, price_brl, max_installments, discount_brl_percentage, principal_image_file,
@@ -34,7 +35,7 @@ export class ProductService extends Service {
 
         const formData = ProductService.#assignDataOnFormData(id, name, description, color, size_type, price_brl, max_installments, discount_brl_percentage, principal_image_file, additional_images)
 
-        let res = await fetch(ProductService.endpoint, {
+        let res = await fetch(ProductService.endpoint(), {
             method: "POST",
             body: formData,
         })
@@ -50,7 +51,7 @@ export class ProductService extends Service {
 
         const formData = this.#assignDataOnFormData(id, name, description, color, size_type, price_brl, max_installments, discount_brl_percentage, principal_image_file, additional_images)
 
-        let res = await fetch(this.endpoint+"update/"+id, {
+        let res = await fetch(ProductService.endpoint("update/"+id), {
             method: "POST",
             body: formData
         });
