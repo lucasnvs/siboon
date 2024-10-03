@@ -1,7 +1,8 @@
-import {getBaseURL} from "../../shared/Constants.js";
+import {GetBaseURL, renderTable} from "../../shared/Constants.js";
 import {ProductService} from "../../shared/services/ProductService.js";
 import {Modal} from "../../shared/components/Modal/Modal.js";
 import {ContainerInput} from "../../shared/components/ContainerInput/ContainerInput.js";
+import {ErrorDialog} from "../../shared/components/SimpleDialog/SimpleDialog.js";
 
 const tableProductsBody = document.querySelector("#table-products tbody");
 
@@ -16,14 +17,9 @@ HTMLAnchorElement.prototype.ModalAddStock = (productID) => {
     })
 }
 
-async function renderTableProducts() {
-    let [{data: products}, isError]= await ProductService.getData();
-    tableProductsBody.innerHTML = "";
-
-    if(!products) return;
-
-    products.forEach(product => {
-        tableProductsBody.innerHTML += `
+(async () => {
+    await renderTable("#table-products", ProductService, (product) => {
+        return `
                 <tr>
                     <td>${product.id}</td>
                     <td>${product.name}</td>
@@ -33,15 +29,11 @@ async function renderTableProducts() {
                         <a href="#" onClick="ModalAddStock(${product.id})">
                             <button class="btn green">Add. Estoque</button>
                         </a>
-                        <a href="${ getBaseURL(`admin/produtos/${product.id}/editar`) }">
+                        <a href="${ GetBaseURL(`admin/produtos/${product.id}/editar`) }">
                             <button class="btn">Editar</button>
                         </a>
                     </td>
                 </tr>
-        `;
+        `
     })
-}
-
-(async () => {
-    await renderTableProducts();
 })();

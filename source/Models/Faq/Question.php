@@ -10,7 +10,7 @@ class Question extends DataLayer implements Model {
 
     public function __construct()
     {
-        parent::__construct("faq_questions", ["type_id", "question", "answer"]);
+        parent::__construct("faq_questions", ["type_id", "question", "answer"], timestamps: false);
     }
 
     /**

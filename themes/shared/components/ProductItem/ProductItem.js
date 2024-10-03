@@ -1,7 +1,7 @@
-import {appendLinkOnHead, CART_CACHE, getBaseURL} from "../../Constants.js";
+import {appendLinkOnHead, CART_CACHE, GetBaseURL} from "../../Constants.js";
 import {openCart} from "../../../web/assets/js/scripts-master.js";
 
-appendLinkOnHead(getBaseURL("themes/shared/components/ProductItem/ProductItem.css"))
+appendLinkOnHead(GetBaseURL("themes/shared/components/ProductItem/ProductItem.css"))
 
 export const ProductItem = (product) => {
 
@@ -9,13 +9,13 @@ export const ProductItem = (product) => {
     productContainer.classList.add('product-container');
 
     const productLink = document.createElement('a');
-    productLink.href = getBaseURL(`produto/${product.url}`);
+    productLink.href = GetBaseURL(`produto/${product.url}`);
 
     const imageContainer = document.createElement('div');
     imageContainer.classList.add('image-container');
     const image = document.createElement('img');
 
-    image.src = getBaseURL(product.principal_img);
+    image.src = GetBaseURL(product.principal_img);
 
     imageContainer.appendChild(image);
 

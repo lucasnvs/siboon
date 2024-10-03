@@ -1,4 +1,4 @@
-export const ContainerInput = ({id, name, label, type = "text", value, isDisabled}) => {
+export const ContainerInput = ({id, name, label, type = "text", value, isDisabled, style}) => {
     const container = document.createElement('div');
     const labelFor = document.createElement('label');
     const input = document.createElement('input');
@@ -15,7 +15,7 @@ export const ContainerInput = ({id, name, label, type = "text", value, isDisable
     input.disabled = isDisabled;
     if(name) input.name = 'email';
     if(id) input.id = id;
-
+    if(style)  container.style = style;
     span.className = 'input-error';
 
     container.appendChild(labelFor);

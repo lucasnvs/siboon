@@ -26,7 +26,7 @@
             <?php endforeach; ?>
             </thead>
             <tbody>
-
+                <td>Nenhum dado encontrado.</td>
             </tbody>
         </table>
     </div>

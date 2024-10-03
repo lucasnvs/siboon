@@ -1,5 +1,6 @@
 import {InfoSection} from "../../shared/components/InfoSection/InfoSection.js";
 import {InputAmount} from "../../shared/components/InputAmount/InputAmount.js";
+import {AUTHORIZATION_COOKIE_KEY} from "../../shared/Constants.js";
 
 const btnLogout = document.getElementById("logout");
 const colOne = document.getElementById("col-1");
@@ -36,7 +37,7 @@ colBig.appendChild(InfoSection({
 }))
 
 btnLogout.addEventListener("click", e => {
-    eraseCookie("AUTHORIZATION");
+    eraseCookie(AUTHORIZATION_COOKIE_KEY);
     window.location.href = "/siboon";
 });
 

@@ -1,9 +1,10 @@
-import {appendLinkOnHead, getBaseURL} from "../../Constants.js";
-appendLinkOnHead(getBaseURL("themes/shared/components/Modal/Modal.css"))
+import {appendLinkOnHead, GetBaseURL} from "../../Constants.js";
+appendLinkOnHead(GetBaseURL("themes/shared/components/Modal/Modal.css"))
 
-export const Modal = ({title = "Sem título", children} = {}) => {
+export const Modal = ({id, title = "Sem título", children} = {}) => {
 
     const dialog = document.createElement("dialog");
+    if(id) dialog.id = id;
     dialog.classList = `dialog`;
 
     const header = document.createElement("header");
@@ -21,16 +22,24 @@ export const Modal = ({title = "Sem título", children} = {}) => {
 
     dialog.appendChild(header);
     if(children) {
+        let appendByTypeOf = {
+            object: (child) => dialog.appendChild(child),
+            string: (child) => dialog.insertAdjacentHTML("beforeend", child),
+        }
+
         children.forEach(child => {
-            dialog.appendChild(child);
+            appendByTypeOf[typeof child](child)
         })
     }
     document.body.appendChild(dialog);
 
-    closeBtn.onclick = ()=> {
+    const closeFunction = ()=> {
         dialog.close();
         dialog.remove()
     }
 
+    closeBtn.onclick = closeFunction
     dialog.showModal()
+
+    return closeFunction;
 }

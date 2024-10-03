@@ -1,9 +1,9 @@
-import {getApiURL} from "../Constants.js";
+import {GetApiURL} from "../Constants.js";
 import {Service} from "./Service.js";
 
 
 export class ProductService extends Service {
-    static endpoint = (path) => getApiURL(`produtos/${path ?? ""}`)
+    static endpoint = (path) => GetApiURL(`produtos/${path ?? ""}`)
 
     static #assignDataOnFormData(
         id,

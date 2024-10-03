@@ -8,6 +8,17 @@ use Source\Support\Response\Code;
 
 try {
     ob_start();
+
+    header("Access-Control-Allow-Origin: *");
+    header("Access-Control-Allow-Headers: *");
+    header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
+    header('Access-Control-Allow-Credentials: true');
+
+    if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
+        http_response_code(200);
+        exit();
+    }
+
     $route = new Router(url("api"),":");
     $route->namespace("Source\Controller\Api");
 
@@ -66,6 +77,12 @@ try {
     $route->delete("/{id}", "OrderController:deleteOrder");
     $route->post("/finalizar", "OrderController:finishOrder");
 
+    /*
+     * Resource: Company /// No documentation
+     */
+    $route->group("company");
+    $route->get("/", "CompanyController:listInformation");
+    $route->post("/", "CompanyController:saveInformation");
 
     $route->group(null);
     $route->dispatch();

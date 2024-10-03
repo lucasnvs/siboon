@@ -1,6 +1,6 @@
 import {ProductService} from "../../shared/services/ProductService.js";
 import {ErrorDialog, SuccessDialog} from "../../shared/components/SimpleDialog/SimpleDialog.js";
-import {getBaseURL} from "../../shared/Constants.js";
+import {GetBaseURL} from "../../shared/Constants.js";
 import {handleProductFormSubmit, setImageChangeEvent} from "../assets/js/shared_products.js";
 
 const ACTIONS = {
@@ -34,7 +34,7 @@ ACTIONS.createProduct.addEventListener("click", async (e) => {
         ErrorDialog(res.message);
     } else {
         SuccessDialog(res.message, () => {
-            window.location.href = getBaseURL("admin/produtos")
+            window.location.href = GetBaseURL("admin/produtos")
         });
     }
 });

@@ -8,16 +8,6 @@ use Source\Controller\Api\ErrorController;
 try {
     ob_start();
 
-    header("Access-Control-Allow-Origin: *");
-    header("Access-Control-Allow-Headers: *");
-    header("Access-Control-Allow-Methods: GET, POST, PUT, DELETE, OPTIONS");
-    header('Access-Control-Allow-Credentials: true');
-
-    if ($_SERVER['REQUEST_METHOD'] === 'OPTIONS') {
-        http_response_code(200);
-        exit();
-    }
-
     $route = new Router(url(), ":");
     $route->namespace("Source\Controller");
 

@@ -1,5 +1,5 @@
 import {ItemCart} from "../../../shared/components/ItemCart/ItemCart.js";
-import {CART_CACHE, getBaseURL, sumCartTotalFormat} from "../../../shared/Constants.js";
+import {CART_CACHE, GetBaseURL, formatTotalPriceCart} from "../../../shared/Constants.js";
 
 console.log("%cSiboon SkateShop - Ecommerce By @lucasnvs on GitHub", 'color: #8A11A8; font-size: 15px; font-family: "Verdana", sans-serif; font-weight: bold;')
 
@@ -49,7 +49,7 @@ const updateCartInfo = (cart) => {
 
     if(!cart) return;
 
-    price_formated = sumCartTotalFormat(cart);
+    price_formated = formatTotalPriceCart(cart);
 
     const btnCreateCheckout = CART_ELEMENTS.info.querySelector("#info-create-checkout");
     btnCreateCheckout.textContent = `FAZER PEDIDO ${price_formated}`;
@@ -62,6 +62,6 @@ const updateCartInfo = (cart) => {
             return;
         }
 
-        window.location.href = getBaseURL("app/checkout");
+        window.location.href = GetBaseURL("app/checkout");
     }
 }

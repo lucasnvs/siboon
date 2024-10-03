@@ -1,28 +1,40 @@
 import {FaqService} from "../../shared/services/FaqService.js";
+import {appendLinkOnHead, GetBaseURL, renderTable} from "../../shared/Constants.js";
+import {ErrorDialog, SuccessDialog} from "../../shared/components/SimpleDialog/SimpleDialog.js";
+import {Modal} from "../../shared/components/Modal/Modal.js";
 
-const tableFaqBody = document.querySelector("#table-faq tbody");
-
-async function renderTable() {
-    let [{data: faqs}, isError] = await FaqService.getData();
-    tableFaqBody.innerHTML = "";
-
-    if(!faqs) return;
-
-    faqs.forEach(faq => {
-        tableFaqBody.innerHTML += `
-                <tr>
-                    <td>${faq.id}</td>
-                    <td>${faq.type}</td>
-                    <td>${faq.question}</td>
-                    <td>${faq.answer}</td>
-                    <td>
-                        <a href="#">
-                            <button class="btn green" >Editar</button>
-                        </a>
-                    </td>
-                </tr>
-        `;
+const showEditDialog = (data) => {
+    let closeModal = Modal({
+        id: "dialog-edit-faq",
+        title: data.type,
+        children: [
+            `
+            <div class="input-container" style="width: 500px;">
+                <label>Questão:</label>
+                <input id="question-edit" class="default-input" type="text" value="${data.question}">
+            <div class="input-container">
+                <label for="answer-edit">Resposta:</label>
+                <textarea class="default-input" id="answer-edit" rows="8">${data.answer}</textarea>
+            </div>
+            <button id="edit-content" class="btn green" style="display: flex;align-self: flex-end">Editar</button>
+            `
+        ]
     })
+
+    document.getElementById("edit-content").onclick = async function () {
+        const [res, isError] = await FaqService.update(data.id, {
+            question: document.getElementById("question-edit").value,
+            answer: document.getElementById("answer-edit").value
+        });
+
+        if(isError) {
+            ErrorDialog(res.message)
+        } else {
+            SuccessDialog(res.message)
+            await updateTable();
+            closeModal();
+        }
+    }
 }
 
 async function renderFaqTypeSelect() {
@@ -41,6 +53,44 @@ async function renderFaqTypeSelect() {
 }
 
 (async () => {
-    await renderTable();
+    await updateTable();
     await renderFaqTypeSelect();
 })();
+
+
+async function updateTable() {
+    await renderTable("#table-faq", FaqService, (faq) => {
+        return `
+                <tr data-id="${faq.id}">
+                    <td>${faq.type}</td>
+                    <td>${faq.question}</td>
+                    <td>${faq.answer}</td>
+                    <td>
+                         <button class="btn green">Editar</button>
+                    </td>
+                </tr>
+        `
+    })
+
+    document.querySelectorAll("#table-faq .btn.green").forEach(btn => {
+        btn.addEventListener("click", async (e) => {
+            const getRowParent = (parent) => {
+                if(!parent) return null;
+                if(parent.tagName === "TR") {
+                    return parent
+                }
+                return getRowParent(parent.parentElement)
+            }
+
+            let faqId = getRowParent(e.target.parentElement)?.dataset.id;
+            let [data, isError] = await FaqService.getDataById(faqId);
+            if (isError) {
+                ErrorDialog(data.message)
+            }
+            let {data: faq} = data;
+            if (!faq) return
+
+            showEditDialog(faq);
+        })
+    })
+}

@@ -1,5 +1,5 @@
-import {appendLinkOnHead, getBaseURL} from "../../Constants.js";
-appendLinkOnHead(getBaseURL("themes/shared/components/InputAmount/InputAmount.css"))
+import {appendLinkOnHead, GetBaseURL} from "../../Constants.js";
+appendLinkOnHead(GetBaseURL("themes/shared/components/InputAmount/InputAmount.css"))
 
 export const InputAmount = ({id = null, onChange = (amount) => {}, onIncrement = (amount) => {}, onMinus = (amount) => {}, onZero = () => {}, initialValue = 1, style = "default"}) => {
 

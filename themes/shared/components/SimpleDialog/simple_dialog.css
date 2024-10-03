@@ -1,4 +1,4 @@
-.dialog {
+.simple_dialog {
     position: absolute;
     align-self: center;
     justify-self: center;
@@ -13,18 +13,18 @@
     text-align: center;
 }
 
-.dialog i {
+.simple_dialog i {
     font-size: 100px;
 }
 
-.dialog.success i {
+.simple_dialog.success i {
     color: #1f7c10;
 }
 
-.dialog.error i {
+.simple_dialog.error i {
     color: #a30e0e;
 }
 
-.dialog .btn {
+.simple_dialog .btn {
     width: 100%;
 }

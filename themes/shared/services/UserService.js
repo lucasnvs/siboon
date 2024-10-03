@@ -1,8 +1,8 @@
-import {getApiURL} from "../Constants.js";
+import {GetApiURL} from "../Constants.js";
 import {Service} from "./Service.js";
 
 export class UserService extends Service {
-    static endpoint = (path) => getApiURL(`usuarios/${path ?? ""}`)
+    static endpoint = (path) => GetApiURL(`usuarios/${path ?? ""}`)
 
     static async sendData(
         firstName,

@@ -1,10 +1,10 @@
-import {appendLinkOnHead, getBaseURL} from "../../Constants.js";
+import {appendLinkOnHead, GetBaseURL} from "../../Constants.js";
 
-appendLinkOnHead(getBaseURL("themes/shared/components/SimpleDialog/simple_dialog.css"))
+appendLinkOnHead(GetBaseURL("themes/shared/components/SimpleDialog/simple_dialog.css"))
 
 const SimpleDialog = (message, icon, style, onClick = () => {}) => {
     const dialog = document.createElement("dialog");
-    dialog.classList = `dialog ${style}`;
+    dialog.classList = `simple_dialog ${style}`;
 
     const iconElement = document.createElement("i");
     iconElement.className = "material-symbols-outlined";

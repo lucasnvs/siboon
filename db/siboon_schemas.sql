@@ -7,7 +7,8 @@ USE siboon_db;
 
 CREATE TABLE IF NOT EXISTS institutional
 (
-    `key`     VARCHAR(100) PRIMARY KEY NOT NULL,
+    id        INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    `key`     VARCHAR(100) UNIQUE NOT NULL,
     `value`   VARCHAR(255) NOT NULL
 );
 

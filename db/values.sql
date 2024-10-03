@@ -2,12 +2,12 @@ USE siboon_db;
 
 INSERT INTO institutional(`key`, value) VALUES
 ("company_name", "Siboon Comp. Ltda."),
-("cnpj", "10.100.100/0001-10"),
-("street", "Tony Hawk"),
-("number", "191"),
-("cep", "10100-100"),
-("city", "Porto Alegre"),
-("state", "Rio Grande do Sul");
+("company_cnpj", "10.100.100/0001-10"),
+("company_street", "Tony Hawk"),
+("company_number", "191"),
+("company_cep", "10100-100"),
+("company_city", "Porto Alegre"),
+("company_state", "Rio Grande do Sul");
 
 INSERT INTO users(`id`, `first_name`, `last_name`, `email`, `password`, `role`) VALUE
 (1, "John", "Doe", "johndoe@email.com", "$2y$10$OEKI/tApOKUnD/gt347yEuGiGoQQhtFw1XaRtz2F477MxByJqR9sa", "ADMIN");

@@ -1,6 +1,6 @@
-import {getApiURL} from "../Constants.js";
+import {GetApiURL} from "../Constants.js";
 
-const endpointUrl = getApiURL("pedidos/");
+const endpointUrl = GetApiURL("pedidos/");
 
 export const OrderService = {
     getData() {

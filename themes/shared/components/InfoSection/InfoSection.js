@@ -1,6 +1,6 @@
-import {appendLinkOnHead, getBaseURL} from "../../Constants.js";
+import {appendLinkOnHead, GetBaseURL} from "../../Constants.js";
 
-appendLinkOnHead(getBaseURL("themes/shared/components/InfoSection/InfoSection.css"))
+appendLinkOnHead(GetBaseURL("themes/shared/components/InfoSection/InfoSection.css"))
 export function InfoSection({
         title = "No Title",
         child

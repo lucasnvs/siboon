@@ -1,4 +1,4 @@
-import {getBaseURL, showDataForm} from "../../shared/Constants.js";
+import {GetBaseURL, showDataForm} from "../../shared/Constants.js";
 import {ProductService} from "../../shared/services/ProductService.js";
 import {ErrorDialog, SuccessDialog} from "../../shared/components/SimpleDialog/SimpleDialog.js";
 import {handleProductFormSubmit, setImageChangeEvent} from "../assets/js/shared_products.js";
@@ -34,7 +34,7 @@ ACTIONS.editProduct.addEventListener("click", async (e) => {
         ErrorDialog(res.message);
     } else {
         SuccessDialog(res.message, () => {
-            window.location.href = getBaseURL("admin/produtos")
+            window.location.href = GetBaseURL("admin/produtos")
         });
     }
 });
@@ -46,7 +46,7 @@ ACTIONS.deleteProduct.addEventListener("click", async e => {
         ErrorDialog(res.message);
     } else {
         SuccessDialog(res.message, () => {
-            window.location.href = getBaseURL("admin/produtos")
+            window.location.href = GetBaseURL("admin/produtos")
         });
     }
 })
@@ -62,10 +62,10 @@ async function setProductData() {
         changeUnderscores: true
     });
 
-    document.querySelector(`label[for="${FORM_ELEMENTS.inputsImages[0].id}"] .image-view`).src = getBaseURL(product.principal_img);
+    document.querySelector(`label[for="${FORM_ELEMENTS.inputsImages[0].id}"] .image-view`).src = GetBaseURL(product.principal_img);
     if(product.additional_imgs) {
         for (let i = 0; i < product.additional_imgs.length; i++){
-            document.querySelector(`label[for="${FORM_ELEMENTS.inputsImages[i + 1].id}"] .image-view`).src = getBaseURL(product.additional_imgs[i]);
+            document.querySelector(`label[for="${FORM_ELEMENTS.inputsImages[i + 1].id}"] .image-view`).src = GetBaseURL(product.additional_imgs[i]);
         }
     }
 }
