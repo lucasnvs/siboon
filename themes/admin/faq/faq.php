@@ -7,7 +7,7 @@
 <?php $this->end(); ?>
 
 <?php
-$header = ["Cód. FAQ", "Tipo", "Questão", "Resposta", "Ações"];
+$header = ["Tipo", "Questão", "Resposta", "Ações"];
 ?>
 
 <h2>Perguntas Frequentes</h2>

@@ -1,51 +1,42 @@
-import {FaqService} from "../../shared/services/FaqService.js";
+import { FaqService } from "../../shared/services/FaqService.js";
 
 function separateByType(data) {
-    const result = {};
-
-    data.data.forEach(item => {
-        if (!result[item.type]) {
-            result[item.type] = [];
+    return data.data.reduce((acc, item) => {
+        if (!acc[item.type]) {
+            acc[item.type] = [];
         }
-        result[item.type].push(item);
-    });
-
-    return result;
+        acc[item.type].push(item);
+        return acc;
+    }, {});
 }
 
 async function renderFaqList() {
     const mainElement = document.querySelector("#main");
+    const [faqsResponse, isError] = await FaqService.getData();
 
-    let [faqsResponse, isError] = await FaqService.getData();
-
-    if(isError) {
-        mainElement.innerHTML = "Erro ao encontrar as perguntas, tente novamente."
+    if (isError) {
+        mainElement.innerHTML = "Erro ao encontrar as perguntas, tente novamente.";
+        return;
     }
 
-    var separatedFaqs = separateByType(faqsResponse);
+    const separatedFaqs = separateByType(faqsResponse);
+    mainElement.innerHTML = Object.keys(separatedFaqs).map(type => createFaqSection(type, separatedFaqs[type])).join('');
+}
 
-    for (let type in separatedFaqs) {
-        if (separatedFaqs.hasOwnProperty(type)) {
-            const faqItems = separatedFaqs[type];
-            let stringItems = "";
+function createFaqSection(type, faqItems) {
+    const faqItemsHtml = faqItems.map(item => `
+        <div class="faq-item">
+            <h3>${item.question}</h3>
+            <p>${item.answer}</p>
+        </div>
+    `).join('');
 
-            faqItems.forEach(item => {
-                stringItems += `
-                    <div class="faq-item">
-                        <h3>${item.question}</h3>
-                        <p>${item.answer}</p>
-                    </div>
-                `;
-            });
-
-            mainElement.innerHTML += `
-                    <div class="faq-type">
-                        <h2>${type}</h2>
-                        ${stringItems}
-                    </div>
-            `;
-        }
-    }
+    return `
+        <div class="faq-type">
+            <h2>${type}</h2>
+            ${faqItemsHtml}
+        </div>
+    `;
 }
 
 (async () => {

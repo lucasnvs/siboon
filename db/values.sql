@@ -1,6 +1,6 @@
 USE siboon_db;
 
-INSERT INTO institutional(`key`, value) VALUES
+INSERT INTO institutional(`key_unique`, value) VALUES
 ("company_name", "Siboon Comp. Ltda."),
 ("company_cnpj", "10.100.100/0001-10"),
 ("company_street", "Tony Hawk"),

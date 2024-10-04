@@ -1,11 +1,18 @@
-import {GetApiURL, showDataForm} from "../../shared/Constants.js";
+import {showDataForm} from "../../shared/Constants.js";
 import {ErrorDialog, SuccessDialog} from "../../shared/components/SimpleDialog/SimpleDialog.js";
+import {CompanyService} from "../../shared/services/CompanyService.js";
 
+(async () =>{
+    await updateForm();
+})()
 
 async function updateForm() {
-    let {data: info} = await fetch(GetApiURL("company"))
-        .then(res => res.json())
+    let [{data: info, message}, isError] = await CompanyService.getData();
 
+    if(isError) {
+        ErrorDialog(message)
+        return
+    }
 
     showDataForm({
         object: info,
@@ -13,28 +20,16 @@ async function updateForm() {
     })
 }
 
-updateForm();
-
-
 const form = document.getElementById("info-form");
 form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
     let formData = new FormData(form);
+    let [data, isError] = await CompanyService.sendData(formData)
 
-    // for(var pair of formData.entries()){
-    //     console.log(pair[0], pair[1]);
-    // }
-
-    let data = await fetch(GetApiURL("company"), {
-        method: "POST",
-        body: formData
-    });
-
-    let resJSON = await data.json();
-    if(!data.ok) {
-        ErrorDialog(resJSON.message);
+    if(isError) {
+        ErrorDialog(data.message)
     } else {
-        SuccessDialog(resJSON.message);
+        SuccessDialog(data.message);
     }
 })

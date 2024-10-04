@@ -67,7 +67,7 @@ try {
     $route->delete("/{id}", "ProductController:deleteProduct");
 
     /*
-     * Resource: Orders
+     * Resource: Orders // No documentation
      */
     $route->group("pedidos");
     $route->get("/", "OrderController:listOrders");
@@ -78,7 +78,7 @@ try {
     $route->post("/finalizar", "OrderController:finishOrder");
 
     /*
-     * Resource: Company /// No documentation
+     * Resource: Company // No documentation
      */
     $route->group("company");
     $route->get("/", "CompanyController:listInformation");

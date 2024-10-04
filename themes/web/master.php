@@ -106,9 +106,7 @@
         </div>
         <div id="footer-logo-info">
             <img src="<?= assets('assets/icons/siboon-logo.png') ?>">
-            <p>Siboon Comp. Ltda. Cnpj: 10.100.100/0001-10</p>
-            <p>Rua Tony Hawk, 191. Cep: 10100-100.</p>
-            <p>Porto Alegre, Rio Grande do Sul.</p>
+
         </div>
         <div>
             <h3>Formas de Pagamento</h3>

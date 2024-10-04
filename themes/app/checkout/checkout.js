@@ -1,103 +1,77 @@
-// import {sumCartTotalFormat} from "../../shared/Constants.js";
-//
-// let carrinho = localStorage.get("cart");
-//
-// document.body.innerHTML +=`<h1>${sumCartTotalFormat(carrinho)}</h1><br>`;
-// carrinho.forEach(item => {
-//     document.body.innerHTML += item.name+" - Quantidade: "+item.amount + "<br>"
-// })
-
-import {InfoSection} from "../../shared/components/InfoSection/InfoSection.js";
-import {ContainerInput} from "../../shared/components/ContainerInput/ContainerInput.js";
-import {UserService} from "../../shared/services/UserService.js";
-import {USER_CACHE} from "../../shared/Constants.js";
+import { UserService } from "../../shared/services/UserService.js";
+import { CART_CACHE, formatTotalPriceCart, GetBaseURL, USER_CACHE } from "../../shared/Constants.js";
+import {ErrorDialog} from "../../shared/components/SimpleDialog/SimpleDialog.js";
 
 (async () => {
-    let [{data: userData}, isError] = await UserService.getDataById(USER_CACHE.get().id);
+    try {
+        let [{ data: userData }, isError] = await UserService.getDataById(USER_CACHE.get().id);
 
-    const [name, last_name] = userData.name.split(" ");
-    console.log(userData)
+        if (isError) {
+            ErrorDialog("Erro ao carregar dados do usuário");
+            return;
+        }
 
-    const cardInfo = document.getElementById("card-info");
+        const summary = document.getElementById("summary");
+        let cart = CART_CACHE.get();
 
-    cardInfo.append(
-        InfoSection({
-            title: "Email",
-            child: ContainerInput({
-                label:"Seu email",
-                value: userData.email ?? "",
-                isDisabled: true
-            })
-        })
-    )
+        if (!cart || cart.length === 0) {
+            summary.innerHTML = "<p>O carrinho está vazio</p>";
+            return;
+        }
 
-    cardInfo.append(
-        InfoSection({
-            title: "Dados Pessoais",
-            child: [
-                ContainerInput({
-                    label: "Nome",
-                    value: name ?? "John",
-                    isDisabled: true,
-                }),
-                ContainerInput({
-                    label: "Sobrenome",
-                    value: last_name ?? "Doe",
-                    isDisabled: true
-                }),
-                ContainerInput({
-                    label: "CPF",
-                    value: userData.cpf ?? "23435454533",
-                    isDisabled: true
-                })
-            ]
-        })
-    )
+        let summaryItems = cart.map(item => `
+            <div class="summary-item">
+                <img src="${GetBaseURL(item.principal_img)}" alt="${item.name}">
+                <div class="item-details">
+                    <div class="item-title">${item.name}</div>
+                    <div class="item-info">Quantidade: ${item.amount} | Tamanho: ${item.size}</div>
+                </div>
+                <div class="item-price">${item.formated_price_brl}</div>
+            </div>
+        `).join('');
 
-    cardInfo.append(
-        InfoSection({
-            title: "Entrega",
-            child: [
-                ContainerInput({
-                    label: "CEP"
-                }),
-                ContainerInput({
-                    label: "Rua/Avenida"
-                }),
-                ContainerInput({
-                    label: "Número"
-                }),
-                ContainerInput({
-                    label: "Bairro"
-                }),
-                ContainerInput({
-                    label: "Complemento"
-                }),
-                ContainerInput({
-                    label: "Cidade"
-                }),
-                ContainerInput({
-                    label: "Estado"
-                }),
-                `<p>Tipo de Entrega:</p><br>
-                <button class="btn">PAC</button>
-                <button class="btn">SEDEX</button>`
-            ]
-        })
-    )
+        let summaryValues = `
+            <div class="summary-item">
+                <span>Frete</span>
+                <span id="frete-value">R$10,00</span>
+            </div>
+            <div class="total">
+                Total: ${formatTotalPriceCart(cart)}
+            </div>
+        `;
 
-    cardInfo.append(
-        InfoSection({
-            title: "Pagamento",
-            child: `
-            <button class="btn">PIX</button>
-            <button class="btn">Boleto</button>
-            <button class="btn">Cartão</button>
-        `
-        })
-    )
+        summary.innerHTML = summaryItems + summaryValues;
+    } catch (error) {
+        console.error("Erro ao carregar o resumo do carrinho", error);
+    }
+})();
 
-    cardInfo.insertAdjacentHTML("beforeend", `
-            <button class="btn">Finalizar Compra</button>
-    `)
-})()
+document.getElementById("payment-method").addEventListener("change", () => {
+    const paymentMethod = document.getElementById("payment-method").value;
+    document.getElementById("credit-card-info").style.display = (paymentMethod === "credit-card") ? "block" : "none";
+    document.getElementById("pix-info").style.display = (paymentMethod === "pix") ? "block" : "none";
+    document.getElementById("boleto-info").style.display = (paymentMethod === "boleto") ? "block" : "none";
+});
+
+document.getElementById("btn-cep-frete").addEventListener("click", async () => {
+    const cep = document.getElementById("cep-frete").value;
+
+    if (cep) {
+        try {
+            // Simular chamada à API de frete com base no CEP
+            document.getElementById("frete-value").textContent = "R$ 12,43"; // Valor fictício
+        } catch (error) {
+            console.error("Erro ao calcular frete", error);
+        }
+    } else {
+        alert("Por favor, insira um CEP válido.");
+    }
+});
+
+document.querySelectorAll('.unlock-button').forEach(button => {
+    button.addEventListener('click', () => {
+        const input = button.previousElementSibling;
+        input.disabled = !input.disabled;
+        button.innerHTML = input.disabled ? "🔒" : "🔓";
+    });
+});

@@ -49,16 +49,3 @@ ACTIONS.clearForm.addEventListener("click", e => {
     FORM_ELEMENTS.inputColor.value = "";
     FORM_ELEMENTS.selectSizeType.value = "";
 });
-
-// FORM_ELEMENTS.selectSizeType.addEventListener("change", (e) => {
-//
-//     const allowedValues = {
-//         cloth: ["PP", "P", "M", "G", "GG", "GGG", "X", "XX", "XL", "XXL"],
-//         shoes: ["31", "32", "33", "34", "35", "36", "37", "38", "39", "40", "41", "42", "43", "44", "45"],
-//         unique: ["Unique"],
-//     }
-//
-//     let value = e.target.value;
-//     let type = allowedValues[value];
-//     if (type === undefined) throw new Error(`Not Allowed Value: The value for the option "${value}", it is not allowed in the "allowedValues" variable.`)
-// })

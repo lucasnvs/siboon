@@ -9,7 +9,7 @@ export const OrderService = {
         // if(res.status === 204) return [];
         // return await res.json();
 
-        return {
+        return [{
             data: [
                 {
                     id: 1,
@@ -36,7 +36,7 @@ export const OrderService = {
                     sale_date: "01/08/2024"
                 },
             ]
-        };
+        }, false];
     },
 
     getDataById(id) {

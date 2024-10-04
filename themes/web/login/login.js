@@ -1,77 +1,71 @@
-import {UserService} from "../../shared/services/UserService.js";
-import {Validate, Validators} from "../../shared/Validate.js";
-import {USER_CACHE} from "../../shared/Constants.js";
+import { UserService } from "../../shared/services/UserService.js";
+import { Validate, Validators } from "../../shared/Validate.js";
+import { USER_CACHE } from "../../shared/Constants.js";
 
 async function login(email, password) {
-    let [res, isError] = await UserService.login(
-        email, password
-    );
+    const [res, isError] = await UserService.login(email, password);
 
-    if(isError) {
+    if (isError) {
         return res;
     }
 
     USER_CACHE.set(res.data);
-
     window.location.href = "app/perfil";
 }
 
-const loginEmail = document.getElementById("email-login");
-const loginPassword = document.getElementById("password-login");
-const loginSubmit = document.getElementById("submit-login");
+const loginElements = {
+    email: document.getElementById("email-login"),
+    password: document.getElementById("password-login"),
+    submit: document.getElementById("submit-login"),
+    errorMessage: document.getElementById("login-error-message"),
+};
 
-loginSubmit.onclick = async () => {
+loginElements.submit.onclick = async () => {
+    const isValidLogin = Validate.validate(loginElements.email, [Validators.required]) &&
+        Validate.validate(loginElements.password, [Validators.required]);
 
-    const isValidLogin = Validate.validate(loginEmail, [Validators.required]) && Validate.validate(loginPassword, [Validators.required])
-    if(!isValidLogin) return;
+    if (!isValidLogin) return;
 
-    let errorBody = await login(
-        loginEmail.value,
-        loginPassword.value
-    );
+    const errorBody = await login(loginElements.email.value, loginElements.password.value);
 
-    const loginErrorMessage = document.getElementById("login-error-message");
-    if(errorBody) {
-        loginErrorMessage.hidden = false;
-        loginErrorMessage.innerHTML = errorBody.message;
+    if (errorBody) {
+        loginElements.errorMessage.hidden = false;
+        loginElements.errorMessage.innerHTML = errorBody.message;
     } else {
-        loginErrorMessage.hidden = true;
-        loginErrorMessage.innerHTML = "";
+        loginElements.errorMessage.hidden = true;
+        loginElements.errorMessage.innerHTML = "";
     }
-}
+};
 
-const signupName = document.getElementById("name-signup");
-const signupLastName = document.getElementById("lastname-signup");
-const signupEmail = document.getElementById("email-signup");
-const signupPassword = document.getElementById("password-signup");
-const signupPasswordConfirm = document.getElementById("password-confirm-signup");
+const signupElements = {
+    name: document.getElementById("name-signup"),
+    lastName: document.getElementById("lastname-signup"),
+    email: document.getElementById("email-signup"),
+    password: document.getElementById("password-signup"),
+    passwordConfirm: document.getElementById("password-confirm-signup"),
+    submit: document.getElementById("submit-signup"),
+};
 
-const signupSubmit = document.getElementById("submit-signup");
-
-signupSubmit.onclick = async () => {
-
+signupElements.submit.onclick = async () => {
     const isValidValues =
-        Validate.validate(signupName, [Validators.required]) &&
-        Validate.validate(signupLastName, [Validators.required]) &&
-        Validate.validate(signupEmail, [Validators.email, Validators.required]) &&
-        Validate.validateConfirmPassword(signupPassword, signupPasswordConfirm, [Validators.required, Validators.password])
+        Validate.validate(signupElements.name, [Validators.required]) &&
+        Validate.validate(signupElements.lastName, [Validators.required]) &&
+        Validate.validate(signupElements.email, [Validators.email, Validators.required]) &&
+        Validate.validateConfirmPassword(signupElements.password, signupElements.passwordConfirm, [Validators.required, Validators.password]);
 
-    if(!isValidValues) return;
+    if (!isValidValues) return;
 
-    let [res, isError] = await UserService.sendData(
-        signupName.value,
-        signupLastName.value,
-        signupEmail.value,
-        signupPassword.value
+    const [res, isError] = await UserService.sendData(
+        signupElements.name.value,
+        signupElements.lastName.value,
+        signupElements.email.value,
+        signupElements.password.value
     );
 
-    if(isError) {
+    if (isError) {
         alert(res.message);
         return;
     }
 
-    await login(
-        signupEmail.value,
-        signupPassword.value
-    )
-}
+    await login(signupElements.email.value, signupElements.password.value);
+};

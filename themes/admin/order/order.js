@@ -1,15 +1,9 @@
 import {OrderService} from "../../shared/services/OrderService.js";
+import {renderTable} from "../../shared/Constants.js";
 
-const tableOrders = document.querySelector("#table-orders tbody");
-
-async function renderTableOrders() {
-    let {data: orders} = OrderService.getData();
-    if(!orders) return;
-
-    tableOrders.innerHTML = "";
-
-    orders.forEach(order => {
-        tableOrders.innerHTML += `
+(async () => {
+    await renderTable("#table-orders", OrderService, (order) => {
+        return `
                 <tr>
                     <td>${order.id}</td>
                     <td>${order.items}</td>
@@ -23,10 +17,6 @@ async function renderTableOrders() {
                         </a>
                     </td>
                 </tr>
-        `;
+        `
     })
-}
-
-(async () => {
-    await renderTableOrders();
 })();

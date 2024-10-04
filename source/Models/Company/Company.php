@@ -10,13 +10,13 @@ class Company extends DataLayer implements Model
 
     public function __construct()
     {
-        parent::__construct("institutional", ["key", "value"], timestamps: false);
+        parent::__construct("institutional", ["key_unique", "value"], timestamps: false);
     }
 
     public function setData($data)
     {
-        if (isset($data["key"])) {
-            $this->key = $data["key"];
+        if (isset($data["key_unique"])) {
+            $this->key_unique = $data["key_unique"];
         }
         if (isset($data["value"])) {
             $this->value = $data["value"];
@@ -25,6 +25,6 @@ class Company extends DataLayer implements Model
 
     public function findByKey($key) : ?DataLayer
     {
-        return parent::find("`key` = :key", "key=$key")->fetch();
+        return parent::find("`key_unique` = :key", "key=$key")->fetch();
     }
 }

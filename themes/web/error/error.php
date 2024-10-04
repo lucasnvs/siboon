@@ -1,78 +1,62 @@
-<?php $this->data(['title' => $title]); ?>
-
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= $title ?></title>
-    <link rel="stylesheet" href="style.css">
+    <title>Página Não Encontrada - 404</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 5rem;
+            color: #d9534f; /* Cor de destaque */
+        }
+
+        h2 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        p {
+            margin-bottom: 2rem;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background-color: #5bc0de; /* Cor do botão */
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #31b0d5; /* Cor do botão ao passar o mouse */
+        }
+    </style>
 </head>
 <body>
-<style>
-    body {
-        position: absolute;
-        display: flex;
-        flex-direction: column;
-        font-family: Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-        left: 0;
-        right: 0;
-        top: 0;
-        bottom: 0;
-        background-color: #f2f2f2;
-    }
-
-    header {
-        background-color: #fff;
-        padding: 20px;
-        text-align: center;
-    }
-
-    h1 {
-        font-size: 90px;
-        color: #333;
-    }
-
-    main {
-        position: relative;
-        display: flex;
-        justify-content: center;
-        flex-direction: column;
-        align-items: center;
-        padding: 50px;
-        height: calc(100% - 150px);
-    }
-
-    a {
-        color: #FFF;
-        padding: 30px;
-        background-color: var(--primary-color);
-        border-radius: 10px;
-    }
-
-    footer {
-        height: 50px;
-        width: calc(100% - 20px);
-        position: absolute;
-        align-self: flex-end;
-        background-color: #333;
-        color: #fff;
-        text-align: center;
-        padding: 10px;
-        bottom: 0;
-    }
-</style>
-
-    <main>
-        <h1><?= $title ?></h1>
-        <h3>Oooops! Algo deu errado.</h3>
-        <a href="<?= url('/') ?>">Voltar para à página principal</a>
-    </main>
-
-    <footer>
-        <p>&copy; Siboon SkateShop</p>
-    </footer>
+<div class="container">
+    <h1>404</h1>
+    <h2>Página Não Encontrada</h2>
+    <p>Desculpe, mas a página que você está procurando não existe ou foi removida.</p>
+    <a href="<?=url("/")?>" class="btn">Voltar para a Página Inicial</a>
+</div>
 </body>
 </html>
