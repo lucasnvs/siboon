@@ -16,6 +16,7 @@ class FieldValidator
     const number = "number";
     const string = "string";
     const required = "required";
+    const positive = "positive";
 
     /**
      * Validate all.
@@ -96,4 +97,17 @@ class FieldValidator
 
     }
 
+    /**
+     * Validate if a number is greater than zero.
+     *
+     * @param $field
+     * @return void
+     */
+    private function positive($field)
+    {
+        self::number($field);
+        if($field <= 0) {
+            throw new InvalidArgumentException("Numero tem que ser positivo (maior do que zero).", Code::$BAD_REQUEST);
+        }
+    }
 }

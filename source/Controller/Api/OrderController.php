@@ -104,42 +104,48 @@ class OrderController extends ApiController
 
         return Response::success(message: "Pedido deletado com sucesso.", code: Code::$OK);
     }
-
     public function finishOrder(array $data)
     {
         $order = (new Order())->findById($data['id']);
-        if(!$order) {
+        if (!$order) {
             return Response::success(message: "Pedido não existe.", code: Code::$NO_CONTENT);
         }
 
         parent::setAccessToEndpoint($this->ACCESS_LOGGED, $order->user_id);
 
-        /*
-         * Isso daq ta horrivel, pfv eu do futuro, melhore isto.
-         */
-        $processPayment = PaymentService::processPayment($order->id, $order->total_price);
-        $paymentId = $processPayment["paymentId"];
+        try {
+            $processPayment = PaymentService::processPayment($order->id, $order->total_price);
+            $paymentId = $processPayment["paymentId"];
 
-        $paymentStatus = PaymentService::checkPaymentStatus($paymentId);
-        $status = $paymentStatus["status"];
+            $paymentStatus = PaymentService::checkPaymentStatus($paymentId);
+            if ($paymentStatus["status"] !== "completed") {
+                throw new PaymentException("Pagamento não foi finalizado.");
+            }
 
-        if($status != "completed") throw new PaymentException("Pagamento não foi finalizado.");
+            $order->payment_status = Order::PAYMENT_STATUS_PAID;
+        } catch (\Exception $e) {
+            throw new PaymentException("Erro ao processar pagamento: " . $e->getMessage(), Code::$BAD_REQUEST);
+        }
 
-        $order->payment_status = Order::PAYMENT_STATUS_PAID;
-
-        try{
+        try {
             $address = (new Address())->findById($order->address_id);
-            $shipmentStatus = ShipmentService::createShipment($order->orderId, $address->cep);
-            if($shipmentStatus["status"] == "success") {
-                // Salva ou não informacoes de envio;
+            if (!$address) {
+                throw new InvalidArgumentException("Endereço não encontrado.", Code::$BAD_REQUEST);
+            }
+
+            $shipmentStatus = ShipmentService::createShipment($order->id, $address->cep);
+            if ($shipmentStatus["status"] === "success") {
                 $order->shipment_status = Order::SHIPMENT_STATUS_SENDED;
             }
-        } catch(\Exception $e) {} // try catch cala boca :(
+        } catch (\Exception $e) {
+            throw new PDOException("Erro ao processar envio: " . $e->getMessage(), Code::$INTERNAL_SERVER_ERROR);
+        }
 
-        if(!$order->save()) {
-            throw new PDOException($order->fail()->getMessage(), Code::$INTERNAL_SERVER_ERROR);
+        if (!$order->save()) {
+            throw new PDOException("Erro ao salvar pedido: " . $order->fail()->getMessage(), Code::$INTERNAL_SERVER_ERROR);
         }
 
         return Response::success("Pedido finalizado com sucesso.", code: Code::$OK);
     }
+
 }

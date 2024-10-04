@@ -84,6 +84,17 @@ try {
     $route->get("/", "CompanyController:listInformation");
     $route->post("/", "CompanyController:saveInformation");
 
+    /*
+     * Resource: Inventory
+     */
+    $route->group("estoque");
+    $route->get("/", "InventoryController:listInventory");
+    $route->post("/", "InventoryController:addToInventory");
+    $route->post("/increase", "InventoryController:increaseItemAmount");
+    $route->post("/decrease", "InventoryController:decreaseItemAmount");
+    $route->delete("/", "InventoryController:removeFromInventory");
+
+
     $route->group(null);
     $route->dispatch();
 

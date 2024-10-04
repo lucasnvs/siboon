@@ -27,10 +27,7 @@ class UserController extends ApiController
             return Response::success(message: "Nenhum usuário encontrado.", code: Code::$NO_CONTENT);
         }
 
-        $response = [];
-        foreach ($users as $user) {
-            $response[] = DTO::UserDTO($user);
-        }
+        $response = array_map([DTO::class, 'UserDTO'], $users);
 
         if ($isLocalReq) return $response;
 

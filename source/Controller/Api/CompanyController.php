@@ -2,7 +2,6 @@
 
 namespace Source\Controller\Api;
 
-use CoffeeCode\DataLayer\DataLayer;
 use InvalidArgumentException;
 use PDOException;
 use Source\Core\ApiController;
@@ -16,34 +15,48 @@ class CompanyController extends ApiController
     {
         $this->setAccessToEndpoint($this->ACCESS_ADMIN);
 
-        $response = [];
-
         $company = new Company();
-
         $information = $company->find()->fetch(true);
 
+        if (empty($information)) {
+            return Response::success([], "Nenhuma informação encontrada.", Code::$NO_CONTENT);
+        }
+
+        $response = [];
         foreach ($information as $info) {
             $response[$info->key_unique] = $info->value;
         }
+
         return Response::success($response, code: Code::$OK);
     }
 
-    public function saveInformation($data)
+    public function saveInformation(array $data)
     {
         parent::setAccessToEndpoint($this->ACCESS_ADMIN);
+
         $request_body = parent::validate($data);
+        $updatedAttributes = [];
 
         foreach ($request_body as $field_key => $field_value) {
-            $field_key = str_replace("-", "_", $field_key);
-            $attribute = (new Company())->findByKey($field_key);
-            $isEditable = $attribute && $field_value != $attribute->value;
+            $normalized_key = str_replace("-", "_", $field_key);
 
-            if ($isEditable) {
-                $attribute->value = $field_value;
-                if (!$attribute->save()) {
-                    throw new PDOException($attribute->fail()->getMessage(), code: Code::$BAD_REQUEST);
+            $attribute = (new Company())->findByKey($normalized_key);
+
+            if ($attribute) {
+                if ($attribute->value !== $field_value) {
+                    $attribute->value = $field_value;
+                    if (!$attribute->save()) {
+                        throw new PDOException($attribute->fail()->getMessage(), Code::$BAD_REQUEST);
+                    }
+                    $updatedAttributes[] = $normalized_key;
                 }
+            } else {
+                throw new InvalidArgumentException("Atributo '$normalized_key' não encontrado.", Code::$BAD_REQUEST);
             }
+        }
+
+        if (empty($updatedAttributes)) {
+            return Response::success(message: "Nenhum atributo foi atualizado.", code: Code::$OK);
         }
 
         return Response::success(message: "Atributo(s) atualizado(s) com sucesso.", code: Code::$OK);
