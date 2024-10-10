@@ -24,7 +24,11 @@ class InventoryController extends ApiController
 
         $response = [];
         foreach ($inventory as $item) {
-            $response[] = $item->data();
+            $response[] = [
+                "product_id" => $item->product_id,
+                "amount" => $item->amount,
+                "size" => $item->size,
+            ];
         }
         return Response::success($response, code: Code::$OK);
     }
@@ -35,8 +39,9 @@ class InventoryController extends ApiController
 
         $requiredFields = [
             "product_id" => [FieldValidator::required],
-            "size" => [FieldValidator::required],
+            "size" => [FieldValidator::required, FieldValidator::size], // This just works for cloths
         ];
+
         $request_body = parent::validate($data, $requiredFields);
 
         $product = (new Product())->findById($request_body['product_id']);
@@ -82,58 +87,76 @@ class InventoryController extends ApiController
 
         return Response::success("Item removido do estoque com sucesso.", code: Code::$OK);
     }
+//    public function updateItemAmount($data)
+//    {
+//        parent::setAccessToEndpoint($this->ACCESS_ADMIN);
+//
+//        $requiredFields = [
+//            "product_id" => [FieldValidator::required],
+//            "size" => [FieldValidator::required],
+//            "amount" => [FieldValidator::required]
+//        ];
+//        $request_body = parent::validate($data, $requiredFields);
+//
+//        $inventory = (new Inventory())->find("product_id = :product_id AND size = :size", "product_id={$request_body['product_id']}&size={$request_body['size']}")->fetch();
+//        if (!$inventory) {
+//            throw new InvalidArgumentException("Item não encontrado no estoque.", Code::$BAD_REQUEST);
+//        }
+//
+//        if ($request_body['amount'] < 0 && $inventory->amount < abs($request_body['amount'])) {
+//            throw new InvalidArgumentException("Quantidade insuficiente no estoque.", Code::$BAD_REQUEST);
+//        }
+//
+//        $inventory->amount += $request_body['amount'];
+//
+//        if (!$inventory->save()) {
+//            throw new PDOException("Erro ao atualizar a quantidade do item: " . $inventory->fail(), Code::$INTERNAL_SERVER_ERROR);
+//        }
+//
+//        return Response::success("Quantidade do item atualizada com sucesso.", code: Code::$OK);
+//    }
 
-    public function increaseItemAmount($data)
+    public function updateStockBySize($data)
     {
         parent::setAccessToEndpoint($this->ACCESS_ADMIN);
 
         $requiredFields = [
             "product_id" => [FieldValidator::required],
-            "size" => [FieldValidator::required],
-            "amount" => [FieldValidator::required, FieldValidator::positive]
+            "sizes" => [FieldValidator::required]
         ];
         $request_body = parent::validate($data, $requiredFields);
 
-        $inventory = (new Inventory())->find("product_id = :product_id AND size = :size", "product_id={$request_body['product_id']}&size={$request_body['size']}")->fetch();
-        if (!$inventory) {
-            throw new InvalidArgumentException("Item não encontrado no estoque.", Code::$BAD_REQUEST);
+        $product = (new Product())->findById($request_body['product_id']);
+        if (!$product) {
+            throw new InvalidArgumentException("Produto não encontrado.", Code::$BAD_REQUEST);
         }
 
-        $inventory->amount += $request_body['amount'];
+        foreach ($request_body['sizes'] as $sizeData) {
+            if (!isset($sizeData['size']) || !isset($sizeData['amount'])) {
+                throw new InvalidArgumentException("Os campos 'size' e 'amount' são obrigatórios para cada item.", Code::$BAD_REQUEST);
+            }
 
-        if (!$inventory->save()) {
-            throw new PDOException("Erro ao aumentar a quantidade do item: " . $inventory->fail(), Code::$INTERNAL_SERVER_ERROR);
+            $size = $sizeData['size'];
+            $amount = $sizeData['amount'];
+
+            $inventory = (new Inventory())->find("product_id = :product_id AND size = :size", "product_id={$request_body['product_id']}&size={$size}")->fetch();
+
+            if ($inventory) {
+                $inventory->amount = $amount;
+            } else {
+                $inventory = new Inventory();
+                $inventory->product_id = $product->id;
+                $inventory->size = $size;
+                $inventory->amount = $amount;
+            }
+
+            if (!$inventory->save()) {
+                throw new PDOException("Erro ao atualizar o estoque para o tamanho {$size}: " . $inventory->fail(), Code::$INTERNAL_SERVER_ERROR);
+            }
         }
 
-        return Response::success("Quantidade do item aumentada com sucesso.", code: Code::$OK);
+        return Response::success("Estoque atualizado com sucesso para todos os tamanhos.", code: Code::$OK);
     }
 
-    public function decreaseItemAmount($data)
-    {
-        parent::setAccessToEndpoint($this->ACCESS_ADMIN);
 
-        $requiredFields = [
-            "product_id" => [FieldValidator::required],
-            "size" => [FieldValidator::required],
-            "amount" => [FieldValidator::required, FieldValidator::positive]
-        ];
-        $request_body = parent::validate($data, $requiredFields);
-
-        $inventory = (new Inventory())->find("product_id = :product_id AND size = :size", "product_id={$request_body['product_id']}&size={$request_body['size']}")->fetch();
-        if (!$inventory) {
-            throw new InvalidArgumentException("Item não encontrado no estoque.", Code::$BAD_REQUEST);
-        }
-
-        if ($inventory->amount < $request_body['amount']) {
-            throw new InvalidArgumentException("Quantidade insuficiente no estoque.", Code::$BAD_REQUEST);
-        }
-
-        $inventory->amount -= $request_body['amount'];
-
-        if (!$inventory->save()) {
-            throw new PDOException("Erro ao diminuir a quantidade do item: " . $inventory->fail(), Code::$INTERNAL_SERVER_ERROR);
-        }
-
-        return Response::success("Quantidade do item diminuída com sucesso.", code: Code::$OK);
-    }
 }

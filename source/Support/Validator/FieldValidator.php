@@ -17,6 +17,7 @@ class FieldValidator
     const string = "string";
     const required = "required";
     const positive = "positive";
+    const size = "size";
 
     /**
      * Validate all.
@@ -92,7 +93,7 @@ class FieldValidator
      * @param $field
      * @return void
      */
-    private function string($field)
+    private function string(string $field)
     {
 
     }
@@ -108,6 +109,21 @@ class FieldValidator
         self::number($field);
         if($field <= 0) {
             throw new InvalidArgumentException("Numero tem que ser positivo (maior do que zero).", Code::$BAD_REQUEST);
+        }
+    }
+
+    /**
+     * Validate if a string is compatible with sizes patterns.
+     *
+     * @param $field
+     * @return void
+     */
+    private function sizes(string $field)
+    {
+        $sizes_patterns = ["PP", "P", "M", "G", "GG"];
+
+        if(!in_array($field, $sizes_patterns)) {
+            throw new InvalidArgumentException("\"$field\" não é um tamanho compatível.", Code::$BAD_REQUEST);
         }
     }
 }

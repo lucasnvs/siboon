@@ -1,10 +1,12 @@
 import {GetBaseURL, renderTable} from "../../shared/Constants.js";
 import {ProductService} from "../../shared/services/ProductService.js";
 import {Modal} from "../../shared/components/Modal/Modal.js";
+import {InventoryService} from "../../shared/services/InventoryService.js";
+import {ErrorDialog, SuccessDialog} from "../../shared/components/SimpleDialog/SimpleDialog.js";
 const tableProductsBody = document.querySelector("#table-products tbody");
 
 HTMLAnchorElement.prototype.ModalAddStock = (productID) => {
-    Modal({
+    let closeModal = Modal({
         title: "CALCA BIG MUITO GRANDE NOME GRANDE VANS EDITION HIGH TECH",
         children: [
             `
@@ -15,28 +17,45 @@ HTMLAnchorElement.prototype.ModalAddStock = (productID) => {
                     <p><strong>Última Inserção:</strong> <span id="last-insertion">Nenhuma</span></p>
                 </div>
                 <div class="modal-content-section">
-                    <h3>Adicionar ao Estoque</h3>
+                    <h3>Gerenciar estoque</h3>
                     <div class="size-grid" id="size-container"></div>
-                    <button id="submit-add">Adicionar ao Estoque</button>
+                    <button id="submit-add">Atualizar Estoque</button>
                 </div>
             </div>
             `
         ]
     })
-    setupModal()
+    setupModal(productID, closeModal)
 }
 
 (async () => {
-    await renderTable("#table-products", ProductService, (product) => {
-        return `
+    let [{data: products}, isErrorProducts] = await ProductService.getData();
+    let [inventory, isErrorInventory] = await InventoryService.getData();
+
+    if(isErrorInventory) {
+        ErrorDialog(inventory.message)
+    }
+    const mergedList = products.map(product => {
+        let inventoryItem = {amount: "Não adicionado no estoque"};
+        if(inventory.data) {
+            inventoryItem = inventory.data.find(inventoryItem => inventoryItem.product_id === product.id);
+        }
+        return { ...product, ...inventoryItem };
+    });
+
+    await renderTable({
+        tableSelector: "#table-products",
+        optionalData: mergedList,
+        writeLine: (product) => {
+            return `
                 <tr>
                     <td>${product.id}</td>
                     <td>${product.name}</td>
                     <td>${product.formated_price_brl}</td>
-                    <td>54</td>
+                    <td>${product.amount}</td>
                     <td>
                         <a href="#" onClick="ModalAddStock(${product.id})">
-                            <button class="btn green">Add. Estoque</button>
+                            <button class="btn green">G. Estoque</button>
                         </a>
                         <a href="${ GetBaseURL(`admin/produtos/${product.id}/editar`) }">
                             <button class="btn">Editar</button>
@@ -44,19 +63,17 @@ HTMLAnchorElement.prototype.ModalAddStock = (productID) => {
                     </td>
                 </tr>
         `
+        }
     })
 })();
 
-function setupModal() {
+function setupModal(productId, closeModal) {
     const sizes = [
         { label: 'PP', id: 'size-pp' },
         { label: 'P', id: 'size-p' },
         { label: 'M', id: 'size-m' },
         { label: 'G', id: 'size-g' },
         { label: 'GG', id: 'size-gg' },
-        { label: '35', id: 'size-35' },
-        { label: '36', id: 'size-36' },
-        { label: '37', id: 'size-37' }
     ];
 
     const sizeContainer = document.getElementById('size-container');
@@ -86,12 +103,23 @@ function setupModal() {
         document.getElementById('last-insertion').textContent = product.lastInsertion || 'Nenhuma';
     }
 
-    document.getElementById('submit-add').onclick = () => {
-        const quantities = {};
+    document.getElementById('submit-add').onclick = async () => {
+        const quantities = [];
         sizes.forEach(size => {
-            quantities[size.label] = parseInt(document.getElementById(size.id).value) || 0;
+            quantities.push({
+                size: size.label,
+                amount: parseInt(document.getElementById(size.id).value) || 0
+            })
         });
 
-        // Lógica para adicionar ao estoque e atualizar a interface...
+        let [data, isError] = await InventoryService.updateList(productId, quantities);
+
+        if(isError) {
+            ErrorDialog(data.message)
+        } else {
+            SuccessDialog(data.message)
+        }
+
+        closeModal()
     };
 }

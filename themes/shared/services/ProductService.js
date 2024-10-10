@@ -1,5 +1,6 @@
 import {GetApiURL} from "../Constants.js";
 import {Service} from "./Service.js";
+import {InventoryService} from "./InventoryService.js";
 
 
 export class ProductService extends Service {
@@ -40,6 +41,12 @@ export class ProductService extends Service {
             body: formData,
         })
 
+        if(res.ok) {
+            let [inventoryRes, isErrorInventory] = await InventoryService.sendData()
+            if(isErrorInventory) {
+                return [inventoryRes, true]
+            }
+        }
         return [await res.json(), !res.ok];
     }
 

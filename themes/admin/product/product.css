@@ -56,7 +56,7 @@ label {
 }
 
 #submit-add {
-    align-self: center;
+    align-self: flex-end;
     background-color: #4CAF50;
     color: white;
     border: none;

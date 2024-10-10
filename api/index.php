@@ -87,11 +87,10 @@ try {
     /*
      * Resource: Inventory
      */
-    $route->group("estoque");
+    $route->group("inventory");
     $route->get("/", "InventoryController:listInventory");
     $route->post("/", "InventoryController:addToInventory");
-    $route->post("/increase", "InventoryController:increaseItemAmount");
-    $route->post("/decrease", "InventoryController:decreaseItemAmount");
+    $route->post("/update-list", "InventoryController:updateStockBySize");
     $route->delete("/", "InventoryController:removeFromInventory");
 
 

@@ -2,8 +2,11 @@ import {OrderService} from "../../shared/services/OrderService.js";
 import {renderTable} from "../../shared/Constants.js";
 
 (async () => {
-    await renderTable("#table-orders", OrderService, (order) => {
-        return `
+    await renderTable({
+        tableSelector: "#table-orders",
+        service: OrderService,
+        writeLine:  (order) => {
+            return `
                 <tr>
                     <td>${order.id}</td>
                     <td>${order.items}</td>
@@ -18,5 +21,6 @@ import {renderTable} from "../../shared/Constants.js";
                     </td>
                 </tr>
         `
+        }
     })
 })();

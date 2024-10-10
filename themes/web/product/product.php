@@ -7,10 +7,16 @@
 <?php $this->end(); ?>
 
 <data id="product_id" value="<?= $product_id ?>"></data>
-<div id="product-image-container">
 
-</div>
+<main id="main">
+    <div id="product-image-container">
 
-<div id="product-description-container">
+    </div>
 
-</div>
+    <div id="product-description-container">
+        <h1>Carregando...</h1>
+        <p>Carregando...</p>
+        <p class="price">R$ ...</p>
+        <button class="add-to-cart-btn">Adicionar ao Carrinho</button>
+    </div>
+</main>

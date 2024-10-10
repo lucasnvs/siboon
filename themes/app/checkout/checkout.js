@@ -58,7 +58,6 @@ document.getElementById("btn-cep-frete").addEventListener("click", async () => {
 
     if (cep) {
         try {
-            // Simular chamada à API de frete com base no CEP
             document.getElementById("frete-value").textContent = "R$ 12,43"; // Valor fictício
         } catch (error) {
             console.error("Erro ao calcular frete", error);

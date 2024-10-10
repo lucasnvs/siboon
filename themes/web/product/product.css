@@ -1,16 +1,32 @@
+/* Adicione o CSS aqui ou inclua o arquivo CSS externo */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+    background-color: #f8f9fa;
+}
+
 #main {
     display: flex;
-    padding: 4%;
+    padding: 2%;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    width: 100%;
+    border-radius: 10px;
 }
 
 img {
-    aspect-ratio: 1/1;
+    height: auto;
 }
 
 #product-image-container {
     display: flex;
     gap: 15px;
-    width: calc(50% - 15px);
+    flex: 1 1 calc(50% - 15px);
+    max-width: fit-content;
 }
 
 #product-image-container .side-images-container {
@@ -21,16 +37,59 @@ img {
 
 #product-image-container .side-images-container .side-image {
     width: 100px;
+    border: 2px solid transparent;
+    transition: border-color 0.3s;
+    cursor: pointer;
+}
+
+#product-image-container .side-images-container .side-image:hover {
+    border-color: #007BFF;
 }
 
 #principal-image {
-    width: 600px;
-    height: 600px;
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
 }
-/* */
-/* */
 
 #product-description-container {
-    width: 50%;
+    flex: 1 1 calc(50% - 15px);
+    max-width: 500px;
+}
 
+h1 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+p {
+    font-size: 1rem;
+    margin-bottom: 20px;
+}
+
+.price {
+    font-size: 1.5rem;
+    color: #007BFF;
+    margin-bottom: 20px;
+}
+
+.add-to-cart-btn {
+    width: 100%;
+}
+
+@media (max-width: 768px) {
+    #main {
+        flex-direction: column;
+    }
+
+    #product-image-container,
+    #product-description-container {
+        width: 100%;
+    }
+
+    #principal-image {
+        max-width: 100%;
+    }
 }

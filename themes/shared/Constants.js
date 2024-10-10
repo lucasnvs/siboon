@@ -43,7 +43,7 @@ export function showDataForm({ object, previousTitle = "", changeUnderscores = f
     });
 }
 
-export async function renderTable(tableSelector, service, writeLine = (item) => "", onFinish = () => {}) {
+export async function renderTable({tableSelector, service, optionalData, writeLine = (item) => "", onFinish = () => {}}) {
     const table = document.querySelector(tableSelector);
     const tableBody = table?.querySelector("tbody");
 
@@ -53,7 +53,13 @@ export async function renderTable(tableSelector, service, writeLine = (item) => 
     }
 
     try {
-        const [data, isError] = await service.getData();
+        let data, isError;
+        if(service) {
+            [data, isError] = await service.getData();
+        } else {
+            [data, isError] = [{data: optionalData}, false];
+        }
+
         if (isError || !data) {
             ErrorDialog(data?.message || "Erro ao carregar dados");
             return;

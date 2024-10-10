@@ -1,5 +1,5 @@
 import {FaqService} from "../../shared/services/FaqService.js";
-import {appendLinkOnHead, GetBaseURL, renderTable} from "../../shared/Constants.js";
+import {renderTable} from "../../shared/Constants.js";
 import {ErrorDialog, SuccessDialog} from "../../shared/components/SimpleDialog/SimpleDialog.js";
 import {Modal} from "../../shared/components/Modal/Modal.js";
 
@@ -59,8 +59,11 @@ async function renderFaqTypeSelect() {
 
 
 async function updateTable() {
-    await renderTable("#table-faq", FaqService, (faq) => {
-        return `
+    await renderTable({
+        tableSelector: "#table-faq",
+        service: FaqService,
+        writeLine: (faq) => {
+            return `
                 <tr data-id="${faq.id}">
                     <td>${faq.type}</td>
                     <td>${faq.question}</td>
@@ -70,6 +73,7 @@ async function updateTable() {
                     </td>
                 </tr>
         `
+        }
     })
 
     document.querySelectorAll("#table-faq .btn.green").forEach(btn => {
