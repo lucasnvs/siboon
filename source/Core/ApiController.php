@@ -49,7 +49,7 @@ abstract class ApiController extends Controller
                 (new FieldValidator())->validate($request_body[$key], $validators);
             } else {
                 if(in_array(FieldValidator::required, $validators)) {
-                    throw new InvalidArgumentException("Todos os campos obrigatórios devem estar presentes e preenchidos!", Code::$BAD_REQUEST);
+                    throw new InvalidArgumentException("Todos os campos obrigatórios devem estar presentes e preenchidos! $key não está.", Code::$BAD_REQUEST);
                 }
             }
         }

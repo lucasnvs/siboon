@@ -7,3 +7,41 @@
 <?php $this->end(); ?>
 
 <h2>Aqui você pode gerenciar suas informações do site.</h2>
+<br>
+<div class="container-section">
+    <div class="container-section-header">
+        <p>Gerenciar Seções</p>
+    </div>
+    <div class="container-section-body">
+        <ul class="section-list" id="section-list">
+            <!-- Seções serão carregadas aqui -->
+        </ul>
+
+        <div class="new-section">
+            <input type="text" id="new-section-name" placeholder="Nome da nova seção">
+            <button id="add-section">Adicionar Seção</button>
+        </div>
+    </div>
+</div>
+<br>
+<div class="container-section">
+    <div class="container-section-header">
+        <p>Gerenciar Itens Exibidos</p>
+    </div>
+    <div class="container-section-body">
+        <button id="addFeaturedItemBtn">Adicionar Item Destacado</button>
+        <table id="featuredItemsTable">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Produto</th>
+                <th>Ordem de Exibição</th>
+                <th>Ações</th>
+            </tr>
+            </thead>
+            <tbody id="featuredItemsBody">
+                <!-- Itens destacados serão inseridos aqui -->
+            </tbody>
+        </table>
+    </div>
+</div>

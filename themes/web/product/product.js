@@ -17,10 +17,9 @@ async function renderProductDetail() {
     productImageContainer.innerHTML = generateProductImages(product);
     productDescriptionContainer.innerHTML = generateProductDescription(product);
 
-    // Aplica o InputAmount depois que os detalhes do produto foram renderizados
-    document.getElementById("quantity-container").append(InputAmount("quantity"));
+    let [element, amount] = InputAmount({id: "quantity"});
+    document.getElementById("quantity-container").append();
 
-    // Configura o evento de troca de imagem
     setupImageSwitching();
 }
 

@@ -85,7 +85,7 @@ try {
     $route->post("/", "CompanyController:saveInformation");
 
     /*
-     * Resource: Inventory
+     * Resource: Inventory // No documentation
      */
     $route->group("inventory");
     $route->get("/", "InventoryController:listInventory");
@@ -93,7 +93,26 @@ try {
     $route->post("/update-list", "InventoryController:updateStockBySize");
     $route->delete("/", "InventoryController:removeFromInventory");
 
+    /*
+    * Resource: Website // No documentation
+    */
+    $route->group("website/sections");
+    $route->get("/", "WebsiteController:listSections");
+    $route->get("/{id}", "WebsiteController:getSection");
+    $route->post("/", "WebsiteController:insertSection");
+    $route->post("/update/{id}", "WebsiteController:updateSection");
+    $route->delete("/{id}", "WebsiteController:deleteSection");
 
+    $route->group("website/featured-items");
+    $route->get("/", "WebsiteController:listFeaturedItems");
+    $route->get("/{id}", "WebsiteController:getFeaturedItem");
+    $route->post("/", "WebsiteController:insertFeaturedItem");
+    $route->post("/update/{id}", "WebsiteController:updateFeaturedItem");
+    $route->delete("/{id}", "WebsiteController:deleteFeaturedItem");
+
+    /*
+     * <<<<<<<<<- DISPATCH ->>>>>>>>>
+     */
     $route->group(null);
     $route->dispatch();
 

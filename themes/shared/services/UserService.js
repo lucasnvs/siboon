@@ -30,9 +30,7 @@ export class UserService extends Service {
             body: body
         });
 
-        if (!res.ok) console.log(await res.text());
-
-        return await res.json();
+        return [await res.json(), !res.ok];
     }
 
     static async login(

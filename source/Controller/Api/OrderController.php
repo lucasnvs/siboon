@@ -135,7 +135,7 @@ class OrderController extends ApiController
 
             $shipmentStatus = ShipmentService::createShipment($order->id, $address->cep);
             if ($shipmentStatus["status"] === "success") {
-                $order->shipment_status = Order::SHIPMENT_STATUS_SENDED;
+                $order->shipment_status = Order::SHIPMENT_STATUS_SENT;
             }
         } catch (\Exception $e) {
             throw new PDOException("Erro ao processar envio: " . $e->getMessage(), Code::$INTERNAL_SERVER_ERROR);

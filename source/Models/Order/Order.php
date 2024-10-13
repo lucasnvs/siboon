@@ -6,7 +6,7 @@ use CoffeeCode\DataLayer\DataLayer;
 use Source\Models\Model;
 
 class Order extends DataLayer implements Model {
-    const SHIPMENT_STATUS_SENDED = "SENDED";
+    const SHIPMENT_STATUS_SENT = "SENT";
     const PAYMENT_STATUS_PAID = "PAID";
     const STATUS_PENDING = "PENDING";
 

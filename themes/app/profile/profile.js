@@ -15,13 +15,14 @@ colOne.appendChild(InfoSection({
     `
 }))
 
+let [inputAmount, value] = InputAmount({
+    initialValue: 1,
+    style: "outlined"
+})
 colOne.appendChild(InfoSection({
     title: "Gerais",
     child: [
-        InputAmount({
-            initialValue: 1,
-            style: "outlined"
-        })
+        inputAmount
     ]
 }))
 

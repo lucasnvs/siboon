@@ -69,7 +69,7 @@ async function writeInFooter() {
         const footerLogoInfoDiv = document.getElementById("footer-logo-info");
         const [{ data: info }] = await CompanyService.getData();
 
-        footerLogoInfoDiv.innerHTML = `
+        footerLogoInfoDiv.innerHTML += `
             <p>${info.company_name} - CNPJ: ${info.company_cnpj}</p>
             <p>${info.company_street}, ${info.company_number}. CEP: ${info.company_cep}.</p>
             <p>${info.company_city}, ${info.company_state}.</p>

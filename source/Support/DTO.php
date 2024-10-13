@@ -91,4 +91,22 @@ abstract class DTO {
             "shipment_status" => $order->shipment_status,
         ];
     }
+
+    public static function SectionDTO($section): array
+    {
+        return [
+            "id" => $section->id,
+            "name" => $section->name,
+        ];
+    }
+
+    public static function FeaturedItemDTO($item): array
+    {
+        return [
+            "id" => $item->id,
+            "section_id" => $item->section_id,
+            "product_id" => $item->product_id,
+            "display_order" => $item->display_order,
+        ];
+    }
 }
