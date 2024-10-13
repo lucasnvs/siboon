@@ -89,6 +89,7 @@ try {
      */
     $route->group("inventory");
     $route->get("/", "InventoryController:listInventory");
+    $route->get("/{id}", "InventoryController:getProductInventory");
     $route->post("/", "InventoryController:addToInventory");
     $route->post("/update-list", "InventoryController:updateStockBySize");
     $route->delete("/", "InventoryController:removeFromInventory");

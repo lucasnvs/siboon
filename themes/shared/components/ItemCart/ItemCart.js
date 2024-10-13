@@ -26,23 +26,22 @@ export const ItemCart = (product) => {
     itemCartDesc.appendChild(description);
     itemCartDesc.appendChild(priceSpan);
 
-    itemCartDesc.appendChild(
-        InputAmount({
-            onIncrement: () => {
-                CART_CACHE.push(product);
-                updateCart();
-            },
-            onMinus: () => {
-                CART_CACHE.minus(product.id);
-                updateCart();
-            },
-            onZero: () => {
-                CART_CACHE.remove(product.id);
-                updateCart();
-            },
-            initialValue: product.amount ? product.amount : 1
-        })
-    )
+    let [inputAmount, quantity] = InputAmount({
+        onIncrement: () => {
+            CART_CACHE.push(product);
+            updateCart();
+        },
+        onMinus: () => {
+            CART_CACHE.minus(product.id);
+            updateCart();
+        },
+        onZero: () => {
+            CART_CACHE.remove(product.id);
+            updateCart();
+        },
+        initialValue: product.amount ? product.amount : 1
+    })
+    itemCartDesc.appendChild(inputAmount)
 
     itemCart.appendChild(image);
     itemCart.appendChild(itemCartDesc);

@@ -1,4 +1,4 @@
-import { ErrorDialog } from "./components/SimpleDialog/SimpleDialog.js";
+import {ErrorDialog, SuccessDialog} from "./components/SimpleDialog/SimpleDialog.js";
 import { Cache } from "./Cache.js";
 
 export const AUTHORIZATION_COOKIE_KEY = "Authorization";
@@ -72,5 +72,14 @@ export async function renderTable({tableSelector, service, optionalData, writeLi
         onFinish();
     } catch (error) {
         console.error("Erro ao renderizar a tabela:", error);
+    }
+}
+
+export function handleDialog(isError, message, successCallback) {
+    if (isError) {
+        ErrorDialog(message);
+    } else {
+        SuccessDialog(message);
+        if (successCallback) successCallback();
     }
 }

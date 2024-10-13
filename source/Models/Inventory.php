@@ -16,6 +16,11 @@ class Inventory extends DataLayer
         parent::__construct("stock", ["product_id", "amount", "size"], timestamps: false);
     }
 
+    public function findProductById($product_id)
+    {
+        return $this->find("product_id = :product_id", "product_id={$product_id}")->fetch(true);
+    }
+
     public function increaseItemAmount($inventory_id, $amount){ // can be $product_id, $size
 
     }

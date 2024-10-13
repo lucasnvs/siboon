@@ -73,7 +73,7 @@ class ProductController extends ApiController
             $this->handleProductImages($product);
         });
 
-        return Response::success("Produto criado com sucesso.", Code::$CREATED);
+        return Response::success(message: "Produto criado com sucesso.", code: Code::$CREATED);
     }
 
     public function updateProduct(array $data)
@@ -98,7 +98,7 @@ class ProductController extends ApiController
             $this->handleProductImages($product, true);
         });
 
-        return Response::success("Produto atualizado com sucesso.", Code::$OK);
+        return Response::success(message: "Produto atualizado com sucesso.", code: Code::$OK);
     }
 
     public function deleteProduct(array $data)
@@ -120,7 +120,7 @@ class ProductController extends ApiController
             throw new PDOException($product->fail()->getMessage(), Code::$INTERNAL_SERVER_ERROR);
         }
 
-        return Response::success("Produto deletado com sucesso.", Code::$OK);
+        return Response::success(message: "Produto deletado com sucesso.", code: Code::$OK);
     }
 
     private function validateProductData(array $data): array

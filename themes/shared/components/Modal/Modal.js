@@ -2,7 +2,6 @@ import {appendLinkOnHead, GetBaseURL} from "../../Constants.js";
 appendLinkOnHead(GetBaseURL("themes/shared/components/Modal/Modal.css"))
 
 export const Modal = ({id, title = "Sem título", children} = {}) => {
-
     const dialog = document.createElement("dialog");
     if(id) dialog.id = id;
     dialog.classList = `dialog`;
@@ -22,6 +21,11 @@ export const Modal = ({id, title = "Sem título", children} = {}) => {
 
     dialog.appendChild(header);
     if(children) {
+        if(typeof children == "string") {
+            dialog.insertAdjacentHTML("beforeend", children)
+            return
+        }
+
         let appendByTypeOf = {
             object: (child) => dialog.appendChild(child),
             string: (child) => dialog.insertAdjacentHTML("beforeend", child),

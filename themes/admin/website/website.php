@@ -24,12 +24,12 @@
     </div>
 </div>
 <br>
+<button id="addFeaturedItemBtn" class="btn green" style="margin-bottom: 10px">Adicionar Item Destacado</button>
 <div class="container-section">
     <div class="container-section-header">
         <p>Gerenciar Itens Exibidos</p>
     </div>
     <div class="container-section-body">
-        <button id="addFeaturedItemBtn">Adicionar Item Destacado</button>
         <table id="featuredItemsTable">
             <thead>
             <tr>

@@ -2,20 +2,12 @@ import { WebsiteService } from "../../shared/services/WebsiteService.js";
 import { ErrorDialog, SuccessDialog } from "../../shared/components/SimpleDialog/SimpleDialog.js";
 import { Modal } from "../../shared/components/Modal/Modal.js";
 import { InputAmount } from "../../shared/components/InputAmount/InputAmount.js";
+import {handleDialog} from "../../shared/Constants.js";
 
 (async () => {
     await loadSections();
     await renderFeaturedItems();
 })()
-
-function handleDialog(isError, message, successCallback) {
-    if (isError) {
-        ErrorDialog(message);
-    } else {
-        SuccessDialog(message);
-        if (successCallback) successCallback();
-    }
-}
 
 async function loadSections() {
     let [responseSection, isError] = await WebsiteService.getSection();

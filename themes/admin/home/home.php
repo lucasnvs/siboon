@@ -19,26 +19,44 @@
     </div>
 
     <div class="chart-container">
-        <div class="chart-box">
-            <h3>Vendas dos Últimos 7 Dias</h3>
-            <canvas id="salesChart"></canvas>
+
+        <div class="container-section">
+            <div class="container-section-header">
+                <p>Vendas dos Últimos 7 Dias</p>
+            </div>
+            <div class="container-section-body">
+                <canvas id="salesChart"></canvas>
+            </div>
         </div>
 
-        <div class="chart-box">
-            <h3>Top Produtos Mais Vendidos</h3>
-            <canvas id="topProductsChart"></canvas>
+        <div class="container-section">
+            <div class="container-section-header">
+                <p>Top Produtos Mais Vendidos</p>
+            </div>
+            <div class="container-section-body">
+                <canvas id="topProductsChart"></canvas>
+            </div>
         </div>
     </div>
     <br>
     <div class="chart-container">
-        <div class="chart-box">
-            <h3>Categorias</h3>
-            <canvas id="categoryChart"></canvas>
+        <div class="container-section">
+            <div class="container-section-header">
+                <p>Categorias</p>
+            </div>
+            <div class="container-section-body">
+                <canvas id="categoryChart"></canvas>
+            </div>
         </div>
 
-        <div class="chart-box">
-            <h3>Receita Mensal (R$)</h3>
-            <canvas id="monthlyRevenueChart"></canvas>
+        <div class="container-section">
+            <div class="container-section-header">
+                <p>Receita Mensal (R$)</p>
+            </div>
+            <div class="container-section-body">
+                <canvas id="monthlyRevenueChart"></canvas>
+
+            </div>
         </div>
     </div>
 

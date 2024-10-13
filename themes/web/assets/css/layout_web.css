@@ -5,13 +5,11 @@ body {
 
 #top-container {
     width: 100%;
-    position: static;
+    position: sticky;
+    top: 0;
     z-index: 1;
 }
 
-/*
-    WEBSITE TOP MESSAGE
- */
 #span-top {
     display: flex;
     align-items: center;
@@ -33,6 +31,7 @@ body > footer a {
     color: #FFF;
     cursor: pointer;
 }
+
 body #top-container header a:hover,
 body > footer a:hover {
     transition: linear 150ms;
@@ -44,24 +43,30 @@ body #top-container header {
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: space-between;
     background-color: var(--primary-neutral-color);
 }
 
 body #top-container header #menu-button {
     display: flex;
     justify-content: center;
-    width: 15%;
+    width: 200px;
 }
+
 body #top-container header #menu-button img {
     cursor: pointer;
 }
 
 body #top-container header #mid-menu {
-    align-self: center;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
     width: 70%;
 }
+
 body #top-container header #mid-menu ul {
+    width: 100%;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -81,19 +86,21 @@ body #top-container header #mid-menu ul li {
 }
 
 body #top-container header #option-menu {
-    width: 15%;
+    width: 200px;
     display: flex;
     flex-direction: row;
     align-items: center;
     justify-content: center;
     gap: 25px;
 }
+
 body #top-container header #option-menu i {
     cursor: pointer;
     color: #FFF;
     font-size: 36px;
     transition: linear 150ms;
 }
+
 body #top-container header #option-menu i:hover {
     color: var(--primary-color);
 }
@@ -133,4 +140,28 @@ body > footer #footer-logo-info img {
     width: 250px;
     height: 125px;
     margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+    body #top-container header {
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px;
+    }
+
+    body #top-container header #mid-menu {
+        display: none;
+    }
+
+    body #top-container header #option-menu {
+        width: fit-content;
+        justify-content: center;
+        gap: 10px;
+    }
+
+    body #top-container header #menu-button {
+        width: fit-content;
+        justify-content: center;
+        margin-bottom: 10px;
+    }
 }

@@ -83,9 +83,9 @@ CREATE TABLE IF NOT EXISTS stock
     product_id INT NOT NULL,
     amount     INT DEFAULT 0,
     size       VARCHAR(20) NOT NULL,
-    FOREIGN KEY (product_id) REFERENCES products (id)
-    ON DELETE CASCADE
-    );
+    FOREIGN KEY (product_id) REFERENCES products (id) ON DELETE CASCADE,
+    UNIQUE (product_id, size)
+);
 
 -- ------ - ----- --
 -- ORDERS & SALES --
@@ -103,7 +103,7 @@ CREATE TABLE IF NOT EXISTS orders
     updated_at     DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
     FOREIGN KEY (user_id) REFERENCES users (id),
     FOREIGN KEY (address_id) REFERENCES user_address (id)
-    );
+);
 
 CREATE TABLE IF NOT EXISTS orders_products
 (

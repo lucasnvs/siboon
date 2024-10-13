@@ -7,7 +7,7 @@
 <?php $this->end(); ?>
 
 <?php
-    $header = ["Cód. Item", "Produto", "Valor", "Qtd. Estoque", "Ações"];
+    $header = ["Cód. Item", "Produto", "Valor", "Status Estoque", "Ações"];
 ?>
 
 <div class="big-options-container">

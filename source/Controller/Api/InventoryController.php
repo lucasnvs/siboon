@@ -33,6 +33,23 @@ class InventoryController extends ApiController
         return Response::success($response, code: Code::$OK);
     }
 
+    public function getProductInventory($data)
+    {
+        $product_id = $data['id'];
+        $productInventory = (new Inventory())->findProductById($product_id);
+
+        if (!$productInventory) {
+            return Response::success(message: "Questão não existe.", code: Code::$NO_CONTENT);
+        }
+
+        $response = array_map(function ($item) {return $item->data();}, $productInventory);
+
+        return Response::success(
+            $response,
+            code: Code::$OK
+        );
+    }
+
     public function addToInventory($data)
     {
         parent::setAccessToEndpoint($this->ACCESS_ADMIN);

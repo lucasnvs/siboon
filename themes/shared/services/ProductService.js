@@ -41,12 +41,6 @@ export class ProductService extends Service {
             body: formData,
         })
 
-        if(res.ok) {
-            let [inventoryRes, isErrorInventory] = await InventoryService.sendData()
-            if(isErrorInventory) {
-                return [inventoryRes, true]
-            }
-        }
         return [await res.json(), !res.ok];
     }
 

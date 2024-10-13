@@ -67,7 +67,7 @@ async function updateTable() {
                 <tr data-id="${faq.id}">
                     <td>${faq.type}</td>
                     <td>${faq.question}</td>
-                    <td>${faq.answer}</td>
+                    <td class="limit-text">${faq.answer}</td>
                     <td>
                          <button class="btn green">Editar</button>
                     </td>

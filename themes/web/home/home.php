@@ -10,15 +10,13 @@
     <div class="banner">
         <img src="<?= assets('assets/imgs/background.png') ?>">
     </div>
-    <!-- banner -->
     <!-- seção rápida scroll horizontal -->
     <!-- seção rápida (talvez por marcas)-->
-    <section class="section-products">
-        <h2>EM ALTA</h2>
-        <div class="container-grid-section">
-
-        </div>
-    </section>
+<!--    <section class="section-products">-->
+<!--        <h2>EM ALTA</h2>-->
+<!--        <div class="container-grid-section">-->
+<!---->
+<!--        </div>-->
+<!--    </section>-->
     <!-- banner -->
-
 </section>

@@ -1,7 +1,7 @@
 import {appendLinkOnHead, GetBaseURL} from "../../Constants.js";
 appendLinkOnHead(GetBaseURL("themes/shared/components/InputAmount/InputAmount.css"))
 
-export const InputAmount = ({id, onChange = (amount) => {}, onIncrement = (amount) => {}, onMinus = (amount) => {}, onZero = () => {}, initialValue = 1, style = "default"} = {}) => {
+export const InputAmount = ({id, noNegative = false, onChange = (amount) => {}, onIncrement = (amount) => {}, onMinus = (amount) => {}, onZero = () => {}, initialValue = 1, style = "default"} = {}) => {
 
     var STYLES = {
         default: "default",
@@ -40,6 +40,11 @@ export const InputAmount = ({id, onChange = (amount) => {}, onIncrement = (amoun
     quantityElement.appendChild(quantityBox);
 
     inputQuantity.addEventListener("change", (e) => {
+        if(noNegative && e.target.value < 0) {
+            AMOUNT = 0;
+            e.target.value = 0;
+            return
+        }
         AMOUNT = e.target.value;
     })
 

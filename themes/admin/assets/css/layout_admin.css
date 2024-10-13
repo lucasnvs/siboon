@@ -124,6 +124,7 @@ body {
 
 .container-section {
     width: 100%;
+    height: fit-content;
     border: 1px solid #DDDDDD;
     background-color: #FFFFFF;
 }
@@ -162,4 +163,20 @@ tr {
 
 .default-table tbody tr td {
     padding: 4px 8px;
+    /*overflow: hidden;            !* Esconde o conteúdo que ultrapassa o limite *!*/
+    /*text-overflow: ellipsis;    !* Adiciona '...' para indicar que há mais texto *!*/
+    /*white-space: normal;         !* Permite que o texto quebre em várias linhas *!*/
+    /*max-width: 200px;           !* Define uma largura máxima para as células *!*/
+    /*text-align: justify;         !* Justifica o texto dentro da célula *!*/
+}
+
+.limit-text {
+    padding: 4px 8px;
+    overflow: hidden;               /* Esconde o conteúdo que ultrapassa o limite */
+    text-overflow: ellipsis;       /* Adiciona '...' para indicar que há mais texto */
+    white-space: normal;            /* Permite que o texto quebre em várias linhas */
+    display: -webkit-box;           /* Necessário para aplicar a limitação de linhas */
+    -webkit-box-orient: vertical;   /* Define a orientação do box como vertical */
+    -webkit-line-clamp: 3;          /* Limita o texto a 3 linhas */
+    text-align: justify;            /* Justifica o texto dentro da célula */
 }
