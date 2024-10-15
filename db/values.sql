@@ -17,6 +17,11 @@ INSERT INTO users(`id`, `first_name`, `last_name`, `email`, `password`, `role`) 
 (5, "Mariana", "Lima", "marianalima@email.com", "$2y$10$OEKI/tApOKUnD/gt347yEuGiGoQQhtFw1XaRtz2F477MxByJqR9sa", "USER"),
 (6, "Lucas", "Pereira", "lucaspereira@email.com", "$2y$10$OEKI/tApOKUnD/gt347yEuGiGoQQhtFw1XaRtz2F477MxByJqR9sa", "USER");
 
+INSERT INTO user_address (user_id, cep, street_avenue, number, complement, district, city, state)
+VALUES
+(1, '12345-678', 'Rua Exemplo', '123', 'Apto 456', 'Bairro Exemplo', 'Cidade Exemplo', 'Estado Exemplo');
+
+
 INSERT INTO  product_size_type(`name`) VALUES
 ("Roupa"),
 ("Sapato"),

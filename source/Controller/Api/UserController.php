@@ -16,7 +16,7 @@ use function Source\Support\UserDTO;
 
 class UserController extends ApiController
 {
-    public function listUsers(array $data = null, $isLocalReq = false)
+    public function listUsers(array $data = null)
     {
         $this->setAccessToEndpoint($this->ACCESS_ADMIN);
 
@@ -28,8 +28,6 @@ class UserController extends ApiController
         }
 
         $response = array_map([DTO::class, 'UserDTO'], $users);
-
-        if ($isLocalReq) return $response;
 
         return Response::success($response, code: Code::$OK);
     }
@@ -208,7 +206,7 @@ class UserController extends ApiController
         $addresses = (new Address())->find("user_id = :user_id", $params)->fetch(true);
 
         if(!$addresses){
-            return Response::success("Nenhum endereço cadastrado para este usuário", code: Code::$NO_CONTENT);
+            return Response::success(message: "Nenhum endereço cadastrado para este usuário", code: Code::$NO_CONTENT);
         }
 
         $response = [];

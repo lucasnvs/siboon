@@ -18,6 +18,10 @@ CART_ELEMENTS.closeCartButton.addEventListener("click", () => {
     CART_ELEMENTS.background_cart.style.display = "none";
 });
 
+document.querySelector("#span-top .close-x").addEventListener("click", () => {
+    document.getElementById("span-top").style.display = "none";
+})
+
 export function openCart() {
     CART_ELEMENTS.background_cart.style.display = "block";
     updateCart();

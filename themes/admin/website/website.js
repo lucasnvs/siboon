@@ -7,7 +7,7 @@ import { ProductService } from "../../shared/services/ProductService.js";
 
 (async () => {
     await loadSections();
-    await renderFeaturedItems();
+    await loadFeaturedItems();
 })();
 
 async function loadSections() {
@@ -169,7 +169,7 @@ async function openFeaturedItemModal({ id = null, productId = '', sectionId = nu
         }
 
         handleDialog(isError, response.message, async () => {
-            await renderFeaturedItems();
+            await loadFeaturedItems();
             closeMyModal();
         });
     };
@@ -196,7 +196,7 @@ async function editFeaturedItem(id) {
     });
 }
 
-async function renderFeaturedItems() {
+async function loadFeaturedItems() {
     const featuredItemsBody = document.getElementById('featuredItemsBody');
     const [response, isError] = await WebsiteService.getSection();
     if (isError) return console.error("Erro ao carregar itens destacados.");
@@ -240,6 +240,6 @@ async function renderFeaturedItems() {
 async function deleteFeaturedItem(id) {
     if (confirm("Tem certeza que deseja deletar esse item destacado?")) {
         const [response, isError] = await WebsiteService.deleteFeaturedItem(id);
-        handleDialog(isError, response.message, renderFeaturedItems);
+        handleDialog(isError, response.message, loadFeaturedItems);
     }
 }

@@ -24,7 +24,7 @@ class Order extends DataLayer implements Model {
 
     public function setData($data)
     {
-        if(isset($data["user_id"])) $this->user_id = $data["user_id"];
+        if(isset($data["costumer_id"])) $this->user_id = $data["costumer_id"];
         if(isset($data["address_id"])) $this->address_id = $data["address_id"];
         if(isset($data["total_price"])) $this->total_price = $data["total_price"];
     }

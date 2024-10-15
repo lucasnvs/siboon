@@ -3,6 +3,14 @@ body {
     height: 100%;
 }
 
+.active {
+    color: gray !important;
+    text-decoration: underline;
+}
+.active button > span {
+    background-color: rgba(255, 255, 255, 0.08);
+}
+
 #button-toggle-sidebar {
     position: absolute;
     right: -15px;
@@ -123,7 +131,7 @@ body {
 }
 
 .container-section {
-    width: fit-content;
+    width: 100%;
     height: fit-content;
     border: 1px solid #DDDDDD;
     background-color: #FFFFFF;

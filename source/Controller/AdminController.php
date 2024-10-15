@@ -64,10 +64,8 @@ class AdminController extends Controller
 
     public function customer()
     {
-        $clients = (new UserController())->listUsers(isLocalReq: true );
         echo $this->view->render("customer/customer", [
             "title" => "Clientes",
-            "clients" => $clients,
         ]);
     }
 

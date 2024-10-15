@@ -14,6 +14,11 @@ abstract class DTO {
 
     private static function format_price($value): string { return "R$ " . number_format($value, 2, ",", "."); }
 
+    private static function format_date($dateString) {
+        $date = new \DateTime($dateString);
+        return $date->format('d/m/Y H:i');
+    }
+
     public static function ProductDTO($product): array
     {
         $responseDto = [
@@ -95,11 +100,13 @@ abstract class DTO {
     {
         return [
             "id" => $order->id,
-            "user_id" => $order->user->id,
+            "user_id" => $order->user_id,
             "address_id" => $order->address_id,
             "total_price" => $order->total_price,
+            "total_price_formated" => self::format_price($order->total_price),
             "payment_status" => $order->payment_status,
             "shipment_status" => $order->shipment_status,
+            "created_at" => self::format_date($order->created_at)
         ];
     }
 

@@ -7,7 +7,7 @@
 <?php $this->end(); ?>
 
 <?php
-    $header = ["Cód. Pedido", "Itens", "Valor Total", "Status", "Email do Cliente", "Data Exp.", "Ações"];
+    $header = ["Cód. Pedido", "Itens", "Valor Total", "Status Pagamento", "Status Entrega", "Email do Cliente", "Data Pedido", "Ações"];
 ?>
 
 <h2>Vendas</h2>

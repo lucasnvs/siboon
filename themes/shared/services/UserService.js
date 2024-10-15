@@ -48,4 +48,12 @@ export class UserService extends Service {
 
         return [await res.json(), !res.ok];
     }
+
+    static async getUserAddresses(userId) {
+        let res = await fetch(this.endpoint(`${userId}/enderecos`));
+
+        if(res.status === 204) return [[], !res.ok];
+
+        return [await res.json(), !res.ok];
+    }
 }

@@ -1,4 +1,7 @@
-<?php $this->layout("master", ["title" => $title, "clients" => $clients]); ?>
+<?php $this->layout("master", ["title" => $title]); ?>
+<?php $this->start("specific-script"); ?>
+<script type="module" src="<?= assets('customer/customer.js', "admin") ?>" async></script>
+<?php $this->end(); ?>
 <?php $this->start("specific-style"); ?>
 <link rel="stylesheet" href="<?= assets('customer/customer.css', 'admin') ?>">
 <?php $this->end(); ?>
@@ -12,22 +15,13 @@ $header = ["Cód. Cliente", "Nome", "Email", "Total de Pedidos", "Ações"];
         <p>Tabela de Clientes</p>
     </div>
     <div class="container-section-body">
-        <table class="default-table">
+        <table id="table-customers" class="default-table">
             <thead>
             <?php foreach ($header as $th): ?>
                 <th> <?= $th ?> </th>
             <?php endforeach; ?>
             </thead>
             <tbody>
-            <?php foreach ($clients as $client): ?>
-                <tr>
-                    <td><?= $client["id"] ?></td>
-                    <td><?= $client["name"] ?></td>
-                    <td><?= $client["email"] ?></td>
-                    <td> 1 </td>
-                    <td></td>
-                </tr>
-            <?php endforeach; ?>
             </tbody>
         </table>
     </div>

@@ -59,7 +59,6 @@ class OrderController extends ApiController
         parent::setAccessToEndpoint($this->ACCESS_ADMIN);
 
         $FIELDS = [
-            "user_id" => [FieldValidator::required],
             "address_id" => [FieldValidator::required],
             "order_items" => [FieldValidator::required],
         ];
@@ -71,6 +70,7 @@ class OrderController extends ApiController
             $totalPrice += $product->price_brl;
         }
         $request_body["total_price"] = $totalPrice;
+        $request_body["costumer_id"] = $this->userAuth->id;
 
         $order = new Order();
         $order->setData($request_body);
@@ -110,35 +110,24 @@ class OrderController extends ApiController
         if (!$order) {
             return Response::success(message: "Pedido não existe.", code: Code::$NO_CONTENT);
         }
-
         parent::setAccessToEndpoint($this->ACCESS_LOGGED, $order->user_id);
 
-        try {
-            $processPayment = PaymentService::processPayment($order->id, $order->total_price);
-            $paymentId = $processPayment["paymentId"];
+        /// Payment
+        $processPayment = PaymentService::processPayment($order->id, $order->total_price);
+        if ($processPayment["status"] !== "success") {
+            throw new PaymentException("Erro ao processar pagamento: " . $processPayment["message"], Code::$INTERNAL_SERVER_ERROR);
+        }
+        $order->payment_status = Order::PAYMENT_STATUS_PAID;
 
-            $paymentStatus = PaymentService::checkPaymentStatus($paymentId);
-            if ($paymentStatus["status"] !== "completed") {
-                throw new PaymentException("Pagamento não foi finalizado.");
-            }
-
-            $order->payment_status = Order::PAYMENT_STATUS_PAID;
-        } catch (\Exception $e) {
-            throw new PaymentException("Erro ao processar pagamento: " . $e->getMessage(), Code::$BAD_REQUEST);
+        /// Shipment
+        $address = (new Address())->findById($order->address_id);
+        if (!$address) {
+            throw new InvalidArgumentException("Endereço não encontrado.", Code::$BAD_REQUEST);
         }
 
-        try {
-            $address = (new Address())->findById($order->address_id);
-            if (!$address) {
-                throw new InvalidArgumentException("Endereço não encontrado.", Code::$BAD_REQUEST);
-            }
-
-            $shipmentStatus = ShipmentService::createShipment($order->id, $address->cep);
-            if ($shipmentStatus["status"] === "success") {
-                $order->shipment_status = Order::SHIPMENT_STATUS_SENT;
-            }
-        } catch (\Exception $e) {
-            throw new PDOException("Erro ao processar envio: " . $e->getMessage(), Code::$INTERNAL_SERVER_ERROR);
+        $shipmentStatus = ShipmentService::createShipment($order->id, $address->cep);
+        if ($shipmentStatus["status"] === "success") {
+            $order->shipment_status = Order::SHIPMENT_STATUS_SENT;
         }
 
         if (!$order->save()) {
