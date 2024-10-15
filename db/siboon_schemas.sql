@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS institutional
     id           INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
     key_unique   VARCHAR(100) UNIQUE NOT NULL,
     `value`      VARCHAR(255) NOT NULL
-    );
+);
 
 -- ---- --
 -- User --
@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS user_address
     state         VARCHAR(255) NOT NULL,
     FOREIGN KEY (user_id) REFERENCES users (id)
     ON DELETE CASCADE
-    );
+);
 
 -- ---- --
 -- Shop --
@@ -49,7 +49,7 @@ CREATE TABLE IF NOT EXISTS product_size_type
 (
     id   INT PRIMARY KEY AUTO_INCREMENT NOT NULL,
     name VARCHAR(30) NOT NULL
-    );
+);
 
 CREATE TABLE IF NOT EXISTS products
 (

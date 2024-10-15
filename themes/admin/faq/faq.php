@@ -12,27 +12,25 @@ $header = ["Tipo", "Questão", "Resposta", "Ações"];
 
 <h2>Perguntas Frequentes</h2>
 <br>
-<div class="container-section">
+<div class="container-section" style="max-width: 900px">
     <div class="container-section-header">
         <p>Adicionar FAQ</p>
     </div>
     <div class="container-section-body">
-        <div class="row" style="gap: 20px;">
-            <div class="col" style="gap: 20px; width: 100%">
-                <div class="input-container">
-                    <label for="faq-question">Pergunta:</label>
-                    <input class="default-input" type="text" id="faq-question">
-                </div>
-                <div class="input-container">
-                    <label for="faq-answer">Resposta:</label>
-                    <textarea class="default-input" id="faq-answer" rows="8"></textarea>
-                </div>
+        <div class="col" style="gap: 20px; width: 100%">
+            <div class="input-container">
+                <label for="faq-question">Pergunta:</label>
+                <input class="default-input" type="text" id="faq-question">
             </div>
             <div class="input-container">
                 <label for="faq-type">Tipo de Pergunta:</label>
                 <select class="default-input" id="faq-type">
                     <option selected disabled>Selecione um valor</option>
                 </select>
+            </div>
+            <div class="input-container">
+                <label for="faq-answer">Resposta:</label>
+                <textarea class="default-input" id="faq-answer" rows="8"></textarea>
             </div>
         </div>
         <br>

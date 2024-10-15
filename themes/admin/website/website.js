@@ -2,12 +2,13 @@ import { WebsiteService } from "../../shared/services/WebsiteService.js";
 import { ErrorDialog, SuccessDialog } from "../../shared/components/SimpleDialog/SimpleDialog.js";
 import { Modal } from "../../shared/components/Modal/Modal.js";
 import { InputAmount } from "../../shared/components/InputAmount/InputAmount.js";
-import {handleDialog} from "../../shared/Constants.js";
+import { handleDialog } from "../../shared/Constants.js";
+import { ProductService } from "../../shared/services/ProductService.js";
 
 (async () => {
     await loadSections();
     await renderFeaturedItems();
-})()
+})();
 
 async function loadSections() {
     let [responseSection, isError] = await WebsiteService.getSection();
@@ -20,7 +21,7 @@ async function loadSections() {
     const sectionList = document.getElementById('section-list');
     sectionList.innerHTML = '';
 
-    if (!responseSection.data) {
+    if (!responseSection.data || !Array.isArray(responseSection.data) || responseSection.data.length === 0) {
         sectionList.insertAdjacentHTML("beforeend", "Não foi encontrada nenhuma seção.");
         return;
     }
@@ -42,6 +43,7 @@ async function loadSections() {
         sectionList.appendChild(li);
     });
 }
+
 document.getElementById("add-section").addEventListener("click", addSection);
 
 async function addSection() {
@@ -87,8 +89,11 @@ async function loadAndPopulateSections(sectionSelect, selectedId = null) {
         ErrorDialog("Erro ao carregar seções.");
         return;
     }
+
     let options = "<option selected disabled value=\"\">Selecione uma seção</option>";
-    options += responseSection.data.map(section => `<option value="${section.id}">${section.name}</option>`).join("");
+    if (Array.isArray(responseSection.data) && responseSection.data.length > 0) {
+        options += responseSection.data.map(section => `<option value="${section.id}">${section.name}</option>`).join("");
+    }
     sectionSelect.innerHTML = options;
     if (selectedId) sectionSelect.value = selectedId;
 }
@@ -102,8 +107,8 @@ async function openFeaturedItemModal({ id = null, productId = '', sectionId = nu
             `
                 <form id="featuredItemForm">
                     <div class="input-container">
-                        <label for="productId">Id Produto:</label>
-                        <input type="text" class="default-input" id="productId" value="${productId}" required>
+                        <label for="productId">Produto:</label>
+                        <select id="productId" required></select>
                     </div>
                     <br>
                     <div class="input-container">
@@ -120,6 +125,20 @@ async function openFeaturedItemModal({ id = null, productId = '', sectionId = nu
             `
         ]
     });
+
+    const selectProductId = document.getElementById("productId");
+    let [responseProduct, isErrorProduct] = await ProductService.getData();
+    if (isErrorProduct) return;
+
+    let options = "<option selected disabled value=\"\">Selecione um produto</option>";
+    if (Array.isArray(responseProduct.data) && responseProduct.data.length > 0) {
+        options += responseProduct.data.map(product => `<option value="${product.id}">${product.name}</option>`).join("");
+    }
+    selectProductId.innerHTML = options;
+
+    if (productId) {
+        selectProductId.value = productId;
+    }
 
     const sectionSelect = document.getElementById('sectionSelect');
     await loadAndPopulateSections(sectionSelect, sectionId);
@@ -183,32 +202,44 @@ async function renderFeaturedItems() {
     if (isError) return console.error("Erro ao carregar itens destacados.");
 
     featuredItemsBody.innerHTML = '';
-    response.data.forEach(section => {
-        const sectionHeader = document.createElement('tr');
-        sectionHeader.innerHTML = `<td colspan="4" style="font-weight: bold;">${section.name}</td>`;
-        featuredItemsBody.appendChild(sectionHeader);
+    if (Array.isArray(response.data) && response.data.length > 0) {
+        response.data.forEach(section => {
+            const sectionHeader = document.createElement('tr');
+            sectionHeader.innerHTML = `<td colspan="4" style="font-weight: bold;">${section.name}</td>`;
+            featuredItemsBody.appendChild(sectionHeader);
 
-        section.featured_items.forEach(item => {
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td>${item.id}</td>
-                <td>${item.product_id}</td>
-                <td>${item.display_order}</td>
-                <td>
-                    <button class="edit-featured-item" data-id="${item.id}">Editar</button>
-                    <button class="delete-featured-item" data-id="${item.id}">Deletar</button>
-                </td>
-            `;
+            if (Array.isArray(section.featured_items) && section.featured_items.length > 0) {
+                section.featured_items.forEach(item => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td>${item.id}</td>
+                        <td>${item.product_id}</td>
+                        <td>${item.display_order}</td>
+                        <td>
+                            <button class="edit-featured-item" data-id="${item.id}">Editar</button>
+                            <button class="delete-featured-item" data-id="${item.id}">Deletar</button>
+                        </td>
+                    `;
 
-            row.querySelector(".edit-featured-item").addEventListener("click", () => editFeaturedItem(item.id));
-            row.querySelector(".delete-featured-item").addEventListener("click", () => deleteFeaturedItem(item.id));
+                    row.querySelector(".edit-featured-item").addEventListener("click", () => editFeaturedItem(item.id));
+                    row.querySelector(".delete-featured-item").addEventListener("click", () => deleteFeaturedItem(item.id));
 
-            featuredItemsBody.appendChild(row);
+                    featuredItemsBody.appendChild(row);
+                });
+            } else {
+                const emptyRow = document.createElement('tr');
+                emptyRow.innerHTML = `<td colspan="4">Nenhum item destacado nesta seção.</td>`;
+                featuredItemsBody.appendChild(emptyRow);
+            }
         });
-    });
+    } else {
+        featuredItemsBody.innerHTML = '<tr><td colspan="4">Nenhuma seção encontrada.</td></tr>';
+    }
 }
 
 async function deleteFeaturedItem(id) {
-    const [response, isError] = await WebsiteService.deleteFeaturedItem(id);
-    handleDialog(isError, response.message, renderFeaturedItems);
+    if (confirm("Tem certeza que deseja deletar esse item destacado?")) {
+        const [response, isError] = await WebsiteService.deleteFeaturedItem(id);
+        handleDialog(isError, response.message, renderFeaturedItems);
+    }
 }

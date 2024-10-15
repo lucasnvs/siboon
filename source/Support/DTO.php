@@ -71,14 +71,25 @@ abstract class DTO {
         $typeModel = new Type();
         $types = $typeModel->find()->fetch(true);
 
+        if (!$types || !is_array($types)) {
+            return $question->data();
+        }
+
         $filter = array_filter($types, function ($type) use ($question) {
             return $type->data()->id == $question->data()->type_id;
-        })[1] ?? null;
+        });
 
-        $question->type = $filter->data()->description;
+        $filterItem = reset($filter) ?: null;
+
+        if ($filterItem) {
+            $question->type = $filterItem->data()->description;
+        } else {
+            $question->type = "Tipo não encontrado";
+        }
 
         return $question->data();
     }
+
 
     public static function OrderDTO($order): array
     {
