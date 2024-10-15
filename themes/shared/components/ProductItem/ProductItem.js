@@ -44,15 +44,31 @@ export const ProductItem = (product) => {
     const sizesContainer = document.createElement('div');
     sizesContainer.classList.add('sizes');
 
-    const sizes = ['P', 'M', 'G', 'GG'];
-    sizes.forEach(size => {
+    const sizes = [
+        { id: `${product.id}-size-p`, size: "P", isSelected: false },
+        { id: `${product.id}-size-m`, size: "M", isSelected: false },
+        { id: `${product.id}-size-g`, size: "G", isSelected: false },
+        { id: `${product.id}-size-gg`, size: "GG", isSelected: false },
+    ];
+
+    sizes.forEach(sizeState => {
         const sizeButton = document.createElement('button');
+        sizeButton.id = sizeState.id;
         sizeButton.classList.add('size');
-        sizeButton.textContent = size;
+        sizeButton.textContent = sizeState.size;
         sizesContainer.appendChild(sizeButton);
 
         sizeButton.addEventListener("click", () => {
-            product.size = size;
+            const hasSizeSelected = sizes.filter(size => size.isSelected === true)
+            if(hasSizeSelected) {
+                hasSizeSelected.forEach(size => {
+                    size.isSelected = false;
+                    document.getElementById(size.id).style.color = "black";
+                });
+            }
+            product.size = sizeState.size;
+            sizeState.isSelected = true;
+            sizeButton.style.color = "#8A11A8";
             sizeSelector.remove();
             productContainer.appendChild(addButton);
         })

@@ -27,6 +27,12 @@
     object-fit: cover;
 }
 
+.product-container:hover .sizes,
+.product-container:hover span,
+.product-container:hover .btn {
+    opacity: 1;
+}
+
 .product-container a {
     display: flex;
     flex-direction: column;
