@@ -83,12 +83,12 @@
 
             <div id="option-menu">
                 <i class="material-symbols-outlined">search</i>
+                <i id="cart-button" class="material-symbols-outlined">shopping_bag</i>
                 <?php if (isset($loggedUser)): ?>
                     <a href="<?= url("/app/perfil") ?>"><i class="material-symbols-outlined">account_circle</i></a>
                 <?php else: ?>
                     <a href="<?= url("entrar") ?>"><i class="material-symbols-outlined">account_circle</i></a>
                 <?php endif; ?>
-                <i id="cart-button" class="material-symbols-outlined">shopping_bag</i>
             </div>
         </header>
     </div>

@@ -1,17 +1,30 @@
 import {InfoSection} from "../../shared/components/InfoSection/InfoSection.js";
 import {InputAmount} from "../../shared/components/InputAmount/InputAmount.js";
-import {AUTHORIZATION_COOKIE_KEY} from "../../shared/Constants.js";
+import {AUTHORIZATION_COOKIE_KEY, GetBaseURL, USER_CACHE} from "../../shared/Constants.js";
+import {UserService} from "../../shared/services/UserService.js";
 
 const btnLogout = document.getElementById("logout");
 const colOne = document.getElementById("col-1");
-const colBig = document.getElementById("col-big")
+const colBig = document.getElementById("col-big");
 
+(async () => {
+    const [data, isError] = await UserService.getDataById(USER_CACHE.get().id);
+    console.log(data)
+})()
 
 colOne.appendChild(InfoSection({
     title: "Meu Perfil",
     child: `
-          <p>John Doe</p>
-          <p>johndoe@email.com</p>
+          <div id="user-detail">
+                <div class="user-label">
+                    <img src=${GetBaseURL()}>
+                    <div>
+                        <p>John Doe</p>
+                        <p>johndoe@email.com</p>
+                    </div>
+              </div>
+                <button class="btn">Editar</button>
+          </div>
     `
 }))
 

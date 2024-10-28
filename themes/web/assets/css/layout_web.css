@@ -93,6 +93,9 @@ body #top-container header #option-menu {
     justify-content: center;
     gap: 25px;
 }
+body #top-container header #option-menu a {
+    height: 36px;
+}
 
 body #top-container header #option-menu i {
     cursor: pointer;
