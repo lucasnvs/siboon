@@ -19,7 +19,6 @@ class User extends DataLayer {
     #[\Override]
     public function save(): bool
     {
-
         if(!filter_var($this->email, FILTER_VALIDATE_EMAIL)){
             $this->message = "E-mail inválido!";
             return false;
@@ -48,6 +47,12 @@ class User extends DataLayer {
             $this->message = "Por favor, informe todos os campos!";
             return false;
         }
+    }
+
+    public function saveImg($img)
+    {
+        $this->img = $img;
+        parent::save();
     }
 
     /**

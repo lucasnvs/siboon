@@ -81,6 +81,10 @@ abstract class Controller
             throw new AuthorizationException("Sem permissão para esse endpoint. $decode->access", code: Code::$UNAUTHORIZED);
         }
 
+        if(!$id && $this->userAuth->id) {
+            $id = $this->userAuth->id;
+        }
+
         if(isset($id) && $decode->access < $this->ACCESS_ADMIN) {
             if($decode->id != $id){
                 throw new AuthorizationException("Sem permissão para esse endpoint.", code: Code::$UNAUTHORIZED);

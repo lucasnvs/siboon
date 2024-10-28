@@ -28,11 +28,13 @@ try {
     $route->group("usuarios");
     $route->get("/", "UserController:listUsers");
     $route->get("/{id}", "UserController:getUser");
+    $route->get("/me", "UserController:getMe");
     $route->post("/", "UserController:insertUser");
     $route->post("/update/{id}", "UserController:updateUser");
     $route->delete("/{id}", "UserController:deleteUser");
     $route->post("/login", "UserController:login");
     $route->post("/change-password", "UserController:changePassword");
+    $route->post("/me/upload-profile-image", "UserController:uploadUserImage");
 
     $route->get("/{user_id}/enderecos/", "UserController:listUserAddresses");
     $route->post("/{user_id}/enderecos/", "UserController:insertUserAddress");

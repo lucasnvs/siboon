@@ -23,6 +23,7 @@ CREATE TABLE IF NOT EXISTS users
     `last_name`  VARCHAR(255) NOT NULL,
     email        VARCHAR(255) UNIQUE NOT NULL,
     `password`   VARCHAR(255) NOT NULL,
+    img          VARCHAR(255),
     `role`       ENUM("CLIENT", "ADMIN") NOT NULL DEFAULT "CLIENT"
     );
 

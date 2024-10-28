@@ -2,6 +2,8 @@
 
 namespace Source\Controller\Api;
 
+use CoffeeCode\Uploader\Image;
+use Exception;
 use InvalidArgumentException;
 use PDOException;
 use Source\Core\ApiController;
@@ -41,6 +43,23 @@ class UserController extends ApiController
         }
 
         return Response::success(DTO::UserDTO($user), code: Code::$OK);
+    }
+
+
+    public function getMe()
+    {
+        $this->setAccessToEndpoint($this->ACCESS_LOGGED);
+
+        $user = (new User())->findById((int) $this->userAuth->id);
+        if (!$user) {
+            return Response::success(message: "Não encontramos você...", code: Code::$NO_CONTENT);
+        }
+
+        return Response::success([
+            "name" => $user->first_name." ".$user->last_name,
+            "email" => $user->email,
+            "img" => $user->img ?? null
+        ], code: Code::$OK);
     }
 
     public function insertUser(array $data)
@@ -154,6 +173,30 @@ class UserController extends ApiController
         return Response::success(message: "Senha alterada com sucesso.", code: Code::$OK);
     }
 
+    public function uploadUserImage()
+    {
+        $this->setAccessToEndpoint($this->ACCESS_LOGGED);
+
+        self::doInsideRoot(function () {
+            $uploader = new Image(CONF_UPLOAD_DIR, CONF_UPLOAD_IMAGE_DIR . "/users/" . $this->userAuth->id, true);
+            if (!isset($_FILES['image']) || $_FILES['image']['error'] !== UPLOAD_ERR_OK) {
+                throw new InvalidArgumentException("Erro no upload da imagem.", Code::$BAD_REQUEST);
+            }
+
+            try {
+                $file = $_FILES['image'];
+                $uploaded = $uploader->upload($file, pathinfo($file['name'], PATHINFO_FILENAME), 600);
+
+                $user = (new User())->findById((int) $this->userAuth->id);
+                $user->saveImg($uploaded);
+
+                return Response::success(["img" => $uploaded], message: "Imagem atualizada com sucesso.", code: Code::$OK);
+
+            } catch (Exception $e) {
+                throw new PDOException("Falha ao fazer upload da imagem: " . $e->getMessage(), code: Code::$INTERNAL_SERVER_ERROR);
+            }
+        });
+    }
     public function login(array $data)
     {
         $FIELDS = [

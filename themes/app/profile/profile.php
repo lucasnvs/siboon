@@ -23,17 +23,43 @@
 </div>
 <div class="container">
     <div id="col-1" class="col">
-<!--        <div class="info-section">-->
-<!--            <header>-->
-<!--                <h2>Meu Perfil</h2>-->
-<!--                <i class="material-symbols-outlined">expand_circle_down</i>-->
-<!--            </header>-->
-<!--            <div class="content">-->
-<!--                <p>--><?php //= $user->first_name." ".$user->last_name?><!--</p>-->
-<!--                <p>--><?php //= $user->email ?><!--</p>-->
-<!--            </div>-->
-<!--        </div>-->
+        <div class="info-section">
+            <header>
+                <h2>Meu Perfil</h2>
+                <i class="material-symbols-outlined">expand_circle_down</i>
+            </header>
+            <div class="content">
+                <div class="inner-content">
+                    <div id="user-detail">
+                        <div class="user-label">
+                            <div id="user-avatar">
+                                <img id="user-image" src="" alt="User Avatar">
+                                <span id="user-initials" style="display: none;"></span>
+                            </div>
+                            <div>
+                                <p id="user-name-display"></p>
+                                <p id="user-email-display"></p>
+                            </div>
+                        </div>
+                        <button id="edit-user" class="btn">Editar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
-    <div id="col-big" class="col big"></div>
+    <div id="col-big" class="col">
+        <div class="info-section">
+            <header>
+                <h2>Pedidos</h2>
+                <i class="material-symbols-outlined">expand_circle_down</i>
+            </header>
+            <div class="content">
+                <div class="inner-content">
+                    <h2>Pedido X</h2>
+                    <p>Situação: Em andamento.</p>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

@@ -56,4 +56,21 @@ export class UserService extends Service {
 
         return [await res.json(), !res.ok];
     }
+
+    static async me() {
+        let res = await fetch(this.endpoint(`me`));
+
+        if(res.status === 204) return [[], !res.ok];
+
+        return [await res.json(), !res.ok];
+    }
+
+    static async meUploadProfileImage(formData) {
+        let res = await fetch(this.endpoint(`me/upload-profile-image`), {
+            method: "POST",
+            body: formData
+        });
+
+        return [await res.json(), !res.ok];
+    }
 }
