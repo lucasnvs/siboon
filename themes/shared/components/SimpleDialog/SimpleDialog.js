@@ -32,5 +32,5 @@ const SimpleDialog = (message, icon, style, onClick = () => {}) => {
 }
 
 export const SuccessDialog = (message, onClick) => SimpleDialog(message, "check_circle", "success", onClick)
-
+export const WarningDialog = (message) => SimpleDialog(message, "warning", "warning")
 export const ErrorDialog = (message) => SimpleDialog(message, "error", "error")

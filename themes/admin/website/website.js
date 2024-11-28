@@ -1,5 +1,5 @@
 import { WebsiteService } from "../../shared/services/WebsiteService.js";
-import { ErrorDialog, SuccessDialog } from "../../shared/components/SimpleDialog/SimpleDialog.js";
+import {ErrorDialog, SuccessDialog, WarningDialog} from "../../shared/components/SimpleDialog/SimpleDialog.js";
 import { Modal } from "../../shared/components/Modal/Modal.js";
 import { InputAmount } from "../../shared/components/InputAmount/InputAmount.js";
 import { handleDialog } from "../../shared/Constants.js";
@@ -50,7 +50,7 @@ async function addSection() {
     const newSectionName = document.getElementById('new-section-name').value.trim();
 
     if (newSectionName === '') {
-        ErrorDialog('Nome da seção não pode estar vazio.');
+        WarningDialog('Nome da seção não pode estar vazio.');
         return;
     }
 

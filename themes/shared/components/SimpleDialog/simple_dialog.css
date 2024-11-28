@@ -25,6 +25,10 @@
     color: #a30e0e;
 }
 
+.simple_dialog.warning i {
+    color: #ffc107;
+}
+
 .simple_dialog .btn {
     width: 100%;
 }
