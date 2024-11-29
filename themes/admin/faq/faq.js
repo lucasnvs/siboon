@@ -1,6 +1,6 @@
 import {FaqService} from "../../shared/services/FaqService.js";
 import {renderTable} from "../../shared/Constants.js";
-import {ErrorDialog, SuccessDialog} from "../../shared/components/SimpleDialog/SimpleDialog.js";
+import SimpleDialog from "../../shared/components/SimpleDialog/SimpleDialog.js";
 import {Modal} from "../../shared/components/Modal/Modal.js";
 
 const showEditDialog = (data) => {
@@ -27,13 +27,14 @@ const showEditDialog = (data) => {
             answer: document.getElementById("answer-edit").value
         });
 
-        if(isError) {
-            ErrorDialog(res.message)
-        } else {
-            SuccessDialog(res.message)
-            await updateTable();
-            closeModal();
-        }
+        SimpleDialog.showDialog({
+            type: res.type,
+            message: res.message,
+            successCallback: async () => {
+                await updateTable();
+                closeModal();
+            }
+        })
     }
 }
 
@@ -89,7 +90,7 @@ async function updateTable() {
             let faqId = getRowParent(e.target.parentElement)?.dataset.id;
             let [data, isError] = await FaqService.getDataById(faqId);
             if (isError) {
-                ErrorDialog(data.message)
+                SimpleDialog.ErrorDialog(data.message)
             }
             let {data: faq} = data;
             if (!faq) return

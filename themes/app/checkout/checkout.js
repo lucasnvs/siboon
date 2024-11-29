@@ -1,6 +1,6 @@
 import { UserService } from "../../shared/services/UserService.js";
 import { CART_CACHE, formatTotalPriceCart, GetBaseURL, USER_CACHE } from "../../shared/Constants.js";
-import { ErrorDialog, SuccessDialog } from "../../shared/components/SimpleDialog/SimpleDialog.js";
+import SimpleDialog from "../../shared/components/SimpleDialog/SimpleDialog.js";
 import { Modal } from "../../shared/components/Modal/Modal.js";
 import { OrderService } from "../../shared/services/OrderService.js";
 
@@ -84,7 +84,7 @@ async function loadUserData() {
     const [{ data: userData }, isError] = await UserService.getDataById(USER_CACHE.get().id);
 
     if (isError) {
-        ErrorDialog("Erro ao carregar dados do usuário");
+        SimpleDialog.ErrorDialog("Erro ao carregar dados do usuário");
         return;
     }
 
@@ -154,10 +154,8 @@ async function finishOrder() {
     console.log(addressSelect.value, orderData)
     const [responseOrder, isError] = await OrderService.sendData(addressSelect.value, orderData);
 
-    if (isError) {
-        ErrorDialog(responseOrder.message);
-        return;
-    }
-
-    SuccessDialog(responseOrder.message);
+    SimpleDialog.showDialog({
+        type: responseOrder.type,
+        message: responseOrder.message
+    })
 }

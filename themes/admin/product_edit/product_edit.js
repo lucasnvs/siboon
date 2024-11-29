@@ -1,6 +1,6 @@
 import {GetBaseURL, showDataForm} from "../../shared/Constants.js";
 import {ProductService} from "../../shared/services/ProductService.js";
-import {ErrorDialog, SuccessDialog} from "../../shared/components/SimpleDialog/SimpleDialog.js";
+import SimpleDialog from "../../shared/components/SimpleDialog/SimpleDialog.js";
 import {handleProductFormSubmit, setImageChangeEvent} from "../assets/js/shared_products.js";
 
 const PRODUCT_ID = document.getElementById("header").dataset.id;
@@ -30,25 +30,26 @@ const FORM_ELEMENTS = {
 
 ACTIONS.editProduct.addEventListener("click", async (e) => {
     let [res, isError] = await handleProductFormSubmit(e, FORM_ELEMENTS, ProductService.update, PRODUCT_ID)
-    if(isError) {
-        ErrorDialog(res.message);
-    } else {
-        SuccessDialog(res.message, () => {
+
+    SimpleDialog.showDialog({
+        type: res.type,
+        message: res.message,
+        successCallback: () => {
             window.location.href = GetBaseURL("admin/produtos")
-        });
-    }
+        }
+    })
 });
 
 ACTIONS.deleteProduct.addEventListener("click", async e => {
     let [res, isError] = await ProductService.delete(PRODUCT_ID);
 
-    if(isError) {
-        ErrorDialog(res.message);
-    } else {
-        SuccessDialog(res.message, () => {
+    SimpleDialog.showDialog({
+        type: res.type,
+        message: res.message,
+        successCallback: () => {
             window.location.href = GetBaseURL("admin/produtos")
-        });
-    }
+        }
+    })
 })
 
 FORM_ELEMENTS.inputsImages.forEach(input => setImageChangeEvent(input))

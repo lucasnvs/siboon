@@ -1,7 +1,6 @@
 import {ProductService} from "../../shared/services/ProductService.js";
 import {ProductItem} from "../../shared/components/ProductItem/ProductItem.js";
 import {WebsiteService} from "../../shared/services/WebsiteService.js";
-import {handleDialog} from "../../shared/Constants.js";
 
 (async () => {
     await renderSections();

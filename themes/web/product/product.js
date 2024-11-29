@@ -1,7 +1,7 @@
 import { InputAmount } from "../../shared/components/InputAmount/InputAmount.js";
 import { GetBaseURL } from "../../shared/Constants.js";
 import { ProductService } from "../../shared/services/ProductService.js";
-import { ErrorDialog } from "../../shared/components/SimpleDialog/SimpleDialog.js";
+import SimpleDialog from "../../shared/components/SimpleDialog/SimpleDialog.js";
 
 const productImageContainer = document.getElementById("product-image-container");
 const productDescriptionContainer = document.getElementById("product-description-container");
@@ -10,7 +10,7 @@ const PRODUCT_ID = document.getElementById("product_id").value;
 async function renderProductDetail() {
     const [{ data: product, message }, isError] = await ProductService.getDataById(PRODUCT_ID);
     if (isError) {
-        ErrorDialog(message);
+        SimpleDialog.ErrorDialog(message);
         return;
     }
 

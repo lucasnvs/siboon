@@ -1,6 +1,6 @@
 import { UserService } from "../../shared/services/UserService.js";
 import { Modal } from "../../shared/components/Modal/Modal.js";
-import { ErrorDialog, SuccessDialog } from "../../shared/components/SimpleDialog/SimpleDialog.js";
+import SimpleDialog from "../../shared/components/SimpleDialog/SimpleDialog.js";
 import { appendLinkOnHead, AUTHORIZATION_COOKIE_KEY, GetBaseURL, USER_CACHE } from "../../shared/Constants.js";
 
 appendLinkOnHead(GetBaseURL("themes/shared/components/InfoSection/InfoSection.css"));
@@ -38,7 +38,7 @@ async function updateUserDetails() {
     const [{data: user}, isError] = await UserService.me();
     console.log(user)
     if (isError) {
-        ErrorDialog("Erro ao carregar os dados do usuário.");
+        SimpleDialog.ErrorDialog("Erro ao carregar os dados do usuário.");
         return;
     }
 
@@ -112,7 +112,7 @@ async function updateUser(user) {
     const [userResponse, userError] = await UserService.update(USER_CACHE.get().id, updateForm);
 
     if (userError) {
-        ErrorDialog("Erro ao atualizar dados do usuário.");
+        SimpleDialog.ErrorDialog("Erro ao atualizar dados do usuário.");
         return;
     }
 
@@ -122,7 +122,7 @@ async function updateUser(user) {
         updateUserDetails({ ...user, name: userName, last_name: userLastName, email: userEmail });
     }
 
-    SuccessDialog("Perfil atualizado com sucesso!");
+    SimpleDialog.SuccessDialog("Perfil atualizado com sucesso!");
 }
 
 async function uploadProfileImage(imageInput) {
@@ -131,7 +131,7 @@ async function uploadProfileImage(imageInput) {
 
     const [imageResponse, imageError] = await UserService.meUploadProfileImage(formData);
     if (imageError) {
-        ErrorDialog("Erro ao fazer upload da imagem.");
+        SimpleDialog.ErrorDialog("Erro ao fazer upload da imagem.");
     } else {
         const userImageDisplay = document.getElementById("user-image");
         userImageDisplay.src = URL.createObjectURL(imageInput);

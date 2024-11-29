@@ -1,8 +1,7 @@
 import { WebsiteService } from "../../shared/services/WebsiteService.js";
-import {ErrorDialog, SuccessDialog, WarningDialog} from "../../shared/components/SimpleDialog/SimpleDialog.js";
+import SimpleDialog from "../../shared/components/SimpleDialog/SimpleDialog.js";
 import { Modal } from "../../shared/components/Modal/Modal.js";
 import { InputAmount } from "../../shared/components/InputAmount/InputAmount.js";
-import { handleDialog } from "../../shared/Constants.js";
 import { ProductService } from "../../shared/services/ProductService.js";
 
 (async () => {
@@ -14,7 +13,7 @@ async function loadSections() {
     let [responseSection, isError] = await WebsiteService.getSection();
 
     if (isError) {
-        ErrorDialog("Erro ao carregar seções: " + responseSection.message);
+        SimpleDialog.ErrorDialog("Erro ao carregar seções: " + responseSection.message);
         return;
     }
 
@@ -50,16 +49,20 @@ async function addSection() {
     const newSectionName = document.getElementById('new-section-name').value.trim();
 
     if (newSectionName === '') {
-        WarningDialog('Nome da seção não pode estar vazio.');
+        SimpleDialog.WarningDialog('Nome da seção não pode estar vazio.');
         return;
     }
 
     let [responseSection, isError] = await WebsiteService.sendSection(newSectionName);
 
-    handleDialog(isError, responseSection.message, async () => {
-        await loadSections();
-        document.getElementById('new-section-name').value = '';
-    });
+    SimpleDialog.showDialog({
+        type: responseSection.type,
+        message: responseSection.message,
+        successCallback: async () => {
+            await loadSections();
+            document.getElementById('new-section-name').value = '';
+        }
+    })
 }
 
 async function editSection(sectionId) {
@@ -71,14 +74,22 @@ async function editSection(sectionId) {
 
     let [responseSection, isError] = await WebsiteService.updateSection(sectionId, { name: newSectionName });
 
-    handleDialog(isError, responseSection.message, loadSections);
+    SimpleDialog.showDialog({
+        type: responseSection.type,
+        message: responseSection.message,
+        successCallback: loadSections
+    })
 }
 
 async function deleteSection(sectionId) {
     if (confirm('Tem certeza que deseja excluir essa seção?')) {
         let [responseSection, isError] = await WebsiteService.deleteSection(sectionId);
 
-        handleDialog(isError, responseSection.message, loadSections);
+        SimpleDialog.showDialog({
+            type: responseSection.type,
+            message: responseSection.message,
+            successCallback: loadSections
+        })
     }
 }
 
@@ -86,7 +97,7 @@ async function deleteSection(sectionId) {
 async function loadAndPopulateSections(sectionSelect, selectedId = null) {
     const [responseSection, isError] = await WebsiteService.getSection();
     if (isError) {
-        ErrorDialog("Erro ao carregar seções.");
+        SimpleDialog.ErrorDialog("Erro ao carregar seções.");
         return;
     }
 
@@ -168,10 +179,14 @@ async function openFeaturedItemModal({ id = null, productId = '', sectionId = nu
             [response, isError] = await WebsiteService.sendFeaturedItem(itemData);
         }
 
-        handleDialog(isError, response.message, async () => {
-            await loadFeaturedItems();
-            closeMyModal();
-        });
+        SimpleDialog.showDialog({
+            type: response.type,
+            message: response.message,
+            successCallback: async () => {
+                await loadFeaturedItems();
+                closeMyModal();
+            }
+        })
     };
 }
 
@@ -182,7 +197,7 @@ document.getElementById('addFeaturedItemBtn').addEventListener('click', async ()
 async function editFeaturedItem(id) {
     const [response, isError] = await WebsiteService.getFeaturedItemById(id);
     if (isError) {
-        ErrorDialog("Erro ao carregar item destacado.");
+        SimpleDialog.ErrorDialog("Erro ao carregar item destacado.");
         return;
     }
     const { product_id, section_id, display_order } = response.data;
@@ -240,6 +255,11 @@ async function loadFeaturedItems() {
 async function deleteFeaturedItem(id) {
     if (confirm("Tem certeza que deseja deletar esse item destacado?")) {
         const [response, isError] = await WebsiteService.deleteFeaturedItem(id);
-        handleDialog(isError, response.message, loadFeaturedItems);
+
+        SimpleDialog.showDialog({
+            type: response.type,
+            message: response.message,
+            successCallback: loadFeaturedItems
+        })
     }
 }

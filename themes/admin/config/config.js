@@ -1,5 +1,5 @@
 import {showDataForm} from "../../shared/Constants.js";
-import {ErrorDialog, SuccessDialog} from "../../shared/components/SimpleDialog/SimpleDialog.js";
+import SimpleDialog from "../../shared/components/SimpleDialog/SimpleDialog.js";
 import {CompanyService} from "../../shared/services/CompanyService.js";
 
 (async () =>{
@@ -10,7 +10,7 @@ async function updateForm() {
     let [{data: info, message}, isError] = await CompanyService.getData();
 
     if(isError) {
-        ErrorDialog(message)
+        SimpleDialog.ErrorDialog(message)
         return
     }
 
@@ -27,9 +27,8 @@ form.addEventListener("submit", async (e) => {
     let formData = new FormData(form);
     let [data, isError] = await CompanyService.sendData(formData)
 
-    if(isError) {
-        ErrorDialog(data.message)
-    } else {
-        SuccessDialog(data.message);
-    }
+    SimpleDialog.showDialog({
+        type: data.type,
+        message: data.message,
+    })
 })

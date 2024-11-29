@@ -2,7 +2,7 @@ import { GetBaseURL, renderTable } from "../../shared/Constants.js";
 import { ProductService } from "../../shared/services/ProductService.js";
 import { Modal } from "../../shared/components/Modal/Modal.js";
 import { InventoryService } from "../../shared/services/InventoryService.js";
-import { ErrorDialog, SuccessDialog } from "../../shared/components/SimpleDialog/SimpleDialog.js";
+import SimpleDialog from "../../shared/components/SimpleDialog/SimpleDialog.js";
 import { InputAmount } from "../../shared/components/InputAmount/InputAmount.js";
 
 (async () => {
@@ -13,7 +13,7 @@ async function renderTableProducts() {
     const [inventory, isErrorInventory] = await InventoryService.getData();
 
     if (isErrorInventory) {
-        ErrorDialog(inventory.message);
+        SimpleDialog.ErrorDialog(inventory.message);
         return;
     }
 
@@ -132,12 +132,14 @@ async function modalAddStock(productId) {
 
         const [data, isError] = await InventoryService.updateList(productId, quantities);
 
-        if (isError) {
-            ErrorDialog(data.message);
-        } else {
-            SuccessDialog(data.message);
-            await renderTableProducts();
-        }
+
+        SimpleDialog.showDialog({
+            type: data.type,
+            message: data.message,
+            successCallback: async () => {
+                await renderTableProducts();
+            }
+        })
 
         closeModal();
     };

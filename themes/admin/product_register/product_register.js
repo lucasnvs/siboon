@@ -1,5 +1,5 @@
 import {ProductService} from "../../shared/services/ProductService.js";
-import {ErrorDialog, SuccessDialog} from "../../shared/components/SimpleDialog/SimpleDialog.js";
+import SimpleDialog from "../../shared/components/SimpleDialog/SimpleDialog.js";
 import {GetBaseURL} from "../../shared/Constants.js";
 import {handleProductFormSubmit, setImageChangeEvent} from "../assets/js/shared_products.js";
 
@@ -30,13 +30,14 @@ FORM_ELEMENTS.inputsImages.forEach(input => setImageChangeEvent(input))
 
 ACTIONS.createProduct.addEventListener("click", async (e) => {
     let [res, isError] = await handleProductFormSubmit(e, FORM_ELEMENTS, ProductService.sendData, 0)
-    if(isError) {
-        ErrorDialog(res.message);
-    } else {
-        SuccessDialog(res.message, () => {
+
+    SimpleDialog.showDialog({
+        type: res.type,
+        message: res.message,
+        successCallback: () => {
             window.location.href = GetBaseURL("admin/produtos")
-        });
-    }
+        }
+    })
 });
 
 ACTIONS.clearForm.addEventListener("click", e => {

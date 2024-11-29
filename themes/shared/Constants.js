@@ -1,4 +1,4 @@
-import {ErrorDialog, SuccessDialog} from "./components/SimpleDialog/SimpleDialog.js";
+import {  } from "./components/SimpleDialog/SimpleDialog.js";
 import { Cache } from "./Cache.js";
 
 export const AUTHORIZATION_COOKIE_KEY = "Authorization";
@@ -61,7 +61,7 @@ export async function renderTable({tableSelector, service, optionalData, writeLi
         }
 
         if (isError || !data) {
-            ErrorDialog(data?.message || "Erro ao carregar dados");
+            SimpleDialog.ErrorDialog(data?.message || "Erro ao carregar dados");
             return;
         }
 
@@ -72,14 +72,5 @@ export async function renderTable({tableSelector, service, optionalData, writeLi
         onFinish();
     } catch (error) {
         console.error("Erro ao renderizar a tabela:", error);
-    }
-}
-
-export function handleDialog(isError, message, successCallback) {
-    if (isError) {
-        ErrorDialog(message);
-    } else {
-        SuccessDialog(message);
-        if (successCallback) successCallback();
     }
 }
