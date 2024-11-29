@@ -1,6 +1,7 @@
 import { ItemCart } from "../../../shared/components/ItemCart/ItemCart.js";
 import { CART_CACHE, GetBaseURL, formatTotalPriceCart } from "../../../shared/Constants.js";
 import { CompanyService } from "../../../shared/services/CompanyService.js";
+import {WarningDialog} from "../../../shared/components/SimpleDialog/SimpleDialog.js";
 
 console.log("%cSiboon SkateShop - Ecommerce By @lucasnvs on GitHub", 'color: #8A11A8; font-size: 15px; font-family: "Verdana", sans-serif; font-weight: bold;');
 
@@ -60,7 +61,7 @@ const updateCartInfo = (cart) => {
 
     btnCreateCheckout.onclick = () => {
         if (cart.length < 1) {
-            console.log("Não pode comprar, o carrinho está vazio");
+            WarningDialog("O carrinho está vazio!");
             return;
         }
 
