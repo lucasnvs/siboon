@@ -1,7 +1,7 @@
 import { UserService } from "../../shared/services/UserService.js";
 import { Validate, Validators } from "../../shared/Validate.js";
 import { USER_CACHE } from "../../shared/Constants.js";
-import {ErrorDialog} from "../../shared/components/SimpleDialog/SimpleDialog";
+import SimpleDialog from "../../shared/components/SimpleDialog/SimpleDialog.js";
 
 async function login(email, password) {
     const [res, isError] = await UserService.login(email, password);
@@ -64,7 +64,7 @@ signupElements.submit.onclick = async () => {
     );
 
     if (isError) {
-        ErrorDialog(res.message);
+        SimpleDialog.ErrorDialog(res.message);
         return;
     }
 

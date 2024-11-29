@@ -1,4 +1,4 @@
-import {  } from "./components/SimpleDialog/SimpleDialog.js";
+import SimpleDialog from "./components/SimpleDialog/SimpleDialog.js";
 import { Cache } from "./Cache.js";
 
 export const AUTHORIZATION_COOKIE_KEY = "Authorization";
