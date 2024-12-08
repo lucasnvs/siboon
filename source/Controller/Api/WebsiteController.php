@@ -16,8 +16,6 @@ class WebsiteController extends ApiController
 {
     public function listSections(array $data)
     {
-        $this->setAccessToEndpoint($this->ACCESS_ADMIN);
-
         $sections = (new Section())->find()->fetch(true);
 
         if (empty($sections)) {
