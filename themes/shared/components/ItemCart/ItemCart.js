@@ -4,23 +4,27 @@ import {updateCart} from "../../../web/assets/js/scripts-master.js";
 
 export const ItemCart = (product) => {
     const itemCart = document.createElement('div');
-    itemCart.classList.add('item-cart');
+    itemCart.classList.add('cart-item');
 
     const image = document.createElement('img');
     image.src = GetBaseURL(product.principal_img);
     image.alt = `Imagem de ${product.name}`;
+    image.classList.add('cart-item-image');
 
     const itemCartDesc = document.createElement('div');
-    itemCartDesc.classList.add('item-cart-desc');
+    itemCartDesc.classList.add('cart-item-details');
 
     const titleElement = document.createElement('h2');
     titleElement.textContent = product.name;
+    titleElement.classList.add('cart-item-title');
 
     const description = document.createElement('p');
     description.textContent = `Cor: ${product.color} | Tamanho: ${product.size}`;
+    description.classList.add('cart-item-description');
 
     const priceSpan = document.createElement('span');
     priceSpan.textContent = product.formated_price;
+    priceSpan.classList.add('cart-item-price');
 
     itemCartDesc.appendChild(titleElement);
     itemCartDesc.appendChild(description);

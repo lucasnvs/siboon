@@ -62,66 +62,6 @@
     </aside>
 
     <div class="container-grid-section">
-        <div class="product-container"><a href="http://localhost/siboon/produto/camisa-high-tee-black-5">
-                <div class="image-container"><img
-                            src="http://localhost/siboon/storage/images/products/5/principal-image.jpg"></div>
-                <div class="product-description"><p class="title">Camisa High Tee Black</p>
-                    <p class="price">R$ 110,00</p>
-                    <p class="price">ou R$ 107,80 no PIX</p></div>
-            </a>
-            <div class="sizes">
-                <button id="5-size-p" class="size">P</button>
-                <button id="5-size-m" class="size">M</button>
-                <button id="5-size-g" class="size">G</button>
-                <button id="5-size-gg" class="size">GG</button>
-            </div>
-            <span>SELECIONE O TAMANHO</span></div>
-        <div class="product-container"><a
-                    href="http://localhost/siboon/produto/cal-a-vans-drill-chore-carpenter-denim-ave-2-0-pirate-black-3">
-                <div class="image-container"><img
-                            src="http://localhost/siboon/storage/images/products/3/principal-image-1733635169.png">
-                </div>
-                <div class="product-description"><p class="title">CALÇA VANS DRILL CHORE CARPENTER DENIM AVE 2.0 PIRATE
-                        BLACK</p>
-                    <p class="price">R$ 390,00</p>
-                    <p class="price">ou R$ 370,50 no PIX</p></div>
-            </a>
-            <div class="sizes">
-                <button id="3-size-p" class="size">P</button>
-                <button id="3-size-m" class="size">M</button>
-                <button id="3-size-g" class="size">G</button>
-                <button id="3-size-gg" class="size">GG</button>
-            </div>
-            <span>SELECIONE O TAMANHO</span></div>
-        <div class="product-container"><a href="http://localhost/siboon/produto/vans-bailey-1">
-                <div class="image-container"><img
-                            src="http://localhost/siboon/storage/images/products/1/principal-image-1732583560.png">
-                </div>
-                <div class="product-description"><p class="title">Vans Bailey</p>
-                    <p class="price">R$ 299,90</p>
-                    <p class="price">ou R$ 299,90 no PIX</p></div>
-            </a>
-            <div class="sizes">
-                <button id="1-size-p" class="size">P</button>
-                <button id="1-size-m" class="size">M</button>
-                <button id="1-size-g" class="size">G</button>
-                <button id="1-size-gg" class="size">GG</button>
-            </div>
-            <span>SELECIONE O TAMANHO</span></div>
-        <div class="product-container"><a href="http://localhost/siboon/produto/camisa-azul-top-2">
-                <div class="image-container"><img
-                            src="http://localhost/siboon/storage/images/products/2/principal-image-1731551643.png">
-                </div>
-                <div class="product-description"><p class="title">Camisa Azul Top</p>
-                    <p class="price">R$ 99,90</p>
-                    <p class="price">ou R$ 97,90 no PIX</p></div>
-            </a>
-            <div class="sizes">
-                <button id="2-size-p" class="size">P</button>
-                <button id="2-size-m" class="size">M</button>
-                <button id="2-size-g" class="size">G</button>
-                <button id="2-size-gg" class="size">GG</button>
-            </div>
-            <span>SELECIONE O TAMANHO</span></div>
+
     </div>
 </div>

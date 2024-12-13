@@ -107,39 +107,54 @@
 
 /* Carrinho Item*/
 
-.item-cart {
+.cart-item {
     width: 100%;
     display: flex;
-    flex-direction: row;
-    gap: 10px;
-    border-radius: 4px;
-    padding: 6px;
-    border: 1px solid black;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 15px;
+    background-color: #fff;
 }
 
-.item-cart img {
-    width: fit-content;
-    max-width: 150px;
-    border-radius: 6px;
+.cart-item-image {
+    min-width: 100px;
+    width: 24%;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 2px;
 }
 
-.item-cart-desc {
+.cart-item-details {
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
-    gap: 4px;
+    justify-content: space-between;
+    margin-left: 20px;
+    flex-grow: 1;
 }
 
-.item-cart-desc h2 {
-    font-size: 16px;
-    text-transform: uppercase;
+.cart-item-title {
+    font-size: 1.2rem;
+    color: #333;
+    margin: 0;
 }
 
-.item-cart-desc > p {
-    font-size: 16px;
+.cart-item-description {
+    font-size: 0.9rem;
+    color: #777;
+    margin: 5px 0;
 }
 
-.item-cart-desc > span {
+.cart-item-price {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #007bff;
+    margin: 10px 0;
+}
+
+.cart-item-quantity {
+    display: flex;
+    align-items: center;
     margin-top: 10px;
-    font-size: 17px;
 }

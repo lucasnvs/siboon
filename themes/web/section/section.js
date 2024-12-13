@@ -10,19 +10,22 @@ async function renderSections() {
     if (isError) return;
 
     responseSection.data.forEach(section => {
-        const gridContainer = document.createElement("div");
-        gridContainer.classList.add("container-grid-section");
-
         section.featured_items.forEach(async item => {
             let [responseProduct, isErrorProduct] = await ProductService.getDataById(item.product_id);
-            if(isErrorProduct) return;
+            if (isErrorProduct) return;
 
             const productElement = ProductItem(responseProduct.data);
-            gridContainer.appendChild(productElement);
+            products_grid_section.appendChild(productElement);
         });
     });
 }
 
+document.getElementById("price-range").addEventListener("input", (event) => {
+    const priceOutput = document.querySelector(".price-output");
+    const value = parseInt(event.target.value, 10);
+    priceOutput.textContent = `R$ ${value.toFixed(2).replace('.', ',')}`;
+});
+
 (async () => {
-    await renderProducts();
+    await renderSections();
 })();
