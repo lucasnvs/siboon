@@ -127,18 +127,20 @@ select,
 textarea {
     outline: 0;
     width: 100%;
-    padding: 12px 40px 12px 15px;
+    padding: 0.8rem;
     font-weight: 500;
-    border: 2px solid var(--light-gray);
+    border: 1px solid var(--light-gray);
     border-radius: 8px;
     font-size: 16px;
-    transition: border-color 0.3s ease;
+    transition: all 0.3s ease;
 }
 
 .default-input:focus,
 select:focus,
 textarea:focus {
     border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(106, 13, 173, 0.1);
 }
 
 textarea {
@@ -169,7 +171,7 @@ textarea {
     display: grid;
     padding: 0 40px;
     justify-content: space-evenly;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 10px 30px;
 }
 

@@ -15,30 +15,20 @@ document.getElementById('add-address-button').addEventListener('click', () => {
     });
 });
 
-document.getElementById("payment-method").addEventListener("change", () => {
-    const paymentMethod = document.getElementById("payment-method").value;
-    togglePaymentInfo(paymentMethod);
-});
+document.querySelectorAll('input[name="payment"]').forEach(radio => {
+    radio.addEventListener("change", () => {
+        const paymentMethod = document.querySelector('input[name="payment"]:checked').value;
+        const paymentInfo = {
+            credit: "credit-card-info",
+            pix: "pix-info",
+            boleto: "boleto-info"
+        };
 
-// document.getElementById("btn-cep-frete").addEventListener("click", async () => {
-//     const cep = document.getElementById("cep-frete").value;
-//
-//     if (cep) {
-//         try {
-//             document.getElementById("frete-value").textContent = "R$ 12,43";
-//         } catch (error) {
-//             console.error("Erro ao calcular frete", error);
-//         }
-//     } else {
-//         alert("Por favor, insira um CEP válido.");
-//     }
-// });
+        document.getElementById("credit-card-info").style.display = "none";
+        document.getElementById("pix-info").style.display = "none";
+        document.getElementById("boleto-info").style.display = "none";
 
-document.querySelectorAll('.unlock-button').forEach(button => {
-    button.addEventListener('click', () => {
-        const input = button.previousElementSibling;
-        input.disabled = !input.disabled;
-        button.innerHTML = input.disabled ? "🔒" : "🔓";
+        document.getElementById(paymentInfo[paymentMethod]).style.display = "block";
     });
 });
 
@@ -141,11 +131,6 @@ function generateFormGroup(id, label, optional = false) {
             </div>
         </div>
     `;
-}
-function togglePaymentInfo(paymentMethod) {
-    document.getElementById("credit-card-info").style.display = (paymentMethod === "credit-card") ? "block" : "none";
-    document.getElementById("pix-info").style.display = (paymentMethod === "pix") ? "block" : "none";
-    document.getElementById("boleto-info").style.display = (paymentMethod === "boleto") ? "block" : "none";
 }
 
 async function finishOrder() {

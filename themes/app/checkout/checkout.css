@@ -17,8 +17,9 @@ body {
     background-color: #FFF;
     padding: 20px;
     width: 80%;
-    height: 100%;
     flex-direction: column;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
 }
 
 .container::before {
@@ -60,9 +61,7 @@ body {
 @media (max-width: 1100px) {
     .content {
         flex-direction: column;
-        width: 100%;
     }
-
     .checkout-section,
     .summary-section {
         width: 100%;
@@ -90,21 +89,7 @@ body {
     background-color: #fff;
     padding: 14px;
     border-radius: 8px;
-    height: fit-content;
     width: 100%;
-}
-
-.inner-section {
-    display: flex;
-    flex-direction: column;
-    padding: 8px;
-    background-color: rgba(195, 195, 195, 0.8);
-    border-radius: 10px;
-    gap: 10px;
-}
-
-.inner-section p {
-    font-size: 1rem;
 }
 
 .section-title {
@@ -258,4 +243,128 @@ body {
 
 .frete-button:hover {
     background-color: #721190;
+}
+
+.checkout-header {
+    background: linear-gradient(135deg, var(--primary-color));
+    padding: 1.5rem;
+    text-align: center;
+}
+
+.checkout-header h1 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.checkout-header p {
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+.checkout-section {
+    padding: 2rem;
+}
+
+.section-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    border-bottom: 2px solid #DDD;
+    padding-bottom: 0.8rem;
+}
+
+.section-header .icon {
+    background-color: var(--primary-color);
+    color: white;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    margin-right: 1rem;
+    font-size: 1.2rem;
+}
+
+.section-header h2 {
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin: 0;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+.form-input {
+    width: 100%;
+    padding: 0.8rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+.form-input:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(106, 13, 173, 0.1);
+}
+
+.payment-methods {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.payment-method {
+    flex: 1;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    padding: 1rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.payment-method input[type="radio"] {
+    display: none;
+}
+
+.payment-method.active,
+.payment-method:hover {
+    border-color: var(--primary-color);
+    background-color: rgba(106, 13, 173, 0.05);
+}
+
+.payment-method img {
+    width: 40px;
+    margin-bottom: 0.5rem;
+}
+
+.payment-box {
+    flex: 1;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    padding: 1rem;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+@media (max-width: 600px) {
+
+    .checkout-section {
+        padding: 1rem;
+    }
+
+    .payment-methods {
+        flex-direction: column;
+    }
 }
