@@ -41,3 +41,136 @@
 .container-grid-section {
     width: 80%;
 }
+
+.product-filters {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.filters-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 16px;
+}
+
+.filter-section {
+    margin-bottom: 20px;
+}
+
+.filter-label {
+    font-size: 14px;
+    font-weight: bold;
+    color: #495057;
+    margin-bottom: 8px;
+}
+
+.filter-control {
+    position: relative;
+}
+
+.filter-select {
+    appearance: none;
+    background-color: #fff;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    padding: 8px 12px;
+    font-size: 14px;
+    color: #495057;
+    width: 100%;
+    cursor: pointer;
+}
+
+.select-arrow {
+    position: absolute;
+    top: 50%;
+    right: 12px;
+    transform: translateY(-50%);
+    color: #495057;
+    pointer-events: none;
+}
+
+.size-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.size-option {
+    display: flex;
+    align-items: center;
+}
+
+.filter-checkbox {
+    appearance: none;
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    width: 16px;
+    height: 16px;
+    margin-right: 6px;
+    background-color: #fff;
+    cursor: pointer;
+}
+
+.filter-checkbox:checked {
+    background-color: #007bff;
+    border-color: #007bff;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 16 16' fill='%23fff' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.filter-slider {
+    width: 100%;
+    -webkit-appearance: none;
+    appearance: none;
+    background-color: #e9ecef;
+    height: 4px;
+    border-radius: 4px;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+}
+
+.filter-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 16px;
+    height: 16px;
+    background-color: #007bff;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.filter-slider::-moz-range-thumb {
+    width: 16px;
+    height: 16px;
+    background-color: #007bff;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.price-output {
+    font-size: 14px;
+    color: #495057;
+    margin-left: 8px;
+}
+
+.filter-button {
+    width: 100%;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 16px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.filter-button:hover {
+    background-color: #0056b3;
+}

@@ -1,18 +1,26 @@
 import {ProductService} from "../../shared/services/ProductService.js";
 import {ProductItem} from "../../shared/components/ProductItem/ProductItem.js";
+import {WebsiteService} from "../../shared/services/WebsiteService.js";
 
-// its duplicated because, the section implementation isn't ready.
 
 const products_grid_section = document.querySelector(".container-grid-section");
 
-async function renderProducts() {
-    let {data: products} = await ProductService.getData();
-    products_grid_section.innerHTML = "";
+async function renderSections() {
+    let [responseSection, isError] = await WebsiteService.getSection();
+    if (isError) return;
 
-    if(!products) return;
-    products.forEach(product => {
-        products_grid_section.append(ProductItem(product))
-    })
+    responseSection.data.forEach(section => {
+        const gridContainer = document.createElement("div");
+        gridContainer.classList.add("container-grid-section");
+
+        section.featured_items.forEach(async item => {
+            let [responseProduct, isErrorProduct] = await ProductService.getDataById(item.product_id);
+            if(isErrorProduct) return;
+
+            const productElement = ProductItem(responseProduct.data);
+            gridContainer.appendChild(productElement);
+        });
+    });
 }
 
 (async () => {

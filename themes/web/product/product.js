@@ -3,8 +3,9 @@ import { GetBaseURL } from "../../shared/Constants.js";
 import { ProductService } from "../../shared/services/ProductService.js";
 import SimpleDialog from "../../shared/components/SimpleDialog/SimpleDialog.js";
 
-const productImageContainer = document.getElementById("product-image-container");
-const productDescriptionContainer = document.getElementById("product-description-container");
+const productGallery = document.querySelector(".product-gallery");
+const mainImage = document.querySelector(".product-main-image img");
+const productInfo = document.querySelector(".product-info");
 const PRODUCT_ID = document.getElementById("product_id").value;
 
 async function renderProductDetail() {
@@ -14,59 +15,47 @@ async function renderProductDetail() {
         return;
     }
 
-    productImageContainer.innerHTML = generateProductImages(product);
-    productDescriptionContainer.innerHTML = generateProductDescription(product);
-
-    let [element, amount] = InputAmount({id: "quantity"});
-    document.getElementById("quantity-container").append();
+    updateProductImages(product);
+    updateProductInfo(product);
 
     setupImageSwitching();
 }
 
-function generateProductImages(product) {
+function updateProductImages(product) {
     const additionalImages = product.additional_imgs?.map((img, index) => `
-        <img src="${GetBaseURL(img)}" alt="Imagem do Produto ${index + 1}" class="side-image">
-    `).join('') || '';
+        <img src="${GetBaseURL(img)}" alt="Thumbnail ${index + 1}" class="side-image">
+    `).join("") || "";
 
-    return `
-        <div id="side-images-container" class="side-images-container">
-            ${additionalImages}
-        </div>
-        <img src="${GetBaseURL(product.principal_img)}" id="principal-image" alt="${product.name}">
-    `;
+    productGallery.innerHTML = additionalImages;
+
+    mainImage.src = GetBaseURL(product.principal_img);
+    mainImage.alt = product.name;
 }
 
-function generateProductDescription(product) {
+function updateProductInfo(product) {
     const installmentPrice = (product.price_brl / 3).toFixed(2);
-    product.sizes = ["PP", "P", "M"]
-    return `
-        <h2>${product.name}</h2>
-        <p>${product.formated_price_brl}</p>
-        <p>ou até 3x de R$ ${installmentPrice}</p>
-        <p>${product.description}</p>
-        <p>TAMANHO</p>
-        <div class="sizes">
-            ${product.sizes.map(size => `<button class="size">${size}</button>`).join('')}
-        </div>
-        <div id="quantity-container">
-            <p>QUANTIDADE</p>
-        </div>
-        <button class="btn add-to-cart-btn">COMPRAR</button>
-    `;
+    const sizeButtons = product.sizes?.map(size => `<button class="size">${size}</button>`).join("") || "";
+
+    productInfo.querySelector(".product-title").textContent = product.name;
+    productInfo.querySelector(".product-brand span").textContent = product.brand || "Unknown";
+    productInfo.querySelector(".product-price").textContent = `${product.formated_price_brl}`;
+    productInfo.querySelector(".product-description").textContent = product.description;
+
+    const sizesContainer = productInfo.querySelector(".product-sizes ul");
+    sizesContainer.innerHTML = sizeButtons;
+
+    const quantityContainer = productInfo.querySelector("#quantity-container");
+    if (quantityContainer) {
+        let [element, amount] = InputAmount({ id: "quantity" });
+        quantityContainer.append(element);
+    }
 }
 
 function setupImageSwitching() {
-    const principalImage = document.getElementById('principal-image');
-    const sideImages = document.querySelectorAll('.side-image');
-
-    sideImages.forEach(smallImage => {
-        smallImage.addEventListener('click', () => {
-            const tempSrc = principalImage.src;
-
-            principalImage.src = smallImage.src;
-
-            smallImage.src = tempSrc;
-        });
+    productGallery.addEventListener("click", (event) => {
+        if (event.target.tagName === "IMG") {
+            [mainImage.src, event.target.src] = [event.target.src, mainImage.src];
+        }
     });
 }
 

@@ -9,14 +9,27 @@
 <data id="product_id" value="<?= $product_id ?>"></data>
 
 <main id="main">
-    <div id="product-image-container">
-
-    </div>
-
-    <div id="product-description-container">
-        <h1>Carregando...</h1>
-        <p>Carregando...</p>
-        <p class="price">R$ ...</p>
-        <button class="add-to-cart-btn">Adicionar ao Carrinho</button>
-    </div>
+    <section class="product-container">
+        <aside class="product-gallery" aria-label="Galeria de Imagens do Produto"></aside>
+        <figure class="product-main-image">
+            <img alt="Imagem Principal">
+        </figure>
+        <article class="product-info">
+            <header>
+                <h1 class="product-title">Carregando...</h1>
+                <p class="product-brand">Marca: <span>Carregando...</span></p>
+            </header>
+            <div class="product-price" aria-label="Product price">R$ ...</div>
+            <p class="product-description">
+                Carregando... Carregando... Carregando... Carregando... Carregando... Carregando...
+            </p>
+            <section class="product-sizes" aria-labelledby="available-sizes">
+                <h2 id="available-sizes">Tamanhos Disponíveis</h2>
+                <ul></ul>
+            </section>
+            <button class="btn" style="width: 300px" aria-label="Add to cart">
+                Comprar
+            </button>
+        </article>
+    </section>
 </main>
