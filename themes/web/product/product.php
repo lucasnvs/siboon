@@ -10,10 +10,12 @@
 
 <main id="main">
     <section class="product-container">
-        <aside class="product-gallery" aria-label="Galeria de Imagens do Produto"></aside>
-        <figure class="product-main-image">
-            <img alt="Imagem Principal">
-        </figure>
+        <div class="galery-container">
+            <aside class="product-gallery" aria-label="Galeria de Imagens do Produto"></aside>
+            <figure class="product-main-image">
+                <img alt="Imagem Principal">
+            </figure>
+        </div>
         <article class="product-info">
             <header>
                 <h1 class="product-title">Carregando...</h1>

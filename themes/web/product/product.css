@@ -7,9 +7,10 @@
 .product-container {
     background: white;
     border-radius: 10px;
+    align-items: center;
     /*box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);*/
     display: flex;
-    max-width: 900px;
+    max-width: 80%;
     width: 100%;
     overflow: hidden;
 }
@@ -33,9 +34,16 @@
 .product-gallery img.active {
     border-color: var(--primary-color);
 }
+
+.galery-container {
+    display: flex;
+    height: fit-content;
+}
+
 .product-main-image {
     min-width: 400px;
     width: 100%;
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
