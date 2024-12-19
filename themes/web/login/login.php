@@ -28,7 +28,7 @@
         <div id="signup" class="form">
             <p>Desejo me cadastrar</p>
             <div class="input-container">
-                <label for="name">Name:</label>
+                <label for="name">Nome:</label>
                 <input class="default-input" type="text" name="first_name" id="name-signup">
                 <span class="input-error"></span>
             </div>
