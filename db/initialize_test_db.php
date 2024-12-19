@@ -2,7 +2,7 @@
 require dirname(__FILE__, 2) . "/vendor/autoload.php";
 
 // Place the files in execution order.
-$SQL_FILES = ["siboon_schemas.sql", "values.sql"];
+$SQL_FILES = ["siboon_db.sql", "values.sql"];
 
 
 function message($message)
