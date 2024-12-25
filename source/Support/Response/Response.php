@@ -48,7 +48,7 @@ class Response
     {
         self::back([
             "type" => "error",
-            "type_error" => $type_error,
+            "data" => $type_error,
             "message" => $message,
         ], $code);
     }
